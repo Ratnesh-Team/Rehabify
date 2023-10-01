@@ -1,2 +1,2 @@
 # Rehabify
- The Path to a Brighter Tomorrow
+ The Path to a Brighter Tomorrow.
