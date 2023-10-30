@@ -1,0 +1,22 @@
+*{
+    font-family: 'Inter', 'sans-serif';
+}
+
+.container1{
+    border-radius: 0px 0px 25px 25px;
+    background: linear-gradient(180deg, #0081FF -59.4%, rgba(255, 255, 255, 0.94) 100%);
+    box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);  
+}
+
+
+img{
+    width: 244px;
+    height: 74px;
+    margin-left: 50px;
+}
+
+
+li{
+    
+    font-weight: 500;
+}
