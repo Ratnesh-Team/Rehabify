@@ -4,9 +4,10 @@ import Sign_Up from "./SignUp_page"
 function Home_page() {
   return (
     <>
-    {/* <Navbar/> */}
+    <Navbar/>
     <Sign_Up/>
-    {/* <Footer/> */}
+  
+    <Footer/>
     </>
    
   )
