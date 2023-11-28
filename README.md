@@ -1,5 +1,6 @@
 # Rehabify
  The Path to a Brighter Tomorrow.
+# for contribution contribute on the main brnach directly but ⚠️ make sure you have latest code changes 
  
 # Contribution Guidelines
 
