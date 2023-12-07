@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+
+    <!-- Display flashed messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endwith %}
+
+    <!-- Login form -->
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.user_type.label }}<br>
+            {{ form.user_type() }}
+        </p>
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email() }}
+        </p>
+        <p>
+            {{ form.password.label }}<br>
+            {{ form.password() }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</body>
+</html>
