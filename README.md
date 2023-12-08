@@ -8,6 +8,6 @@
 
 Before submitting your pull request, please ensure that you have the latest updates from the main branch by pulling the changes:
 
-```bash
+```bashn 
 git pull origin main
 
