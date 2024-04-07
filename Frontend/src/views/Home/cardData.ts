@@ -28,7 +28,7 @@ export const cardData: CardData[] = [
         content:
             'Drinking plenty of water helps flush toxins from your body and keeps you hydrated. Herbal teas and detox drinks can also be beneficial.',
         image: '/img/others/img-1.jpg',
-        author: 'Admin',
+        author: 'Ratnesh',
         date: 'Apr 7, 2024',
     },
 ]
