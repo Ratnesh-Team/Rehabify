@@ -8,32 +8,32 @@ export const protectedRoutes = [
     {
         key: 'home',
         path: '/home',
-        component: lazy(() => import('@/views/Home/Home')),
+        component: lazy(() => import('@/views/Home/index')),
         authority: [],
     },
 
     {
         key: 'database',
         path: '/database',
-        component: lazy(() => import('@/views/Database')),
+        component: lazy(() => import('@/views/Database/index')),
         authority: [],
     },
     {
         key: 'treatment-centers',
         path: '/treatment-centers',
-        component: lazy(() => import('@/views/TreatmentCenters/TreatmentCenters')),
+        component: lazy(() => import('@/views/TreatmentCenters')),
         authority: [],
     },
     {
         key: 'home-remedies',
         path: '/home-remedies',
-        component: lazy(() => import('@/views/HomeRemedies/HomeRemedies')),
+        component: lazy(() => import('@/views/HomeRemedies/index')),
         authority: [],
     },
     {
         key: 'community',
         path: '/community',
-        component: lazy(() => import('@/views/Community/Community')),
+        component: lazy(() => import('@/views/Community/index')),
         authority: [],
     },
 ]
