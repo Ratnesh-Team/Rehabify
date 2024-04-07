@@ -7,6 +7,8 @@ import (
 
 // SetupRoutes initializes and returns the Gin router with defined routes
 
-func SecretRoutes(router *gin.Engine) {
+func NMKroutes(router *gin.Engine) {
+	
+
 
 }
