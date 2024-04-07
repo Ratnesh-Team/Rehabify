@@ -1,5 +1,5 @@
 import React from 'react';
-import cardData from '../HomeRemedies/cardData';
+import cardData from './cardData';
 import { Card, CardProps } from '@/components/ui';
 import CardData from './types'; // Import the CardData interface
 
