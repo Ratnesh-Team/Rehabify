@@ -15,7 +15,7 @@ export const protectedRoutes = [
     {
         key: 'database',
         path: '/database',
-        component: lazy(() => import('@/views/Database/Database')),
+        component: lazy(() => import('@/views/Database')),
         authority: [],
     },
     {

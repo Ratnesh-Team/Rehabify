@@ -1,7 +1,11 @@
+import React from 'react'
+
 const Database = () => {
-    return <div>
-        
-        <h1>hello</h1>Database</div>
+    return (
+        <div>
+            Jhftgfdhgfhfh
+        </div>
+    )
 }
 
 export default Database
