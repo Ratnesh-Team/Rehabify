@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import Table from '@/components/ui/Table'
 import Pagination from '@/components/ui/Pagination'
 import Select from '@/components/ui/Select'
@@ -33,30 +33,6 @@ type Option = {
 }
 
 const PaginationTable = () => {
-    const [data, setData] = useState<Person[]>([])
-    const [totalData, setTotalData] = useState(0)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(Base_Url + '/users')
-                const responseData = await response.json()
-                const mappedData: Person[] = responseData.map((item: any) => ({
-                    Name: item.Name,
-                    Addiction_Type: item.Addiction_Type,
-                    State: item.State,
-                    Nasha_Mukti_Centre_Address: item.Nasha_Mukti_Centre_Address,
-                    Gender: item.Gender
-                }))
-                setData(mappedData)
-                setTotalData(mappedData.length)
-            } catch (error) {
-                console.error('Error fetching data:', error)
-            }
-        }
-        fetchData()
-    }, [])
-
     const columns = useMemo<ColumnDef<Person>[]>(
         () => [
             {
@@ -73,17 +49,69 @@ const PaginationTable = () => {
             },
             {
                 header: 'Nasha Mukti Centre Address',
-                accessorKey: 'Nasha_Mukti_Centre_Address',
+                accessorKey: 'Nasha_Mukti_Centre_Address'
             },
             {
                 header: 'Gender',
-                accessorKey: 'Gender',
+                accessorKey: 'Gender'
             }
         ],
         []
     )
 
+    const [data, setData] = useState<Person[]>([])
     const [sorting, setSorting] = useState<ColumnSort[]>([])
+    const [pageIndex, setPageIndex] = useState(0);
+    const [totalData, setTotalData] = useState(0);
+    const [loading, setLoading] = useState(true); // Add loading state
+
+    // Page size options
+    const pageSizeOption = [
+        { value: 10, label: '10 / page' },
+        { value: 20, label: '20 / page' },
+        { value: 30, label: '30 / page' },
+        { value: 40, label: '40 / page' },
+        { value: 50, label: '50 / page' },
+    ]
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(Base_Url + '/users')
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data')
+                }
+                const responseData = await response.json()
+
+                console.log('API Response:', responseData); // Log the API response
+
+                if (!Array.isArray(responseData.data)) {
+                    console.error('Invalid data format. Expected an array:', responseData.data)
+                    // Optionally, handle this situation accordingly
+                    return;
+                }
+
+                // Use responseData.data directly
+                const mappedData: Person[] = responseData.data.map((item: any) => ({
+                    Name: item.Name,
+                    Addiction_Type: item.Addiction_Type,
+                    State: item.State,
+                    Nasha_Mukti_Centre_Address: item.Nasha_Mukti_Centre_Address,
+                    Gender: item.Gender
+                }));
+
+                setData(mappedData)
+                setTotalData(mappedData.length)
+                setLoading(false)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+                setLoading(false)
+                // Optionally, you can set an error state here to display to the user
+            }
+        }
+        fetchData()
+    }, [])
+
 
     const table = useReactTable({
         data,
@@ -99,34 +127,50 @@ const PaginationTable = () => {
     })
 
     const onPaginationChange = (page: number) => {
-        table.setPageIndex(page - 1)
+        // Update the page index state
+        table.setPageIndex(page - 1);
+        // Call the table's gotoPage method to update the page
+       
     }
 
-    const onSelectChange = (value = 0) => {
-        table.setPageSize(Number(value))
+    const onSelectChange = (value: number) => {
+        setPageIndex(0); // Reset to first page when changing page size
+        table.setPageSize(value);
     }
 
     return (
         <div>
             <Table>
-                {/* Table Header */}
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                    <Th key={header.id} colSpan={header.colSpan}>
+                                    <Th
+                                        key={header.id}
+                                        colSpan={header.colSpan}
+                                    >
                                         {header.isPlaceholder ? null : (
                                             <div
-                                                className={
-                                                    header.column.getCanSort()
-                                                        ? 'cursor-pointer select-none'
-                                                        : ''
-                                                }
-                                                onClick={header.column.getToggleSortingHandler()}
+                                                {...{
+                                                    className:
+                                                        header.column.getCanSort()
+                                                            ? 'cursor-pointer select-none'
+                                                            : '',
+                                                    onClick:
+                                                        header.column.getToggleSortingHandler(),
+                                                }}
                                             >
-                                                {flexRender(header.column.columnDef.header, header.getContext())}
-                                                {<Sorter sort={header.column.getIsSorted()} />}
+                                                {flexRender(
+                                                    header.column.columnDef
+                                                        .header,
+                                                    header.getContext()
+                                                )}
+                                                {
+                                                    <Sorter
+                                                        sort={header.column.getIsSorted()}
+                                                    />
+                                                }
                                             </div>
                                         )}
                                     </Th>
@@ -135,18 +179,29 @@ const PaginationTable = () => {
                         </Tr>
                     ))}
                 </THead>
-                {/* Table Body */}
                 <TBody>
-                    {table.getRowModel().rows.map((row) => (
-                        <Tr key={row.id}>
-                            {row.getVisibleCells().map((cell) => (
-                                <Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Td>
-                            ))}
+                    {loading ? (
+                        <Tr>
+                            <Td colSpan={columns.length}>
+                                Loading...
+                            </Td>
                         </Tr>
-                    ))}
+                    ) : (
+                        table.getRowModel().rows.map((row) => (
+                            <Tr key={row.id}>
+                                {row.getVisibleCells().map((cell) => (
+                                    <Td key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </Td>
+                                ))}
+                            </Tr>
+                        ))
+                    )}
                 </TBody>
             </Table>
-            {/* Pagination */}
             <div className="flex items-center justify-between mt-4">
                 <Pagination
                     pageSize={table.getState().pagination.pageSize}
@@ -154,16 +209,15 @@ const PaginationTable = () => {
                     total={totalData}
                     onChange={onPaginationChange}
                 />
-                {/* Page Size Selector */}
                 <div style={{ minWidth: 130 }}>
                     <Select<Option>
                         size="sm"
                         isSearchable={false}
-                        value={pageSizeOption.filter(
+                        value={pageSizeOption.find(
                             (option) => option.value === table.getState().pagination.pageSize
                         )}
                         options={pageSizeOption}
-                        onChange={(option) => onSelectChange(option?.value)}
+                        onChange={(option) => onSelectChange(option?.value || 0)}
                     />
                 </div>
             </div>
