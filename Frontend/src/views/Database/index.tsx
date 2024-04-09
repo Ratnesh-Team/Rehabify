@@ -1,5 +1,8 @@
-import React from 'react'
+
+import { getUsers } from '@/services/UserService'
 import Database from './Database'
+import { useEffect } from 'react'
+
 
 
 const index = () => {
