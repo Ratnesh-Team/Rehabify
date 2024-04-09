@@ -3,5 +3,171 @@
     "info": {
         "contact": {}
     },
-    "paths": {}
+    "paths": {
+        "/NMK": {
+            "get": {
+                "description": "Get all NMK codes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "NMK"
+                ],
+                "summary": "Get all NMK codes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.NMK"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "Get users based on query parameters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get users",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Addiction Type",
+                        "name": "Addiction_Type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Nasha Mukti Centre Code",
+                        "name": "Nasha_Mukti_Centre_Code",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Employment Status",
+                        "name": "Employment_Status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Is Treatment Completed",
+                        "name": "Is_Treatment_Completed",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.NMK": {
+            "type": "object",
+            "properties": {
+                "Address": {
+                    "type": "string"
+                },
+                "Contact_Number": {
+                    "type": "integer"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "ImageURL": {
+                    "type": "string"
+                },
+                "NMK_Code": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Owner_Name": {
+                    "type": "string"
+                },
+                "_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "Addiction_Duration": {
+                    "type": "integer"
+                },
+                "Addiction_Type": {
+                    "type": "string"
+                },
+                "Age": {
+                    "type": "integer"
+                },
+                "Counselling_Count": {
+                    "type": "integer"
+                },
+                "Counsellor_Name": {
+                    "type": "string"
+                },
+                "District": {
+                    "type": "string"
+                },
+                "Duration_of-Treatment": {
+                    "type": "integer"
+                },
+                "Employment_Status": {
+                    "type": "integer"
+                },
+                "Gender": {
+                    "type": "string"
+                },
+                "Guardian_Name": {
+                    "type": "string"
+                },
+                "Is_Treatment_Completed": {
+                    "type": "boolean"
+                },
+                "Joining_Date": {
+                    "type": "string"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Nasha_Mukti_Centre_Address": {
+                    "type": "string"
+                },
+                "Nasha_Mukti_Centre_Code": {
+                    "type": "string"
+                },
+                "Nasha_Mukti_Centre_Name": {
+                    "type": "string"
+                },
+                "State": {
+                    "type": "string"
+                },
+                "Under_Treatment": {
+                    "type": "boolean"
+                },
+                "_id": {
+                    "type": "string"
+                }
+            }
+        }
+    }
 }

@@ -1,4 +1,112 @@
+definitions:
+  models.NMK:
+    properties:
+      _id:
+        type: string
+      Address:
+        type: string
+      Contact_Number:
+        type: integer
+      Email:
+        type: string
+      ImageURL:
+        type: string
+      NMK_Code:
+        type: string
+      Name:
+        type: string
+      Owner_Name:
+        type: string
+    type: object
+  models.User:
+    properties:
+      _id:
+        type: string
+      Addiction_Duration:
+        type: integer
+      Addiction_Type:
+        type: string
+      Age:
+        type: integer
+      Counselling_Count:
+        type: integer
+      Counsellor_Name:
+        type: string
+      District:
+        type: string
+      Duration_of-Treatment:
+        type: integer
+      Employment_Status:
+        type: integer
+      Gender:
+        type: string
+      Guardian_Name:
+        type: string
+      Is_Treatment_Completed:
+        type: boolean
+      Joining_Date:
+        type: string
+      Name:
+        type: string
+      Nasha_Mukti_Centre_Address:
+        type: string
+      Nasha_Mukti_Centre_Code:
+        type: string
+      Nasha_Mukti_Centre_Name:
+        type: string
+      State:
+        type: string
+      Under_Treatment:
+        type: boolean
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /NMK:
+    get:
+      consumes:
+      - application/json
+      description: Get all NMK codes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.NMK'
+      summary: Get all NMK codes
+      tags:
+      - NMK
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Get users based on query parameters
+      parameters:
+      - description: Addiction Type
+        in: query
+        name: Addiction_Type
+        type: string
+      - description: Nasha Mukti Centre Code
+        in: query
+        name: Nasha_Mukti_Centre_Code
+        type: string
+      - description: Employment Status
+        in: query
+        name: Employment_Status
+        type: integer
+      - description: Is Treatment Completed
+        in: query
+        name: Is_Treatment_Completed
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: Get users
+      tags:
+      - User
 swagger: "2.0"

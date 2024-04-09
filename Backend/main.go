@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	cors "github.com/itsjamie/gin-cors"
 	swaggerFiles "github.com/swaggo/files"
-	ginSwagger"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"log"
 	"net/http"
 	"time"
@@ -29,10 +29,11 @@ func main() {
 
 	router := gin.Default()
 	router.Use(cors.Middleware(corsConfig))
-	routes.SecretRoutes(router)
+	routes.RehabifyRoutes(router)
 
 	// swagger url is http://localhost:3000/swagger/index.html
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	router.GET("/swagger-ui/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	log.Print("Server listening on http://localhost:3000/")
 	if err := http.ListenAndServe("0.0.0.0:3000", router); err != nil {

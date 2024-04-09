@@ -11,7 +11,7 @@ const appConfig: AppConfig = {
     apiPrefix: '/api',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
-    tourPath: '/',
+    tourPath: '/home',
     locale: 'en',
     enableMock: true,
 }
