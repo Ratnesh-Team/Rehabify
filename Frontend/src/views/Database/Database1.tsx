@@ -1,5 +1,4 @@
-
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Table from '@/components/ui/Table'
 import Pagination from '@/components/ui/Pagination'
 import Select from '@/components/ui/Select'
@@ -12,12 +11,20 @@ import {
     flexRender,
 } from '@tanstack/react-table'
 import type { ColumnDef, ColumnSort } from '@tanstack/react-table'
+import { Base_Url } from '@/configs/app.config'
+import Sorter from '@/components/ui/Table/Sorter'
+import TBody from '@/components/ui/Table/TBody'
+import THead from '@/components/ui/Table/THead'
+import Td from '@/components/ui/Table/Td'
+import Th from '@/components/ui/Table/Th'
+import Tr from '@/components/ui/Table/Tr'
 
 type Person = {
-    firstName: string
-    lastName: string
-    age: number
-    place: string
+    Name: string
+    Addiction_Type: string
+    State: string
+    Nasha_Mukti_Centre_Address: string
+    Gender: string
 }
 
 type Option = {
@@ -25,59 +32,58 @@ type Option = {
     label: string
 }
 
-const { Tr, Th, Td, THead, TBody, Sorter } = Table
-
-const tableData = (): Person[] => {
-    const arr = []
-    for (let i = 0; i < 100; i++) {
-        arr.push({
-            firstName: `Maria ${i}`,
-            lastName: `Anders ${i}`,
-            age: i,
-            place: `place ${i}`,
-        })
-    }
-    return arr;
-}
-
-const totalData = tableData().length
-
-const pageSizeOption = [
-    { value: 10, label: '10 / page' },
-    { value: 20, label: '20 / page' },
-    { value: 30, label: '30 / page' },
-    { value: 40, label: '40 / page' },
-    { value: 50, label: '50 / page' },
-]
-
 const PaginationTable = () => {
+    const [data, setData] = useState<Person[]>([])
+    const [totalData, setTotalData] = useState(0)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(Base_Url + '/users')
+                const responseData = await response.json()
+                const mappedData: Person[] = responseData.map((item: any) => ({
+                    Name: item.Name,
+                    Addiction_Type: item.Addiction_Type,
+                    State: item.State,
+                    Nasha_Mukti_Centre_Address: item.Nasha_Mukti_Centre_Address,
+                    Gender: item.Gender
+                }))
+                setData(mappedData)
+                setTotalData(mappedData.length)
+            } catch (error) {
+                console.error('Error fetching data:', error)
+            }
+        }
+        fetchData()
+    }, [])
 
     const columns = useMemo<ColumnDef<Person>[]>(
         () => [
             {
-                header: 'First Name',
-                accessorKey: 'firstName',
+                header: 'Name',
+                accessorKey: 'Name',
             },
             {
-                header: 'Last Name',
-                accessorKey: 'lastName',
+                header: 'Addiction Type',
+                accessorKey: 'Addiction_Type',
             },
             {
-                header: 'Age',
-                accessorKey: 'age',
+                header: 'State',
+                accessorKey: 'State',
             },
             {
-                header: 'Place',
-                accessorKey: 'place'
+                header: 'Nasha Mukti Centre Address',
+                accessorKey: 'Nasha_Mukti_Centre_Address',
+            },
+            {
+                header: 'Gender',
+                accessorKey: 'Gender',
             }
         ],
         []
     )
 
-    const [data] = useState(() => tableData())
     const [sorting, setSorting] = useState<ColumnSort[]>([])
-    // const [pageIndex, setPageIndex] = useState(0);
-
 
     const table = useReactTable({
         data,
@@ -85,8 +91,6 @@ const PaginationTable = () => {
         state: {
             sorting,
         },
-        // Pipeline
-
         onSortingChange: setSorting,
         getSortedRowModel: getSortedRowModel(),
         getCoreRowModel: getCoreRowModel(),
@@ -104,38 +108,25 @@ const PaginationTable = () => {
 
     return (
         <div>
-            <div>Harshit</div>
             <Table>
+                {/* Table Header */}
                 <THead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
                                 return (
-                                    <Th
-                                        key={header.id}
-                                        colSpan={header.colSpan}
-                                    >
+                                    <Th key={header.id} colSpan={header.colSpan}>
                                         {header.isPlaceholder ? null : (
                                             <div
-                                                {...{
-                                                    className:
-                                                        header.column.getCanSort()
-                                                            ? 'cursor-pointer select-none'
-                                                            : '',
-                                                    onClick:
-                                                        header.column.getToggleSortingHandler(),
-                                                }}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef
-                                                        .header,
-                                                    header.getContext()
-                                                )}
-                                                {
-                                                    <Sorter
-                                                        sort={header.column.getIsSorted()}
-                                                    />
+                                                className={
+                                                    header.column.getCanSort()
+                                                        ? 'cursor-pointer select-none'
+                                                        : ''
                                                 }
+                                                onClick={header.column.getToggleSortingHandler()}
+                                            >
+                                                {flexRender(header.column.columnDef.header, header.getContext())}
+                                                {<Sorter sort={header.column.getIsSorted()} />}
                                             </div>
                                         )}
                                     </Th>
@@ -144,45 +135,35 @@ const PaginationTable = () => {
                         </Tr>
                     ))}
                 </THead>
+                {/* Table Body */}
                 <TBody>
-                    {table.getRowModel().rows.map((row) => {
-                        return (
-                            <Tr key={row.id}>
-                                {row.getVisibleCells().map((cell) => {
-                                    return (
-                                        <Td key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </Td>
-                                    )
-                                })}
-                            </Tr>
-                        )
-                    })}
+                    {table.getRowModel().rows.map((row) => (
+                        <Tr key={row.id}>
+                            {row.getVisibleCells().map((cell) => (
+                                <Td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Td>
+                            ))}
+                        </Tr>
+                    ))}
                 </TBody>
             </Table>
+            {/* Pagination */}
             <div className="flex items-center justify-between mt-4">
                 <Pagination
                     pageSize={table.getState().pagination.pageSize}
                     currentPage={table.getState().pagination.pageIndex + 1}
                     total={totalData}
                     onChange={onPaginationChange}
-
                 />
+                {/* Page Size Selector */}
                 <div style={{ minWidth: 130 }}>
                     <Select<Option>
                         size="sm"
                         isSearchable={false}
                         value={pageSizeOption.filter(
-                            (option) =>
-                                option.value ===
-                                table.getState().pagination.pageSize
+                            (option) => option.value === table.getState().pagination.pageSize
                         )}
                         options={pageSizeOption}
                         onChange={(option) => onSelectChange(option?.value)}
-
                     />
                 </div>
             </div>
@@ -191,7 +172,3 @@ const PaginationTable = () => {
 }
 
 export default PaginationTable
-
-
-
-
