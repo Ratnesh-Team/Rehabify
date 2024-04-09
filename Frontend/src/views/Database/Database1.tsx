@@ -76,7 +76,7 @@ const PaginationTable = () => {
 
     const [data] = useState(() => tableData())
     const [sorting, setSorting] = useState<ColumnSort[]>([])
-    const [pageIndex, setPageIndex] = useState(0);
+    // const [pageIndex, setPageIndex] = useState(0);
 
 
     const table = useReactTable({
