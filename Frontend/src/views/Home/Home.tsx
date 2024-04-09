@@ -1,6 +1,6 @@
 import React from 'react';
 import cardData from './cardData';
-import { Card, CardProps } from '@/components/ui';
+import { Card } from '@/components/ui';
 import CardData from './types'; // Import the CardData interface
 
 const Home: React.FC = () => {

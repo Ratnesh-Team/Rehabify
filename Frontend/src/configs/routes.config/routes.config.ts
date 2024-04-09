@@ -8,7 +8,7 @@ export const protectedRoutes = [
     {
         key: 'home',
         path: '/home',
-        component: lazy(() => import('@/views/Home/index')),
+        component: lazy(() => import('@/views/Home/Home')),
         authority: [],
     },
 
@@ -27,7 +27,7 @@ export const protectedRoutes = [
     {
         key: 'home-remedies',
         path: '/home-remedies',
-        component: lazy(() => import('@/views/HomeRemedies/index')),
+        component: lazy(() => import('@/views/HomeRemedies/HomeRemedies')),
         authority: [],
     },
     {
