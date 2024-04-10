@@ -38,7 +38,7 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 		if addictionType := queryParams.Get("Addiction_Type"); addictionType != "" {
 			filter["Addiction_Type"] = addictionType
 		}
-		if nashaMuktiCentreCode := queryParams.Get("Nasha_Mukti_Centre_Code"); nashaMuktiCentreCode != "" {
+		if nashaMuktiCentreCode := queryParams.Get("NMK_Code"); nashaMuktiCentreCode != "" {
 			filter["Nasha_Mukti_Centre_Code"] = nashaMuktiCentreCode
 		}
 		if employmentStatusStr := queryParams.Get("Employment_Status"); employmentStatusStr != "" {

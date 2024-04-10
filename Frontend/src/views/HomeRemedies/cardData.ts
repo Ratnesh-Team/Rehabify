@@ -1,4 +1,5 @@
-import CardData from '../Home/types'
+import CardData from "./types"
+
 
 export const cardData: CardData[] = [
     {

@@ -6,6 +6,7 @@ import (
 	"github.com/Ratnesh-Team/Rehabify/models"
 	"github.com/Ratnesh-Team/Rehabify/repository"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 // GetNMKCodes is a handler to get all NMK codes.
@@ -20,9 +21,18 @@ import (
 func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var nmkList []models.NMK
+             
+			queryParams := c.Request.URL.Query()
+			filter := bson.M{}
+			if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
+			filter["NMK_Code"] = NMK_Code
+		}else{
+			filter=nil
+		}
+	
 
 		// Fetch all NMK codes from the repository
-		cursor, err := nmkRepo.Find(nil)
+		cursor, err := nmkRepo.Find(filter)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  http.StatusInternalServerError,

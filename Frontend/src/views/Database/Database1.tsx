@@ -184,20 +184,21 @@ const PaginationTable = () => {
 
     return (
         <div>
+            <div>
+                <h1  className="font-semibold">Users Data</h1>
+            </div>
             <div className="flex justify-between items-center mb-4">
-                <div>
-                    <h2 className="text-lg font-semibold">Nasha Mukti Kendra (NMK) Data</h2>
-                </div>
+               <span></span>
                 <div className="flex items-center ">
                     <Input className="mr-2" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
                     <Button
-                        className="mr-2"
+                        className="mr-2 px-3 py-4"
                         variant="solid"
                         onClick={handleDownloadJSON}
                         loading={loading}
                         icon={<HiOutlineInboxIn />}
                     >
-                        <span>Download csv</span>
+                        
                     </Button>
                 </div>
             </div>

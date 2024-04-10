@@ -1,52 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import { Card, Pagination } from '@/components/ui';
-import { Base_Url } from '@/configs/app.config';
+import React, { useState } from 'react';
+import Pagination from '@/components/ui/Pagination';
 import CardData from './types'; // Import the CardData interface
+import { Card } from '@/components/ui';
 
 interface Props {
-    // Removed cards and pageSize props
+    cards: CardData[];
+    pageSize: number;
 }
 
-const Controlled: React.FC<Props> = () => {
+const Controlled: React.FC<Props> = ({ cards, pageSize }) => {
     const [page, setPage] = useState(1);
 
     const onPageChange = (newPage: number) => {
         setPage(newPage);
     };
-
-    return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
-
-            <TreatmentCentres page={page} onPageChange={onPageChange} />
-        </div>
-    );
-};
-
-const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void }> = ({
-    page,
-    onPageChange,
-}) => {
-    const [cards, setCards] = useState<CardData[]>([]);
-    const pageSize = 6; // Number of cards per page
-
-    useEffect(() => {
-        const fetchCards = async () => {
-            try {
-                const response = await fetch(Base_Url + '/NMK');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
-                setCards(responseData.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchCards();
-    }, []);
 
     // Calculate total pages based on cards length and pageSize
     const totalPages = Math.ceil(cards.length / pageSize);
@@ -57,14 +24,14 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     const displayedCards = cards.slice(startIndex, endIndex);
 
     return (
-        <>
-            {/* Render cards based on current page */}
-            <div className="flex flex-wrap justify-around gap-6">
-                {displayedCards.map((card, index) => (
-                    <div key={index} className="max-w-xs mb-6">
-                        {/* Wrap Card content in Link */}
-                        <Link to={`/NMK?NMK_Code=${card.NMK_Code}`} className="max-w-xs mb-6">
-                            <Card
+        <div>
+            <div className="flex flex-col items-center">
+                <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
+                {/* Render cards based on current page */}
+                <div className="flex flex-wrap justify-around gap-6">
+                    {displayedCards.map((card, index) => (
+                        <div key={index} className="max-w-xs mb-6">
+                            {/* <Card
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                 header={
@@ -85,10 +52,10 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                     <p className="text-sm overflow-hidden">{card.Email}</p>
                                     <p className="text-sm overflow-hidden">{card.Contact_Number}</p>
                                 </span>
-                            </Card>
-                        </Link>
-                    </div>
-                ))}
+                            </Card> */}
+                        </div>
+                    ))}
+                </div>
             </div>
 
             {/* Pagination */}
@@ -97,7 +64,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 currentPage={page}
                 onChange={onPageChange}
             />
-        </>
+        </div>
     );
 };
 
