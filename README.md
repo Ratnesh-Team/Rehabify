@@ -1,13 +1,4 @@
-# Rehabify
- The Path to a Brighter Tomorrow.
-# for contribution contribute on the main brnach directly but ⚠️ make sure you have latest code changes 
- 
-# Contribution Guidelines
+# Rehabify Project
 
-## ⚠️⚠️⚠️⚠️ Before Creating a Pull Request
-
-Before submitting your pull request, please ensure that you have the latest updates from the main branch by pulling the changes:
-
-```bash
-git pull origin main
+Welcome to the Rehabify project! This repository contains the source code for the Rehabify web application, which is designed to help users track their physical therapy exercises and progress. If you are interested in contributing to this project, please take a moment to review the guidelines below.
 
