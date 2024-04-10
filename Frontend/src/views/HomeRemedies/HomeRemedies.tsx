@@ -2,6 +2,7 @@ import React from 'react';
 import cardData from '../HomeRemedies/cardData';
 import { Card } from '@/components/ui';
 import CardData from './types'; // Import the CardData interface
+import { link } from 'fs';
 
 const HomeRemedies: React.FC = () => {
     // Assuming cardData is an array of CardData objects
@@ -13,36 +14,42 @@ const HomeRemedies: React.FC = () => {
             <div className="flex flex-wrap justify-around gap-6">
                 {cards.map((card) => (
                     <div key={card.id} className="max-w-xs mb-6">
-                        <Card
-                            clickable
-                            className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
-                            header={
-                                <div className="rounded-tl-lg rounded-tr-lg overflow-hidden">
-                                    <img src={card.image} alt="card header" />
-                                </div>
-                            }
-                            footer={
-                                <div className='flex justify-between'>
-                                <span>
-                                    <h6 className="text-sm">{card.author}</h6>
-                                    <span className="text-xs">{card.date}</span>
-                                </span>
-                                <span>
-                                <h6 className="text-sm">Read More⏭️</h6>
-                                </span>
-                                </div>
-                            }
-                            headerClass="p-0"
-                            footerBorder={false}
-                            headerBorder={true}
+                        <a
+                            href="https://www.healthline.com/health/home-remedies"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
-                            <span className="text-emerald-600 font-semibold">
-                                {card.category}
-                            </span>
-                            <h4 className="font-bold my-3">{card.title}</h4>
-                            {/* Add CSS class for truncated text */}
-                            <p className="text-sm h-20 overflow-hidden">{card.content}</p>
-                        </Card>
+                            <Card
+                                clickable
+                                className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                header={
+                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden">
+                                        <img src={card.image} alt="card header" />
+                                    </div>
+                                }
+                                footer={
+                                    <div className='flex justify-between'>
+                                        <span>
+                                            <h6 className="text-sm">{card.author}</h6>
+                                            <span className="text-xs">{card.date}</span>
+                                        </span>
+                                        <span>
+                                            <h6 className="text-sm">Read More⏭️</h6>
+                                        </span>
+                                    </div>
+                                }
+                                headerClass="p-0"
+                                footerBorder={false}
+                                headerBorder={true}
+                            >
+                                <span className="text-emerald-600 font-semibold">
+                                    {card.category}
+                                </span>
+                                <h4 className="font-bold my-3">{card.title}</h4>
+                                {/* Add CSS class for truncated text */}
+                                <p className="text-sm h-20 overflow-hidden">{card.content}</p>
+                            </Card>
+                        </a>
                     </div>
                 ))}
             </div>

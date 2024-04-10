@@ -3,7 +3,7 @@ import Community from './Community'
 
 const index = () => {
   return (
-   Community()
+    Community()
   )
 }
 

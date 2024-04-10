@@ -21,7 +21,7 @@ export const protectedRoutes = [
     {
         key: 'treatment-centers',
         path: '/treatment-centers',
-        component: lazy(() => import('@/views/TreatmentCenters')),
+        component: lazy(() => import('@/views/TreatmentCenters/TreatmentCenters')),
         authority: [],
     },
     {
