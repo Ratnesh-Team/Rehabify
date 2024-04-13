@@ -56,5 +56,15 @@ const navigationConfig: NavigationTree[] = [
         authority: [],
         subMenu: [],
     },
+    {
+        key: 'register',
+        path: '/Register',
+        title: ' NMK Registeration ',
+        translateKey: 'Register',
+        icon: 'users',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
 ]
 export default navigationConfig

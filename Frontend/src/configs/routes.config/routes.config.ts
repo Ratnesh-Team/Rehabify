@@ -37,6 +37,12 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'register',
+        path: '/Register',
+        component: lazy(() => import('@/views/Register/index')),
+        authority: [],
+    },
+    {
         key: 'NMK',
         path: '/NMK',
         component: lazy(() => import('@/views/NMK/index')),
