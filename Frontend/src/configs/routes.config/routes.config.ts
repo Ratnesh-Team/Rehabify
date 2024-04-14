@@ -7,15 +7,15 @@ export const publicRoutes: Routes = [...authRoute]
 export const protectedRoutes = [
     {
         key: 'home',
-        path: '/home',
-        component: lazy(() => import('@/views/Home/Home')),
+        path: '/',
+        component: lazy(() => import('@/views/Home')),
         authority: [],
     },
 
     {
         key: 'database',
         path: '/database',
-        component: lazy(() => import('@/views/Database/Database1')),
+        component: lazy(() => import('@/views/Database')),
         authority: [],
     },
     {
@@ -25,27 +25,33 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'ngo',
+        path: '/ngo',
+        component: lazy(() => import('@/views/Ngo')),
+        authority: [],
+    },
+    {
         key: 'home-remedies',
         path: '/home-remedies',
-        component: lazy(() => import('@/views/HomeRemedies/HomeRemedies')),
+        component: lazy(() => import('@/views/HomeRemedies')),
         authority: [],
     },
     {
         key: 'community',
         path: '/community',
-        component: lazy(() => import('@/views/Community/index')),
+        component: lazy(() => import('@/views/Community')),
         authority: [],
     },
     {
         key: 'register',
         path: '/Register',
-        component: lazy(() => import('@/views/Register/index')),
+        component: lazy(() => import('@/views/Register')),
         authority: [],
     },
     {
         key: 'NMK',
         path: '/NMK',
-        component: lazy(() => import('@/views/NMK/index')),
+        component: lazy(() => import('@/views/NMK')),
         authority: [],
     },
 ]

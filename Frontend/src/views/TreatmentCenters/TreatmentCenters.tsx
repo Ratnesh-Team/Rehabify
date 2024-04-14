@@ -17,7 +17,7 @@ const Controlled: React.FC<Props> = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
+            <h1 className="text-3xl font-bold mb-6">Treatment Centres</h1>
 
             <TreatmentCentres page={page} onPageChange={onPageChange} />
         </div>

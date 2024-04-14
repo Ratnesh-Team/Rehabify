@@ -37,6 +37,16 @@ const navigationConfig: NavigationTree[] = [
         subMenu: [],
     },
     {
+        key: 'ngo',
+        path: '/ngo',
+        title: 'NGO',
+        translateKey: 'NGO',
+        icon: 'ngo',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
+    {
         key: 'home-remedies',
         path: '/home-remedies',
         title: 'Home Remedies',
@@ -59,7 +69,7 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'register',
         path: '/Register',
-        title: ' NMK Registeration ',
+        title: ' NMK Registration ',
         translateKey: 'Register',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,
