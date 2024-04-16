@@ -49,9 +49,9 @@ const YearTable = (props: YearTableProps) => {
                     !active && !disabled && 'hover:bg-gray-100',
                     disabled && 'year-picker-cell-disabled'
                 )}
+                type="button"
                 onClick={() => onChange(year)}
                 onMouseDown={(event) => preventFocus && event.preventDefault()}
-                type="button"
             >
                 {formatYear(year, yearLabelFormat)}
             </button>

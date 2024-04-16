@@ -83,6 +83,7 @@ const Tooltip = (props: TooltipProps) => {
                 {tooltipOpen && (
                      <AnimatePresence>
                         <motion.div
+                            ref={refs.setFloating}
                             className={classNames(
                                 defaultTooltipClass,
                                 className
@@ -106,7 +107,6 @@ const Tooltip = (props: TooltipProps) => {
                                 duration: 0.15,
                                 type: 'tween',
                             }}
-                            ref={refs.setFloating}
                             style={floatingStyles}
                             {...getFloatingProps()}
                         >

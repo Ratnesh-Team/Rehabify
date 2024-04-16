@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Pagination from '@/components/ui/Pagination';
 import CardData from './types'; // Import the CardData interface
-import { Card } from '@/components/ui';
 
 interface Props {
     cards: CardData[];

@@ -52,6 +52,7 @@ const DefaultItem = (props: DefaultItemProps) => {
                 <Link
                     to={nav.path}
                     className="flex items-center h-full w-full"
+                    target={nav.isExternalLink ? '_blank' :  ''}
                     onClick={() =>
                         onLinkClick?.({
                             key: nav.key,
@@ -59,7 +60,6 @@ const DefaultItem = (props: DefaultItemProps) => {
                             path: nav.path,
                         })
                     }
-                    target={nav.isExternalLink ? '_blank' :  ''}
                 >
                     <VerticalMenuIcon icon={nav.icon} />
                     {!sideCollapsed && (

@@ -10,11 +10,11 @@ import Td from '@/components/ui/Table/Td';
 import Th from '@/components/ui/Table/Th';
 import Tr from '@/components/ui/Table/Tr';
 import Button from '@/components/ui/Button';
-import { HiOutlineInboxIn } from 'react-icons/hi';
+import { HiOutlineInboxIn , HiMail } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
 import CardData from './types';
 import { DocumentTextIcon, PhoneIcon } from '@heroicons/react/20/solid';
-import { HiMail } from "react-icons/hi";
+
 import { IoMdPerson } from "react-icons/io";
 
 type Person = {
@@ -224,9 +224,9 @@ const SimpleTable = () => {
                         <Button
                             className="mr-2 px-3 py-4"
                             variant="solid"
-                            onClick={handleDownloadJSON}
                             loading={loading}
                             icon={<HiOutlineInboxIn />}
+                            onClick={handleDownloadJSON}
                         ></Button>
                     </div>
                 </div>

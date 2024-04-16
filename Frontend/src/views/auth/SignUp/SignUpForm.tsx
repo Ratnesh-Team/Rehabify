@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
@@ -5,10 +6,13 @@ import Alert from '@/components/ui/Alert'
 import PasswordInput from '@/components/shared/PasswordInput'
 import ActionLink from '@/components/shared/ActionLink'
 import useTimeOutMessage from '@/utils/hooks/useTimeOutMessage'
-import { Field, Form, Formik } from 'formik'
+import { Field, FieldProps, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import useAuth from '@/utils/hooks/useAuth'
 import type { CommonProps } from '@/@types/common'
+import RoleDrop from './roledrop'
+import { Select } from '@/components/ui'
+
 
 interface SignUpFormProps extends CommonProps {
     disableSubmit?: boolean
@@ -19,7 +23,14 @@ type SignUpFormSchema = {
     userName: string
     password: string
     email: string
+    confirmPassword: string
+    role: string // Add a role field to the schema
 }
+
+const roleOptions = [
+    { value: 'admin', label: 'Admin' },
+    { value: 'user', label: 'User' },
+]
 
 const validationSchema = Yup.object().shape({
     userName: Yup.string().required('Please enter your user name'),
@@ -31,11 +42,12 @@ const validationSchema = Yup.object().shape({
         [Yup.ref('password')],
         'Your passwords do not match'
     ),
+    role: Yup.string().required('Please select a role'), // Add validation for role
 })
 
 const SignUpForm = (props: SignUpFormProps) => {
     const { disableSubmit = false, className, signInUrl = '/sign-in' } = props
-
+    const [role, setrole] = useState('')
     const { signUp } = useAuth()
 
     const [message, setMessage] = useTimeOutMessage()
@@ -44,9 +56,9 @@ const SignUpForm = (props: SignUpFormProps) => {
         values: SignUpFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        const { userName, password, email } = values
+        const { userName, password, email, role } = values
         setSubmitting(true)
-        const result = await signUp({ userName, password, email })
+        const result = await signUp({ userName, password, email, role })
 
         if (result?.status === 'failed') {
             setMessage(result.message)
@@ -68,6 +80,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                     password: '123Qwe1',
                     confirmPassword: '123Qwe1',
                     email: 'test@testmail.com',
+                    role: '', // Initialize role field
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { setSubmitting }) => {
@@ -78,7 +91,7 @@ const SignUpForm = (props: SignUpFormProps) => {
                     }
                 }}
             >
-                {({ touched, errors, isSubmitting }) => (
+                {({ touched, errors, isSubmitting, values }) => (
                     <Form>
                         <FormContainer>
                             <FormItem
@@ -133,6 +146,14 @@ const SignUpForm = (props: SignUpFormProps) => {
                                     placeholder="Confirm Password"
                                     component={PasswordInput}
                                 />
+                            </FormItem>
+                            <FormItem label='Role'>
+                                <Select options={roleOptions} onChange={(option) => {
+                                    if (option) {
+                                        setrole(option.value);
+                                        values.role = option.value;
+                                    }
+                                }} />
                             </FormItem>
                             <Button
                                 block

@@ -115,11 +115,11 @@ const DateTable = (props: DateTableProps) => {
                                 className={classNames(pickerHeaderLabelClass)}
                                 disabled={!enableHeaderLabel}
                                 tabIndex={index > 0 ? -1 : 0}
+                                type="button"
                                 onClick={() => onNextLevel('month')}
                                 onMouseDown={(event) =>
                                     preventFocus && event.preventDefault()
                                 }
-                                type="button"
                             >
                                 {formatMonthLabel({
                                     month: monthDate,
@@ -131,11 +131,11 @@ const DateTable = (props: DateTableProps) => {
                                 className={classNames(pickerHeaderLabelClass)}
                                 disabled={!enableHeaderLabel}
                                 tabIndex={index > 0 ? -1 : 0}
+                                type="button"
                                 onClick={() => onNextLevel('year')}
                                 onMouseDown={(event) =>
                                     preventFocus && event.preventDefault()
                                 }
-                                type="button"
                             >
                                 {formatMonthLabel({
                                     month: monthDate,

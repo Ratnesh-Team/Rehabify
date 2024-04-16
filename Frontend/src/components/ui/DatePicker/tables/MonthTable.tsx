@@ -62,9 +62,9 @@ const MonthTable = (props: MonthTableProps) => {
                     disabled && 'month-picker-cell-disabled'
                 )}
                 disabled={disabled}
+                type="button"
                 onClick={() => onChange(index)}
                 onMouseDown={(event) => preventFocus && event.preventDefault()}
-                type="button"
             >
                 {month}
             </button>

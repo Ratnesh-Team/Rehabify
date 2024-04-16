@@ -3,35 +3,35 @@ import Dropdown from '@/components/ui/Dropdown'
 import withHeaderItem from '@/utils/hoc/withHeaderItem'
 import useAuth from '@/utils/hooks/useAuth'
 import { Link } from 'react-router-dom'
-// import classNames from 'classnames'
+import classNames from 'classnames'
 import { HiOutlineLogout, HiOutlineUser } from 'react-icons/hi'
 import type { CommonProps } from '@/@types/common'
 
-// type DropdownList = {
-//     label: string
-//     path: string
-//     icon: JSX.Element
-// }
+type DropdownList = {
+    label: string
+    path: string
+    icon: JSX.Element
+}
 
-// const dropdownItemList: DropdownList[] = []
+const dropdownItemList: DropdownList[] = []
 
 const _UserDropdown = ({ className }: CommonProps) => {
 
-    // const { signOut } = useAuth()
+    const { signOut } = useAuth()
 
-    // const UserAvatar = (
-    //     <div className={classNames(className, 'flex items-center gap-2')}>
-    //         <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
-    //         <div className="hidden md:block">
-    //             <div className="text-xs capitalize">admin</div>
-    //             <div className="font-bold">User01</div>
-    //         </div>
-    //     </div>
-    // )
+    const UserAvatar = (
+        <div className={classNames(className, 'flex items-center gap-2')}>
+            <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
+            <div className="hidden md:block">
+                <div className="text-xs capitalize">admin</div>
+                <div className="font-bold">User01</div>
+            </div>
+        </div>
+    )
 
     return (
         <div>
-            {/* <Dropdown
+            <Dropdown
                 menuStyle={{ minWidth: 240 }}
                 renderTitle={UserAvatar}
                 placement="bottom-end"
@@ -54,8 +54,8 @@ const _UserDropdown = ({ className }: CommonProps) => {
                         eventKey={item.label}
                         className="mb-1 px-0"
                     >
-                        <Link 
-                            className="flex h-full w-full px-2" 
+                        <Link
+                            className="flex h-full w-full px-2"
                             to={item.path}
                         >
                             <span className="flex gap-2 items-center w-full">
@@ -68,7 +68,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                     </Dropdown.Item>
                 ))}
                 {/* <Dropdown.Item variant="divider" /> */}
-                {/* <Dropdown.Item
+                <Dropdown.Item
                     eventKey="Sign Out"
                     className="gap-2"
                     onClick={signOut}
@@ -78,7 +78,7 @@ const _UserDropdown = ({ className }: CommonProps) => {
                     </span>
                     <span>Sign Out</span>
                 </Dropdown.Item>
-            </Dropdown> */} 
+            </Dropdown>
         </div>
     )
 }

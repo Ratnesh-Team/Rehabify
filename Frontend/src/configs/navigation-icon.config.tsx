@@ -1,5 +1,5 @@
-import { HiOutlineHome } from 'react-icons/hi'
-import { HiOutlineDatabase } from 'react-icons/hi'
+import { HiOutlineHome , HiOutlineDatabase } from 'react-icons/hi'
+
 import { CiHospital1 } from 'react-icons/ci'
 import { GiMedicines } from 'react-icons/gi'
 import { MdGroups } from 'react-icons/md'
