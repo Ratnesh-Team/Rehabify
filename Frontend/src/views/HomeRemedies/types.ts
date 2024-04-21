@@ -1,11 +1,11 @@
 interface CardData {
-  id: number;
-  category: string;
-  title: string;
-  content: string;
-  image: string;
-  author: string;
-  date: string;
+  ID: number;
+  Category: string;
+  Title: string;
+  Content: string;
+  Image: string;
+  Author: string;
+  Date: string;
 }
 
 export default CardData;

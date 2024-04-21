@@ -73,29 +73,16 @@ function useAuth() {
     const signUp = async (values: SignUpCredential) => {
         try {
             const resp = await apiSignUp(values)
-            if (resp.data) {
-                const { token } = resp.data
-                dispatch(signInSuccess(token))
-                if (resp.data.user) {
-                    dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            },
-                        ),
-                    )
-                }
-                const redirectUrl = query.get(REDIRECT_URL_KEY)
-                navigate(
-                    redirectUrl
-                        ? redirectUrl
-                        : appConfig.authenticatedEntryPath,
-                )
+            console.log(resp)
+            if (resp.status === 200) {
+                navigate(appConfig.unAuthenticatedEntryPath)
                 return {
                     status: 'success',
+                    message: '',
+                }
+            } else {
+                return {
+                    status: 'failed',
                     message: '',
                 }
             }

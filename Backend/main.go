@@ -1,16 +1,16 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net/http"
+	"time"
+
 	"github.com/Ratnesh-Team/Rehabify/config"
 	"github.com/Ratnesh-Team/Rehabify/routes"
 	"github.com/gin-gonic/gin"
 	cors "github.com/itsjamie/gin-cors"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	"log"
-	"net/http"
-	"time"
 )
 
 func main() {
@@ -24,8 +24,6 @@ func main() {
 		ValidateHeaders: false,
 		MaxAge:          1 * time.Minute,
 	}
-
-	fmt.Println("hello from the initializ backend")
 
 	router := gin.Default()
 	router.Use(cors.Middleware(corsConfig))

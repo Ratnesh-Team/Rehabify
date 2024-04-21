@@ -1,9 +1,9 @@
 import React from 'react'
-import HomeRemedies from './HomeRemedies'
+import Homeremedies from './HomeRemedies'
 
 const index = () => {
   return (
-    <HomeRemedies />
+    <Homeremedies />
   )
 }
 

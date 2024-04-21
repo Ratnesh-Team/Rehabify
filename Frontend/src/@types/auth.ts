@@ -1,3 +1,5 @@
+import { Interface } from 'readline'
+
 export type SignInCredential = {
     userName: string
     password: string
@@ -13,7 +15,11 @@ export type SignInResponse = {
     }
 }
 
-export type SignUpResponse = SignInResponse
+export type SignUpResponse = {
+    status: number
+    message: string
+    data: Interface
+}
 
 export type SignUpCredential = {
     userName: string
