@@ -38,8 +38,8 @@ const Homeremedies: React.FC = () => {
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                 header={
-                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden">
-                                        <img src={card.Image} alt="card header" />
+                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ height: '200px' }}>
+                                        <img src={card.Image} alt="card header" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                     </div>
                                 }
                                 footer={

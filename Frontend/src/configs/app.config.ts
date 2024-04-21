@@ -15,6 +15,7 @@ const appConfig: AppConfig = {
     locale: 'en',
     enableMock: true,
 }
+// export const Base_Url = 'http://localhost:3000'
 export const Base_Url = 'https://rehabify-backend.prod.psi.initz.run'
 
 export default appConfig
