@@ -7,7 +7,7 @@ export const publicRoutes: Routes = [...authRoute]
 export const protectedRoutes = [
     {
         key: 'home',
-        path: '/',
+        path: '/home',
         component: lazy(() => import('@/views/Home')),
         authority: [],
     },

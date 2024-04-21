@@ -1,0 +1,11 @@
+package models
+
+type Homeremedies struct {
+	ID       int    `bson:"id,omitempty"`
+	Category string `bson:"category,omitempty"`
+	Title    string `bson:"title,omitempty"`
+	Content  string `bson:"content,omitempty"`
+	Image    string `bson:"image,omitempty"`
+	Author   string `bson:"author,omitempty"`
+	Date     string `bson:"date,omitempty"`
+}

@@ -1,3 +1,4 @@
+import { Base_Url } from '@/configs/app.config'
 import ApiService from './ApiService'
 import type {
     SignInCredential,
@@ -17,11 +18,25 @@ export async function apiSignIn(data: SignInCredential) {
 }
 
 export async function apiSignUp(data: SignUpCredential) {
-    return ApiService.fetchData<SignUpResponse>({
-        url: '/sign-up',
-        method: 'post',
-        data,
-    })
+    try {
+        const response = await fetch(Base_Url + '/signUp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+
+        if (!response.ok) {
+            throw new Error('Failed to submit data')
+        }
+
+        const responseData = await response.json()
+        return responseData
+    } catch (error) {
+        console.error('Error posting data:', error)
+        return null
+    }
 }
 
 export async function apiSignOut() {
