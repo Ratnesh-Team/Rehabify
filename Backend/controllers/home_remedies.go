@@ -1,0 +1,63 @@
+package controllers
+
+import (
+	"net/http"
+
+	"github.com/Ratnesh-Team/Rehabify/models"
+	"github.com/Ratnesh-Team/Rehabify/repository"
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+)
+
+// GetHomeremediesDetails is a handler to get all Homeremedies details.
+// It fetches all Homeremedies details from the repository and returns them as a response.
+// @Summary Get all Homeremedies details
+// @Description Get all Homeremedies details
+// @Tags Homeremedies
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Homeremedies
+// @Router /Homeremedies [get]
+func GetHomeremediesDetails(HomeremediesRepo repository.MongoRepository) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var HomeremediesList []models.Homeremedies
+
+		queryParams := c.Request.URL.Query()
+		filter := bson.M{}
+		if id := queryParams.Get("_id"); id != "" {
+			filter["_id"] = id
+		} else {
+			filter = nil
+		}
+		// Fetch all Homeremedies details from the repository
+		cursor, err := HomeremediesRepo.Find(filter)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  http.StatusInternalServerError,
+				"message": "Failed to fetch Homeremedies details",
+				"data":    nil,
+			})
+			return
+		}
+		defer cursor.Close(c.Request.Context())
+
+		// Decode each document and append to the Homeremedies list
+		for cursor.Next(c.Request.Context()) {
+			var Homeremedies models.Homeremedies
+			if err := cursor.Decode(&Homeremedies); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{
+					"status":  http.StatusInternalServerError,
+					"message": "Failed to decode Homeremedies document",
+					"data":    nil,
+				})
+				return
+			}
+			HomeremediesList = append(HomeremediesList, Homeremedies)
+		}
+		c.JSON(http.StatusOK, gin.H{
+			"status":  http.StatusOK,
+			"message": "Homeremedies details fetched successfully",
+			"data":    HomeremediesList,
+		})
+	}
+}
