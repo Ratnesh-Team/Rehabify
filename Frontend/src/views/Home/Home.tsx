@@ -1,3 +1,4 @@
+import ModeSwitcher from '@/components/template/ThemeConfigurator/ModeSwitcher';
 import { Alert } from '@/components/ui';
 import React from 'react';
 
