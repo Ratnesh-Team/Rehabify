@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import {  Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,6 +12,7 @@ import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
+import { Alert } from '@/components/ui'
 
 
 const userRegisteration = () => {
@@ -21,6 +22,9 @@ const userRegisteration = () => {
     }
     return (
         <div style={{ marginTop: "2rem" }}>
+            <Alert showIcon className="mb-4" >
+                Please be patient, this page is under development
+            </Alert>
             <Formik
                 const initialValues={{
 

@@ -12,6 +12,7 @@ import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
+import { Alert } from '@/components/ui'
 
 
 const validationSchema = Yup.object().shape({
@@ -54,6 +55,9 @@ const index = () => {
 
 
         <>
+            <Alert showIcon className="mb-4" >
+                Please be patient, this page is under development
+            </Alert>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
                 <Button variant='solid' onClick={handle} >Register</Button>

@@ -1,9 +1,15 @@
+import { Alert } from '@/components/ui';
 import React from 'react';
 
 const Home: React.FC = () => {
     return (
-        //  custom home page which we were creating.
+        <div>
+            <Alert showIcon className="mb-4" >
+               Please be patient, this page is under development
+            </Alert>
         <h1> Home Page</h1>
+       
+        </div>
     );
 };
 

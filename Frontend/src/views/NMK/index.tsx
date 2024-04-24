@@ -12,6 +12,7 @@ import Tr from '@/components/ui/Table/Tr';
 import Button from '@/components/ui/Button';
 import { HiOutlineInboxIn , HiMail } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
+import { IoMdPin } from "react-icons/io";
 import CardData from './types';
 import { DocumentTextIcon, PhoneIcon } from '@heroicons/react/20/solid';
 
@@ -184,22 +185,30 @@ const SimpleTable = () => {
                             <img className="w-full h-full object-cover" src={card.ImageURL} alt="card header" />
                         </div>
                         <div className="w-full lg:w-1/2 px-6 py-4">
-                            <h1 className="text-cyan-600 font-bold text-lg lg:text-xl mb-2">{card.Name}</h1>
+                            <h1 className="text-cyan-600 font-bold mb-2">{card.Name}</h1>
                             <div className="flex items-center mb-2">
-                                <IoMdPerson className="h-5 w-5 mr-1 text-gray-700" />
-                                <h2 className="text-sm lg:text-lg text-gray-700">{card.Address}</h2>
+                                <IoMdPin className="h-5 w-5 mr-1 " />
+                                <h2 className="text-sm lg:text-lg">{card.Address}</h2>
+                                <a
+                                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(card.Address)}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="ml-2 text-blue-500 hover:underline"
+                                >
+                                    (View on Map)
+                                </a>
                             </div>
                             <div className="flex items-center mb-2">
-                                <DocumentTextIcon className="h-5 w-5 mr-1 text-gray-700" />
+                                <IoMdPerson className="h-5 w-5 mr-1 " />
                                 <h2 className="font-semibold text-sm lg:text-lg">{card.Owner_Name}</h2>
                             </div>
                             <div className="flex items-center mb-2">
-                                <HiMail className="h-5 w-5 mr-1 text-gray-700" />
-                                <h2 className="text-sm lg:text-lg text-gray-700">{card.Email}</h2>
+                                <HiMail className="h-5 w-5 mr-1 " />
+                                <a href={`mailto:${card.Email}`} className="text-sm lg:text-lg">{card.Email}</a>
                             </div>
                             <div className="flex items-center">
-                                <PhoneIcon className="h-5 w-5 mr-1 text-gray-700" />
-                                <h2 className="text-sm lg:text-lg text-gray-700">{card.Contact_Number}</h2>
+                                <PhoneIcon className="h-5 w-5 mr-1 " />
+                                <a href={`tel:${card.Contact_Number}`} className="text-sm lg:text-lg">{card.Contact_Number}</a>
                             </div>
                         </div>
                     </div>
