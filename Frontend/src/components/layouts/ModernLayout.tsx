@@ -5,6 +5,7 @@ import SideNavToggle from '@/components/template/SideNavToggle'
 import MobileNav from '@/components/template/MobileNav'
 import SideNav from '@/components/template/SideNav'
 import View from '@/views'
+import ModeSwitcher from '../template/ThemeConfigurator/ModeSwitcher'
 
 const HeaderActionsStart = () => {
     return (
@@ -18,8 +19,10 @@ const HeaderActionsStart = () => {
 const HeaderActionsEnd = () => {
     return (
         <>
+            <ModeSwitcher />
             <SidePanel />
             <UserDropdown hoverable={false} />
+            
         </>
     )
 }
