@@ -1,6 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
-
+import { useNavigate } from 'react-router-dom'
+import userRegisteration from './userRegisteration'
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -11,6 +12,7 @@ import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
+import { Alert } from '@/components/ui'
 
 
 const validationSchema = Yup.object().shape({
@@ -36,17 +38,29 @@ const validationSchema = Yup.object().shape({
 
 
 const index = () => {
+
+
+    const navigate = useNavigate();
     const submit = () => {
         console.log('submitted')
     }
+
+    const handle = () => {
+        navigate('/Register/userRegistration')
+    }
+
+
 
     return (
 
 
         <>
+            <Alert showIcon className="mb-4" >
+                Please be patient, this page is under development
+            </Alert>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
-                <Button variant='solid'>Register</Button>
+                <Button variant='solid' onClick={handle} >Register</Button>
             </Box>
             <div style={{ marginTop: "2rem" }}>
                 <Formik
@@ -203,7 +217,11 @@ const index = () => {
                 </Formik>
             </div>
 
+
+
+
         </>
+
 
     )
 }

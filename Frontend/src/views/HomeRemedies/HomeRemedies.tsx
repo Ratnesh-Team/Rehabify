@@ -17,12 +17,12 @@ const Homeremedies: React.FC = () => {
     }, []);
     
     const toastNotification = (
-        <Notification closable type="info" duration={4000}>
+        <Notification closable type="warning" duration={1000}>
             Page under Development
         </Notification>
     )
     const onRemedyClick = ()=>{
-        toast.push(toastNotification,{placement:'top-center'})
+        toast.push(toastNotification)
     }
 
     return (

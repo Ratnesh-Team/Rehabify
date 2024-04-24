@@ -1,35 +1,51 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import { Card, Pagination } from '@/components/ui';
+import { Link } from 'react-router-dom';
+import { Card, Pagination, Input } from '@/components/ui'; // Import Input from your UI components
 import { Base_Url } from '@/configs/app.config';
-import CardData from './types'; // Import the CardData interface
+import CardData from './types';
 
-interface Props {
-    // Removed cards and pageSize props
-}
+interface Props { }
 
 const Controlled: React.FC<Props> = () => {
     const [page, setPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const onPageChange = (newPage: number) => {
         setPage(newPage);
     };
 
     return (
-        <div className="flex flex-col items-center">
+        <div>
             <h1 className="text-3xl font-bold mb-6">Treatment Centres</h1>
-
-            <TreatmentCentres page={page} onPageChange={onPageChange} />
+            {/* Search Input */}
+            <div className="flex justify-between items-center mb-4">
+                <div className="flex-grow"></div> {/* Empty div to push the search input to the right */}
+                <div > {/* Adjust the width of the search input container */}
+                    <Input
+                        type="text"
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="px-3 py-4" 
+                    />
+                </div>
+            </div>
+            <div className="flex flex-col items-center">
+                {/* Pass searchTerm to TreatmentCentres component */}
+                <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} />
+            </div>
         </div>
+
     );
 };
 
-const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void }> = ({
+const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void; searchTerm: string }> = ({
     page,
     onPageChange,
+    searchTerm,
 }) => {
     const [cards, setCards] = useState<CardData[]>([]);
-    const pageSize = 6; // Number of cards per page
+    const pageSize = 6;
 
     useEffect(() => {
         const fetchCards = async () => {
@@ -48,21 +64,30 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
         fetchCards();
     }, []);
 
-    // Calculate total pages based on cards length and pageSize
-    const totalPages = Math.ceil(cards.length / pageSize);
+    // Filter cards based on multiple search criteria
+    const filteredCards = cards.filter((card) => {
+        const search = searchTerm.toLowerCase();
+        const contactNumber = card.Contact_Number.toString(); // Convert to string
+        return (
+            card.Name.toLowerCase().includes(search) ||
+            card.Address.toLowerCase().includes(search) ||
+            card.Owner_Name.toLowerCase().includes(search) ||
+            card.Email.toLowerCase().includes(search) ||
+            contactNumber.includes(search) // Use includes on the stringified contact number
+        );
+    });
 
-    // Get the start and end index of cards to display for the current page
+    const totalPages = Math.ceil(filteredCards.length / pageSize);
+
     const startIndex = (page - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-    const displayedCards = cards.slice(startIndex, endIndex);
+    const displayedCards = filteredCards.slice(startIndex, endIndex);
 
     return (
         <>
-            {/* Render cards based on current page */}
             <div className="flex flex-wrap justify-around gap-6">
                 {displayedCards.map((card, index) => (
                     <div key={index} className="max-w-xs mb-6">
-                        {/* Wrap Card content in Link */}
                         <Link to={`/NMK?NMK_Code=${card.NMK_Code}`} className="max-w-xs mb-6">
                             <Card
                                 clickable
@@ -79,19 +104,14 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 <span>
                                     <h3 className="text-emerald-600 font-bold ">{card.Name}</h3>
                                 </span>
-                                <p className="text-sm overflow-hidden">{card.Address}</p>
+                                <p className="text-sm overflow-hidden whitespace-nowrap ">{card.Address}</p>
                                 <p className="font-semibold">{card.Owner_Name}</p>
-                                <span className='flex justify-between'>
-                                    <p className="text-sm overflow-hidden">{card.Email}</p>
-                                    <p className="text-sm overflow-hidden">{card.Contact_Number}</p>
-                                </span>
                             </Card>
                         </Link>
                     </div>
                 ))}
             </div>
 
-            {/* Pagination */}
             <Pagination
                 total={totalPages}
                 currentPage={page}
