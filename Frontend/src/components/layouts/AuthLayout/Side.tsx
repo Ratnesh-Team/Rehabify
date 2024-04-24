@@ -14,28 +14,50 @@ const Side = ({ children, content, ...rest }: SideProps) => {
             <div
                 className="bg-no-repeat bg-cover py-6 px-16 flex-col justify-between hidden lg:flex"
                 style={{
-                    backgroundImage: `url('/img/others/auth-side-bg.jpg')`,
+                    backgroundImage: `url('/img/others/Frame36.png')`,
                 }}
             >
                 <Logo mode="dark" />
                 <div>
-                    <div className="mb-6 flex items-center gap-4">
-                        <Avatar
-                            className="border-2 border-white"
-                            shape="circle"
-                            src="/img/avatars/thumb-10.jpg"
-                        />
-                        <div className="text-white">
-                            <div className="font-semibold text-base">
-                                Brittany Hale
+                    <div className="mb-6 flex item-col">
+                        <div>
+                            <div className="mb-6 flex items-center gap-4">
+                                <Avatar
+                                    className="border-2 "
+                                    // shape="circle"
+                                    size={70}
+                                    src="https://avatars.githubusercontent.com/u/85143283?v=4"
+                                />
+                                <Avatar
+                                    className="border-2 "
+                                    // shape="circle"
+                                    size={60}
+                                    src="https://avatars.githubusercontent.com/u/76718079?v=4"
+                                />
+                                <Avatar
+                                    className="border-2 "
+                                    size={50}
+                                    src="https://avatars.githubusercontent.com/u/83102075?v=4"
+                                />
+                                <Avatar
+                                    className="border-2 "
+                                    size={40}
+                                    shape='circle'
+                                    src="https://avatars.githubusercontent.com/u/89264092?s=64&v=4"
+                                />
                             </div>
-                            <span className="opacity-80">CTO, Onward</span>
+                            <div className=" flex items-center gap-4">
+                                
+                                    <div className="font-semibold text-base">
+                                        Rehabify Team
+                                        <div className="opacity-80">Devlopers</div>
+                                
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <p className="text-lg text-white opacity-80">
-                        Elstar comes with a complete set of UI components
-                        crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
+                    <p className="text-lg text-black font-semibold opacity-80">
+                        The Path to a  Brighter Tomorrow
                     </p>
                 </div>
                 <span className="text-white">
@@ -48,8 +70,8 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                     <div className="mb-8">{content}</div>
                     {children
                         ? cloneElement(children as React.ReactElement, {
-                              ...rest,
-                          })
+                            ...rest,
+                        })
                         : null}
                 </div>
             </div>
