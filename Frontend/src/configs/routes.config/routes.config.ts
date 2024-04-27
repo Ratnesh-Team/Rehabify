@@ -1,6 +1,7 @@
 import { lazy } from 'react'
 import authRoute from './authRoute'
 import type { Routes } from '@/@types/routes'
+import { ADMIN } from '@/constants/roles.constant'
 
 export const publicRoutes: Routes = [...authRoute]
 
@@ -9,55 +10,57 @@ export const protectedRoutes = [
         key: 'home',
         path: '/home',
         component: lazy(() => import('@/views/Home')),
-        authority: [],
+        authority: ['USER'],
     },
 
     {
         key: 'database',
         path: '/database',
         component: lazy(() => import('@/views/Database')),
-        authority: [],
+        authority: ['USER'],
     },
     {
         key: 'treatment-centers',
         path: '/treatment-centers',
-        component: lazy(() => import('@/views/TreatmentCenters/TreatmentCenters')),
-        authority: [],
+        component: lazy(
+            () => import('@/views/TreatmentCenters/TreatmentCenters'),
+        ),
+        authority: ['USER'],
     },
     {
         key: 'ngo',
         path: '/ngo',
         component: lazy(() => import('@/views/Ngo')),
-        authority: [],
+        authority: ['USER'],
     },
     {
         key: 'home-remedies',
         path: '/home-remedies',
         component: lazy(() => import('@/views/HomeRemedies')),
-        authority: [],
+        authority: ['USER'],
     },
     {
         key: 'community',
         path: '/community',
         component: lazy(() => import('@/views/Community')),
-        authority: [],
+        authority: ['USER'],
     },
     {
         key: 'register',
         path: '/Register',
         component: lazy(() => import('@/views/Register')),
-        authority: [],
+        authority: ['ADMIN'],
     },
     {
         key: 'NMK',
         path: '/NMK',
         component: lazy(() => import('@/views/NMK')),
-        authority: [],
+        authority: ['USER'],
     },
     {
         key: 'userRegistration',
         path: '/Register/userRegistration',
         component: lazy(() => import('@/views/Register/userRegisteration')),
-        authority: [],
+        authority: ['ADMIN'],
     },
 ]

@@ -19,4 +19,5 @@ func RehabifyRoutes(router *gin.Engine) {
 	router.GET("/NMK", controllers.GetNMK(NMK))
 	router.GET("/home-remedies", controllers.GetHomeremediesDetails(home_remedies))
 	router.POST("/signUp", controllers.AddUser(AuthDB))
+	router.POST("/signIn", controllers.VerifyUser(AuthDB))
 }

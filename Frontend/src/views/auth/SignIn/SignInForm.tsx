@@ -18,13 +18,14 @@ interface SignInFormProps extends CommonProps {
 }
 
 type SignInFormSchema = {
-    userName: string
+    Email: string
     password: string
     rememberMe: boolean
 }
 
 const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('Please enter your user name'),
+    //validation for the mail regex
+    Email: Yup.string().required('Please enter your user name'),
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
@@ -45,10 +46,10 @@ const SignInForm = (props: SignInFormProps) => {
         values: SignInFormSchema,
         setSubmitting: (isSubmitting: boolean) => void
     ) => {
-        const { userName, password } = values
+        const { Email, password } = values
         setSubmitting(true)
 
-        const result = await signIn({ userName, password })
+        const result = await signIn({ Email, password })
 
         if (result?.status === 'failed') {
             setMessage(result.message)
@@ -66,8 +67,8 @@ const SignInForm = (props: SignInFormProps) => {
             )}
             <Formik
                 initialValues={{
-                    userName: 'admin',
-                    password: '123Qwe',
+                    Email: 'test@testmail.com',
+                    password: '123Qwe1',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
@@ -83,18 +84,18 @@ const SignInForm = (props: SignInFormProps) => {
                     <Form>
                         <FormContainer>
                             <FormItem
-                                label="User Name"
+                                label="Email"
                                 invalid={
-                                    (errors.userName &&
-                                        touched.userName) as boolean
+                                    (errors.Email &&
+                                        touched.Email) as boolean
                                 }
-                                errorMessage={errors.userName}
+                                errorMessage={errors.Email}
                             >
                                 <Field
-                                    type="text"
+                                    type="email"
                                     autoComplete="off"
-                                    name="userName"
-                                    placeholder="User Name"
+                                    name="Email"
+                                    placeholder="Email"
                                     component={Input}
                                 />
                             </FormItem>

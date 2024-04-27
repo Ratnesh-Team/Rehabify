@@ -10,7 +10,7 @@ import (
 
 var JWTSecretKey = []byte("your_secret_key_here")
 
-func GenerateJWTToken(user *models.Users) (string, error) {
+func GenerateJWTToken(user *models.SignUp) (string, error) {
 
 	claims := jwt.MapClaims{
 		"username": user.Username,

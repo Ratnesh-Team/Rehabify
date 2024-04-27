@@ -13,7 +13,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'nav.home',
         icon: 'home',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -23,7 +23,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'Database',
         icon: 'database',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -33,7 +33,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'Treatment Centers',
         icon: 'hospital',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -43,7 +43,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'NGO',
         icon: 'ngo',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -53,7 +53,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'Home Remedies',
         icon: 'medicine',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -63,7 +63,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'Community',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'USER', 'ADMIN' ],
         subMenu: [],
     },
     {
@@ -73,7 +73,7 @@ const navigationConfig: NavigationTree[] = [
         translateKey: 'Register',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
+        authority: [ 'ADMIN' ],
         subMenu: [],
     },
 ]

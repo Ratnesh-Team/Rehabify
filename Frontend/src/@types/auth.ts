@@ -1,11 +1,12 @@
 import { Interface } from 'readline'
 
 export type SignInCredential = {
-    userName: string
+    Email: string
     password: string
 }
 
 export type SignInResponse = {
+    
     token: string
     user: {
         userName: string

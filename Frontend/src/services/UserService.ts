@@ -6,7 +6,6 @@ export async function getUsers() {
         url: '/users',
         method: 'get',
     })
-
 }
 
 
