@@ -21,15 +21,13 @@ import (
 func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var nmkList []models.NMK
-             
-			queryParams := c.Request.URL.Query()
-			filter := bson.M{}
-			if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
+		queryParams := c.Request.URL.Query()
+		filter := bson.M{}
+		if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
 			filter["NMK_Code"] = NMK_Code
-		}else{
-			filter=nil
+		} else {
+			filter = nil
 		}
-	
 
 		// Fetch all NMK codes from the repository
 		cursor, err := nmkRepo.Find(filter)
