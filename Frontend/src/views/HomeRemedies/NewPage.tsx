@@ -24,9 +24,12 @@ const NewPage: React.FC<{ id: string }> = ({ id }) => {
 
     fetchData();
   }, [id]);
+  const decodeHTML = (html: string) => {
+    return html.replace(/\\u(\d{4})/g, (match, grp) => String.fromCharCode(parseInt(grp, 16)));
+  };
 
   return (
-    <div className="container mx-auto">
+    <div style={{ fontFamily: 'Arial, sans-serif', maxWidth: '800px', margin: '0 auto' , lineHeight:'2'}}>
       {isLoading ? (
         <div className="text-center">Loading...</div>
       ) : (
@@ -35,11 +38,17 @@ const NewPage: React.FC<{ id: string }> = ({ id }) => {
           <div className="flex justify-center mb-4">
             <img src={card?.Image} alt="Card Header" style={{ width: '70%', height: '70%' }} />
           </div>
-          <div className="flex justify-between mb-4">
+          <div>
             <span className="text-sm">{card?.Author}</span>
+          </div>
+          <div>
             <span className="text-sm">{card?.Date}</span>
           </div>
-          <p className="text-lg">{card?.Content}</p>
+          
+          { card?.body !='abcd' ?
+            <div dangerouslySetInnerHTML={{ __html: decodeHTML(card?.body || '') }} /> :
+            <p className="text-lg">{card?.Content}</p>
+          }
         </div>
       )}
     </div>

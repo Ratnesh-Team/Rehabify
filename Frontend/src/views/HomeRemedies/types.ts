@@ -3,6 +3,7 @@ interface CardData {
   Category: string;
   Title: string;
   Content: string;
+  body: string;
   Image: string;
   Author: string;
   Date: string;
