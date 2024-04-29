@@ -7,13 +7,13 @@ export type SignInCredential = {
 
 export type SignInResponse = {
     
-    token: string
+token: string
     user: {
         userName: string
         authority: string[]
         avatar: string
         email: string
-    }
+    }    
 }
 
 export type SignUpResponse = {

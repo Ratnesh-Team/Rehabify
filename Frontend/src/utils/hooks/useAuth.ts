@@ -123,10 +123,8 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
         handleSignOut()
     }
-
     return {
         authenticated: token && signedIn,
         signIn,
