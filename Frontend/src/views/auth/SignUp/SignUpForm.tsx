@@ -93,33 +93,36 @@ const SignUpForm = (props: SignUpFormProps) => {
             >
                 {({ touched, errors, isSubmitting, values }) => (
                     <Form>
-                        <FormContainer>
-                            <FormItem
-                                label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
-                            >
-                                <Field
-                                    type="text"
-                                    autoComplete="off"
-                                    name="userName"
-                                    placeholder="User Name"
-                                    component={Input}
-                                />
-                            </FormItem>
-                            <FormItem
-                                label="Email"
-                                invalid={errors.email && touched.email}
-                                errorMessage={errors.email}
-                            >
-                                <Field
-                                    type="email"
-                                    autoComplete="off"
-                                    name="email"
-                                    placeholder="Email"
-                                    component={Input}
-                                />
-                            </FormItem>
+                        <FormContainer >
+                            <div className="flex  pr-2">
+                                <FormItem
+                                    label="User Name"
+                                    invalid={errors.userName && touched.userName}
+                                    errorMessage={errors.userName}
+                                    className="mr-2 w-1/2"
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="userName"
+                                        placeholder="User Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="Email"
+                                    invalid={errors.email && touched.email}
+                                    errorMessage={errors.email}
+                                >
+                                    <Field
+                                        type="email"
+                                        autoComplete="off"
+                                        name="email"
+                                        placeholder="Email"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                            </div>
                             <FormItem
                                 label="Password"
                                 invalid={errors.password && touched.password}
