@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui';
 import { cardData, fetchData } from '../HomeRemedies/cardData';
 import CardData from './types'; 
-import toast from '@/components/ui/toast'
-import Notification from '@/components/ui/Notification'
+import { Link } from 'react-router-dom';
+
 
 const Homeremedies: React.FC = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -15,15 +15,6 @@ const Homeremedies: React.FC = () => {
             setIsLoading(false);
         });
     }, []);
-    
-    const toastNotification = (
-        <Notification closable type="warning" duration={1000}>
-            Page under Development
-        </Notification>
-    )
-    const onRemedyClick = ()=>{
-        toast.push(toastNotification)
-    }
 
     return (
         <div className="flex flex-col items-center">
@@ -31,39 +22,38 @@ const Homeremedies: React.FC = () => {
             {isLoading ? (
                 <div className='centre'>Loading...</div>
             ) : (
-                <div className="flex flex-wrap justify-around gap-6" onClick={onRemedyClick}>
+                <div className="flex flex-wrap justify-around gap-6" >
                     {cards.map((card) => (
                         <div key={card.ID} className="max-w-xs mb-6">
-                            <Card
-                                clickable
-                                className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
-                                header={
-                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ height: '200px' }}>
-                                        <img src={card.Image} alt="card header" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                                    </div>
-                                }
-                                footer={
-                                    <div className='flex justify-between'>
-                                        <span>
-                                            <h6 className="text-sm">{card.Author}</h6>
-                                            <span className="text-xs">{card.Date}</span>
-                                        </span>
-                                        <span>
-                                            <h6 className="text-sm">Read More⏭️</h6>
-                                        </span>
-                                    </div>
-                                }
-                                headerClass="p-0"
-                                footerBorder={false}
-                                headerBorder={true}
-                            >
-                                <h4 className="font-bold my-3">{card.Title}</h4>
-                                <p className="text-sm h-20 overflow-hidden">
-                                    {card.Content.split(" ").length > 20 
-                                        ? `${card.Content.split(" ").slice(0, 20).join(" ")}...` 
-                                        : card.Content}
-                                </p>
-                            </Card>
+                            <Link to={`/home-remedies?id=${card.ID}`} className="max-w-xs mb-6">
+                                <Card
+                                    clickable
+                                    className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                    header={
+                                        <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ height: '200px' }}>
+                                            <img src={card.Image} alt="card header" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                        </div>
+                                    }
+                                    footer={
+                                        <div className='flex justify-between'>
+                                            <span>
+                                                <h6 className="text-sm">{card.Author}</h6>
+                                                <span className="text-xs">{card.Date}</span>
+                                            </span>
+                                        </div>
+                                    }
+                                    headerClass="p-0"
+                                    footerBorder={false}
+                                    headerBorder={true}
+                                >
+                                    <h4 className="font-bold my-3">{card.Title}</h4>
+                                    <p className="text-sm h-20 overflow-hidden">
+                                        {card.Content.split(" ").length > 20 
+                                            ? `${card.Content.split(" ").slice(0, 20).join(" ")}...` 
+                                            : card.Content}
+                                    </p>
+                                </Card>
+                            </Link>
                         </div>
                     ))}
                 </div>

@@ -13,6 +13,7 @@ import useQuery from './useQuery'
 import type { SignInCredential, SignUpCredential } from '@/@types/auth'
 import { Sign } from 'crypto'
 import SignUp from '@/views/auth/SignUp'
+import { responsiveFontSizes } from '@mui/material'
 
 type Status = 'success' | 'failed'
 
@@ -30,19 +31,20 @@ function useAuth() {
     ): Promise<
         | {
               status: Status
-              message: string
+              message: any
           }
         | undefined
     > => {
         try {
             const resp = await apiSignIn(values)
-            if (resp.data) {
-                const { token } = resp.data
+            if (resp.data.data) {
+                const { token } = resp.data.data
+                console.log(token)
                 dispatch(signInSuccess(token))
-                if (resp.data.user) {
+                if (resp.data.data.user) {
                     dispatch(
                         setUser(
-                            resp.data.user || {
+                            resp.data.data.user || {
                                 avatar: '',
                                 userName: 'Anonymous',
                                 authority: ['USER'],
@@ -73,24 +75,36 @@ function useAuth() {
     const signUp = async (values: SignUpCredential) => {
         try {
             const resp = await apiSignUp(values)
-            console.log(resp)
             if (resp.status === 200) {
                 navigate(appConfig.unAuthenticatedEntryPath)
                 return {
                     status: 'success',
-                    message: '',
+                    message: 'Sign up successfully! Please sign in.',
                 }
             } else {
                 return {
                     status: 'failed',
-                    message: '',
+                    message: "Can't sign up. Please try again.",
                 }
             }
-            // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-        } catch (errors: any) {
-            return {
-                status: 'failed',
-                message: errors?.response?.data?.message || errors.toString(),
+        } catch (error: any) {
+            console.error('Error:', error)
+            if (
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) {
+                console.error('Response message:', error.response.data.message)
+                return {
+                    status: 'failed',
+                    message: error.response.data.message,
+                }
+            } else {
+                console.error('Unknown error occurred.')
+                return {
+                    status: 'failed',
+                    message: "Can't sign up. Please try again.",
+                }
             }
         }
     }
@@ -109,10 +123,8 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
         handleSignOut()
     }
-
     return {
         authenticated: token && signedIn,
         signIn,

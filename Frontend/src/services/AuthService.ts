@@ -10,33 +10,19 @@ import type {
 } from '@/@types/auth'
 
 export async function apiSignIn(data: SignInCredential) {
-    return ApiService.fetchData<SignInResponse>({
-        url: '/sign-in',
+    return ApiService.fetchData<any>({
+        url: Base_Url + '/signIn',
         method: 'post',
         data,
     })
 }
 
 export async function apiSignUp(data: SignUpCredential) {
-    try {
-        const response = await fetch(Base_Url + '/signUp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-
-        if (!response.ok) {
-            throw new Error('Failed to submit data')
-        }
-
-        const responseData = await response.json()
-        return responseData
-    } catch (error) {
-        console.error('Error posting data:', error)
-        return null
-    }
+    return ApiService.fetchData<SignUpResponse>({
+        url: Base_Url + '/signUp',
+        method: 'post',
+        data,
+    })
 }
 
 export async function apiSignOut() {

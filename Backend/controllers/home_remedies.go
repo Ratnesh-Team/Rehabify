@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/Ratnesh-Team/Rehabify/models"
 	"github.com/Ratnesh-Team/Rehabify/repository"
@@ -24,8 +25,17 @@ func GetHomeremediesDetails(HomeremediesRepo repository.MongoRepository) gin.Han
 
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
-		if id := queryParams.Get("_id"); id != "" {
-			filter["_id"] = id
+		if id := queryParams.Get("id"); id != "" {
+			idInt, err := strconv.Atoi(id)
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"status":  http.StatusBadRequest,
+					"message": "Invalid value for 'id'",
+					"data":    nil,
+				})
+				return
+			}
+			filter["id"] = idInt
 		} else {
 			filter = nil
 		}

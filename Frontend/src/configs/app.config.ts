@@ -1,5 +1,3 @@
-
-
 export type AppConfig = {
     apiPrefix: string
     authenticatedEntryPath: string
@@ -15,9 +13,9 @@ const appConfig: AppConfig = {
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
     locale: 'en',
-    enableMock: true,
+    enableMock: false,
 }
-// export const Base_Url = 'http://localhost:3000'
-export const Base_Url = 'https://rehabifybackend.prod.psi.initz.run'
+export const Base_Url = 'http://localhost:3000'
+// export const Base_Url = 'https://rehabifybackend.prod.psi.initz.run'
 
 export default appConfig
