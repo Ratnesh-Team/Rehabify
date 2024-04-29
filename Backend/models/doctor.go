@@ -10,5 +10,5 @@ type DoctorData struct {
 	ContactNumber  int    `json:"ContactNumber" bson:"ContactNumber"`
 	Email          string `json:"Email" bson:"Email"`
 	ImageURL       string `json:"ImageURL" bson:"ImageURL"`
-	Doctor_Code    string `json:"Doctor_Code" bson:"Doctor_Code"`
+	Docter_Code    string `json:"Docter_Code" bson:"Docter_Code"`
 }

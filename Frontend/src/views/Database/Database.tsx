@@ -52,8 +52,8 @@ const PaginationTable = () => {
                 accessorKey: 'State',
             },
             {
-                header: 'NMK Address',
-                accessorKey: 'Nasha_Mukti_Centre_Address'
+                header: 'Is Employed',
+                accessorKey: 'Is_Employed',
             },
             {
                 header: 'Gender',
@@ -101,12 +101,13 @@ const PaginationTable = () => {
                 }
 
                 const mappedData: Person[] = responseData.data.map((item: any) => ({
-                    Name: item.Name,
+                    Name: "******",
                     Addiction_Type: item.Addiction_Type,
                     State: item.State,
-                    Nasha_Mukti_Centre_Address: item.Nasha_Mukti_Centre_Address,
                     Gender: item.Gender,
-                    Nasha_Mukti_Centre_Name: item.Nasha_Mukti_Centre_Name
+                    Nasha_Mukti_Centre_Name: item.Nasha_Mukti_Centre_Name,
+                    Under_Treatment: item.Under_Treatment === "true" ? "no" : "yes",
+                    Is_Employed: item.Employment_Status === 0 ? "No" : "Yes", 
                 }));
 
                 setData(mappedData);

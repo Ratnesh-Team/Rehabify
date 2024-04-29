@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Pagination, Input, Dialog } from '@/components/ui';
+import { Card, Pagination, Input, Dialog, Button } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
 import CardData from './types';
+import '@fortawesome/fontawesome-free/css/all.css';
+
 
 interface Props { }
 
@@ -31,7 +33,7 @@ const Controlled: React.FC<Props> = () => {
     }, [selectedDoctor]);
 
     return (
-        <div style={blur ? {filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none'} : {}}>
+        <div style={blur ? { filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none' } : {}}>
             <h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1>
             {/* Search Input */}
             <div className="flex justify-between items-center mb-4">
@@ -51,35 +53,36 @@ const Controlled: React.FC<Props> = () => {
                 <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} onCardClick={handleCardClick} />
             </div>
             {selectedDoctor && (
-                <Dialog isOpen={true} onClose={handleCloseDialog}>
+                <Dialog isOpen={true} onClose={handleCloseDialog} >
                     {/* Render dialog content here */}
                     <div className="p-4">
-                        <h2 className="text-2xl font-bold mb-2">{selectedDoctor.Name}</h2>
-                        <hr className="my-2" />
-                        <p className="mb-2">{selectedDoctor.Description}</p>
-                        <hr className="my-2" />
-                        <p className="mb-2">
-                            <i className="fas fa-envelope"></i> Email: {selectedDoctor.Email}
-                        </p>
-                        <hr className="my-2" />
-                        <p className="mb-2">
-                            <i className="fas fa-phone"></i> Contact Number: {selectedDoctor.ContactNumber}
-                        </p>
-                        <hr className="my-2" />
-                        <p className="mb-2">
-                            <i className="fas fa-stethoscope"></i> Specialization: {selectedDoctor.Specialization}
-                        </p>
-                        <hr className="my-2" />
+                        <div className='flex justify-between'>
+
+                            <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="square-full h-32 w-32 mb-4 rounded" />
+                            <div className="flex flex-col">
+                                <h2 className="text-2xl font-bold mb-2">{selectedDoctor.Name}</h2>
+                                <p className="mb-2">
+                                    <i className="fas fa-stethoscope"></i> Specialization: {selectedDoctor.Specialization}
+                                </p>
+                                <p className="mb-2">
+                                    <i className="fas fa-envelope"></i> Email: {selectedDoctor.Email}
+                                </p>
+                                <p className="mb-2">
+                                    <i className="fas fa-phone"></i> Contact Number: {selectedDoctor.ContactNumber}
+                                </p>
+                            </div>
+                        </div>
+                        <p className="mb-2 font-bold">{selectedDoctor.Description}</p>
+
+
                         <p className="mb-2">
                             <i className="fas fa-map-marker-alt"></i> Address: {selectedDoctor.ClinicAddress}
                         </p>
-                        <hr className="my-2" />
-                        <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="rounded-full h-32 w-32 mb-4" />
-                        <a href="https://wa.me/?text=I'm%20interested%20in%20booking%20an%20appointment" target="_blank" rel="noopener noreferrer">
-                            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                                Book Appointment
-                            </button>
-                        </a>
+                        <div className='flex flex-row-reverse'>
+                            <a href="https://wa.me/?text=I'm%20interested%20in%20booking%20an%20appointment" target="_blank" rel="noopener noreferrer">
+                                <Button variant="solid">Book Appointment</Button>
+                            </a>
+                        </div>
                     </div>
                 </Dialog>
             )}
@@ -143,12 +146,14 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                 header={
-                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden">
+                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
                                         <img src={card.ImageURL} alt="card header" />
                                     </div>
+
+
                                 }
                                 footer={
-                                    <div className="ml-0">
+                                    <div className='flex flex-row-reverse'>
                                         <span className="font-bold">Book Appointment </span>
                                     </div>
                                 }
@@ -159,8 +164,11 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 <span>
                                     <h3 className="text-emerald-600 font-bold ">{card.Name}</h3>
                                 </span>
-                                <p className="text-sm">{card.Specialization}</p>
+                                <p className="text-sm"> <i className="fas fa-stethoscope"></i>{card.Specialization}</p>
                                 <p className="font-semibold">{card.Description}</p>
+                                <p className="mb-2">
+                                    <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
+                                </p>
                             </Card>
                         </div>
                     </div>
