@@ -80,17 +80,12 @@ const options: Option[] = [
 
 
 type FormModel = {
-    input: string
-    select: string
-    multipleSelect: string[]
-    date: Date | null
-    time: Date | null
-    singleCheckbox: boolean
-    multipleCheckbox: Array<string | number>
-    radio: string
-    switcher: boolean
-    segment: string[];
-    upload: File[];
+
+    state: string
+
+    yearOfRegistration: Date | null
+
+
 }
 
 
@@ -115,7 +110,7 @@ const validationSchema = Yup.object().shape({
     state: Yup.string().required('State Required'),
     district: Yup.string().required('District Required'),
     pinCode: Yup.string().required('Pincode Required'),
-    yearOfRegistrtion: Yup.date().required('Date Required!').nullable(),
+    yearOfRegistrtion: Yup.string().required('Date Required!').nullable(),
 
 })
 
@@ -166,9 +161,6 @@ const index = () => {
                     {({ values, touched, errors, resetForm }) => (
                         <Form>
                             <FormContainer >
-
-
-
                                 <Grid container spacing={3}>
 
                                     <Grid item xs={6} sm={6} style={{
@@ -267,7 +259,7 @@ const index = () => {
                                             invalid={errors.state && touched.state}
                                             errorMessage={errors.state}
                                         >
-                                            <Field name="select">
+                                            <Field name="state">
                                                 {({ field, form }: FieldProps<FormModel>) => (
                                                     <Select
                                                         field={field}
