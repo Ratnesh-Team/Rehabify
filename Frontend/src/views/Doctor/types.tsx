@@ -4,10 +4,10 @@ interface DoctorData {
     Description: string;
     Specialization: string;
     ClinicAddress: string;
-    ContactNumber: string;
+    ContactNumber: number;
     Email: string;
     ImageURL: string;
-    Docter_Code: string;
+    Doctor_Code: string;
 }
 
 

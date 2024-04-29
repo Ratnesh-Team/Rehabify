@@ -23,8 +23,8 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		var doctorlist []models.DoctorData
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
-		if Docker_Code := queryParams.Get("Docter_Code"); Docker_Code != "" {
-			filter["Docter_Code"] = Docker_Code
+		if Doctor_Code := queryParams.Get("Doctor_Code"); Doctor_Code != "" {
+			filter["Docter_Code"] = Doctor_Code
 		} else {
 			filter = nil
 		}
@@ -43,7 +43,7 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 
 		// Decode each document and append to the NMK list
 		for cursor.Next(c.Request.Context()) {
-			var doctor  models.DoctorData
+			var doctor models.DoctorData
 			if err := cursor.Decode(&doctor); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{
 					"status":  http.StatusInternalServerError,

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, Pagination, Input } from '@/components/ui'; // Import Input from your UI components
+import { Card, Pagination, Input, Dialog } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
 import CardData from './types';
 
@@ -9,13 +8,30 @@ interface Props { }
 const Controlled: React.FC<Props> = () => {
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
+    const [selectedDoctor, setSelectedDoctor] = useState<CardData | null>(null);
+    const [blur, setBlur] = useState(false);
 
     const onPageChange = (newPage: number) => {
         setPage(newPage);
     };
 
+    const handleCardClick = (doctor: CardData) => {
+        setSelectedDoctor(doctor);
+    };
+
+    const handleCloseDialog = () => {
+        setSelectedDoctor(null);
+    };
+    useEffect(() => {
+        if (selectedDoctor) {
+            setBlur(true);
+        } else {
+            setBlur(false);
+        }
+    }, [selectedDoctor]);
+
     return (
-        <div>
+        <div style={blur ? {filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none'} : {}}>
             <h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1>
             {/* Search Input */}
             <div className="flex justify-between items-center mb-4">
@@ -32,17 +48,51 @@ const Controlled: React.FC<Props> = () => {
             </div>
             <div className="flex flex-col items-center">
                 {/* Pass searchTerm to TreatmentCentres component */}
-                <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} />
+                <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} onCardClick={handleCardClick} />
             </div>
-        </div>
+            {selectedDoctor && (
+                <Dialog isOpen={true} onClose={handleCloseDialog}>
+                    {/* Render dialog content here */}
+                    <div className="p-4">
+                        <h2 className="text-2xl font-bold mb-2">{selectedDoctor.Name}</h2>
+                        <hr className="my-2" />
+                        <p className="mb-2">{selectedDoctor.Description}</p>
+                        <hr className="my-2" />
+                        <p className="mb-2">
+                            <i className="fas fa-envelope"></i> Email: {selectedDoctor.Email}
+                        </p>
+                        <hr className="my-2" />
+                        <p className="mb-2">
+                            <i className="fas fa-phone"></i> Contact Number: {selectedDoctor.ContactNumber}
+                        </p>
+                        <hr className="my-2" />
+                        <p className="mb-2">
+                            <i className="fas fa-stethoscope"></i> Specialization: {selectedDoctor.Specialization}
+                        </p>
+                        <hr className="my-2" />
+                        <p className="mb-2">
+                            <i className="fas fa-map-marker-alt"></i> Address: {selectedDoctor.ClinicAddress}
+                        </p>
+                        <hr className="my-2" />
+                        <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="rounded-full h-32 w-32 mb-4" />
+                        <a href="https://wa.me/?text=I'm%20interested%20in%20booking%20an%20appointment" target="_blank" rel="noopener noreferrer">
+                            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                                Book Appointment
+                            </button>
+                        </a>
+                    </div>
+                </Dialog>
+            )}
 
+        </div>
     );
 };
 
-const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void; searchTerm: string }> = ({
+const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void; searchTerm: string; onCardClick: (doctor: CardData) => void }> = ({
     page,
     onPageChange,
     searchTerm,
+    onCardClick,
 }) => {
     const [cards, setCards] = useState<CardData[]>([]);
     const pageSize = 6;
@@ -67,13 +117,12 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     // Filter cards based on multiple search criteria
     const filteredCards = cards.filter((card) => {
         const search = searchTerm.toLowerCase();
-        const contactNumber = card.ContactNumber.toString(); // Convert to string
         return (
             card.Name.toLowerCase().includes(search) ||
             card.ClinicAddress.toLowerCase().includes(search) ||
-            card.Name.toLowerCase().includes(search) ||
             card.Email.toLowerCase().includes(search) ||
-            contactNumber.includes(search) // Use includes on the stringified contact number
+            card.ContactNumber.toString().includes(search) ||
+            card.Specialization.toLowerCase().includes(search)
         );
     });
 
@@ -88,7 +137,8 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
             <div className="flex flex-wrap justify-around gap-6">
                 {displayedCards.map((card, index) => (
                     <div key={index} className="max-w-xs mb-6">
-                        <Link to={`/doctor?Docter_Code=${card.Docter_Code}`} className="max-w-xs mb-6">
+                        {/* Use onClick event handler to handle card click */}
+                        <div onClick={() => onCardClick(card)} className="max-w-xs mb-6 cursor-pointer">
                             <Card
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
@@ -99,9 +149,8 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 }
                                 footer={
                                     <div className="ml-0">
-                                        <span className="font-bold">Book Appointment </span>     
+                                        <span className="font-bold">Book Appointment </span>
                                     </div>
-
                                 }
                                 headerClass="p-0"
                                 footerBorder={true}
@@ -113,7 +162,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 <p className="text-sm">{card.Specialization}</p>
                                 <p className="font-semibold">{card.Description}</p>
                             </Card>
-                        </Link>
+                        </div>
                     </div>
                 ))}
             </div>
