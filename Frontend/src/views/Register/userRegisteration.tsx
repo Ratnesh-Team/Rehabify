@@ -1,4 +1,4 @@
-import {  Box, Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -94,7 +94,7 @@ const userRegisteration = () => {
                                     // errorMessage={errors.email}
                                     >
                                         <Field
-                                            type="age"
+                                            type="number"
                                             autoComplete="off"
                                             name="age"
                                             placeholder="Age"
@@ -108,7 +108,7 @@ const userRegisteration = () => {
                                     paddingTop: "0px"
                                 }}>
                                     <FormItem
-                                        label="Genger"
+                                        label="Gender"
                                     // invalid={errors.ownerName && touched.ownerName}
                                     // errorMessage={errors.ownerName}
                                     >
@@ -206,7 +206,7 @@ const userRegisteration = () => {
                                     // errorMessage={errors.contactNumber}
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="addictionDuration"
                                             placeholder="Addiction Duration"
@@ -222,7 +222,7 @@ const userRegisteration = () => {
                                     // errorMessage={errors.durationOfTreatment}
                                     >
                                         <Field
-                                            type="text"
+                                            type="number"
                                             autoComplete="off"
                                             name="durationOfTreatment"
                                             placeholder="Duration of Treatment"
@@ -231,7 +231,7 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid>
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Is Treatment Completed"
                                     // invalid={errors.isTreatmentCompleted && touched.isTreatmentCompleted}
@@ -245,9 +245,9 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem>
-                                </Grid>
+                                </Grid> */}
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Under Treatment"
                                     // invalid={errors.underTreatment && touched.underTreatment}
@@ -261,7 +261,7 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem>
-                                </Grid>
+                                </Grid> */}
 
                                 <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
@@ -279,7 +279,7 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid>
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Name"
                                     // invalid={errors.nashaMuktiCentreName && touched.nashaMuktiCentreName}
@@ -293,9 +293,9 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem>
-                                </Grid>
+                                </Grid> */}
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Address"
                                     // invalid={errors.nashaMuktiCentreAddress && touched.nashaMuktiCentreAddress}
@@ -309,9 +309,9 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem>
-                                </Grid>
+                                </Grid> */}
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Code"
                                     // invalid={errors.nashaMuktiCentreCode && touched.nashaMuktiCentreCode}
@@ -325,7 +325,7 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem>
-                                </Grid>
+                                </Grid> */}
 
                                 <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
