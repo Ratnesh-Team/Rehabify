@@ -18,6 +18,7 @@ import { Alert } from '@/components/ui'
 import DatePicker from '@/components/ui/DatePicker'
 import type { FieldProps } from 'formik'
 import UserRegisteration from './userRegisteration'
+import { image } from 'd3-fetch'
 
 
 type Option = {
@@ -65,20 +66,6 @@ const options: Option[] = [
     { value: 'Lakshadweep', label: 'Lakshadweep' },
     { value: 'Puducherry', label: 'Puducherry' },
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 type FormModel = {
 
     state: string
@@ -93,19 +80,20 @@ const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email Required'),
     name: Yup.string()
         .min(3, 'Too Short!')
-        .max(25, 'Too Long!')
+        .max(50, 'Too Long!')
         .required('NMK Name Required'),
     address: Yup.string()
         .min(3, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(200, 'Too Long!')
         .required('Address Name Required'),
     ownerName: Yup.string()
         .min(3, 'Too Short!')
-        .max(25, 'Too Long!')
+        .max(50, 'Too Long!')
         .required('Owner Name Required'),
     contactNumber: Yup.string()
         .required('Contact Number Required')
         .min(10, 'Too Short!')
+        .max(10, 'Too Long!')
         .matches(/^[0-9]*$/, 'Only Numbers Allowed'),
     state: Yup.string().required('State Required'),
     district: Yup.string().required('District Required'),
@@ -117,10 +105,36 @@ const validationSchema = Yup.object().shape({
 
 const index = () => {
     const [dialogIsOpen, setIsOpen] = useState<boolean>(false);
+    const [files,setFiles] = useState<string>("")
+    const [files2,setFiles2] = useState<string>("")
     const openDialog = () => {
         setIsOpen(true)
     }
 
+    const onUpload = async (files: File[], imageField: string) => {
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        formData.append('upload_preset', 'pbfwqcie'); // Use your Cloudinary upload preset
+
+        try {
+            const response = await fetch('https://api.cloudinary.com/v1_1/daosik5yi/image/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            console.log('Image uploaded to Cloudinary:', data.secure_url);
+            
+            if (imageField === 'image1') {
+                setFiles(data.secure_url);
+            } else if (imageField === 'image2') {
+                setFiles2(data.secure_url);
+            }
+
+        } catch (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+
+        }
+    };
     const navigate = useNavigate();
     const submit = () => {
         console.log('submitted')
@@ -131,9 +145,6 @@ const index = () => {
 
     return (
         <>
-            <Alert showIcon className="mb-4" >
-                Please be patient, this page is under development
-            </Alert>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
                 <Button variant='solid' onClick={openDialog} >Register User</Button>
@@ -152,10 +163,15 @@ const index = () => {
                         district: '',
                         pinCode: '',
                         yearOfRegistrtion: Date.now(),
+                        image1: '',
+                        image2: '',
 
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(values, { resetForm, setSubmitting }) => {
+                        
+                        values.image1 = files
+                        values.image2 = files2
                         console.log(values)
                         setTimeout(() => {
                             alert(JSON.stringify(values, null, 2))
@@ -169,7 +185,7 @@ const index = () => {
                             <FormContainer >
                                 <Grid container spacing={3}>
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -188,7 +204,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -207,7 +223,7 @@ const index = () => {
                                     </Grid>
 
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -225,7 +241,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -242,23 +258,11 @@ const index = () => {
                                             />
                                         </FormItem>
                                     </Grid>
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
-                                        {/* <FormItem
-                                            label="State"
-                                            invalid={errors.state && touched.state}
-                                            errorMessage={errors.state}
-                                        >
-                                            <Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="state"
-                                                placeholder="State"
-                                                component={Input}
-                                            />
-                                        </FormItem> */}
+
                                         <FormItem
                                             asterisk
                                             label="Select State"
@@ -288,7 +292,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -306,7 +310,7 @@ const index = () => {
                                             />
                                         </FormItem>
                                     </Grid>
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -325,24 +329,11 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={6} sm={6} style={{
+                                    <Grid item xs={12}sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
-                                        {/* <FormItem
-                                            label="Year Of Registration"
-                                            invalid={errors.yearOfRegistrtion && touched.yearOfRegistrtion}
-                                            errorMessage={errors.yearOfRegistrtion}
-                                        >
-                                            <Field
-                                                type="text"
-                                                autoComplete="off"
-                                                name="yearOfRegistrtion"
-                                                placeholder="Year Of Registration"
-                                                component={Input}
-                                            />
 
-                                        </FormItem> */}
 
                                         <FormItem
                                             asterisk
@@ -389,13 +380,28 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={12} sm={12} style={{
+                                    <Grid item xs={12} sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
-                                        <Upload draggable />
+                                <h6>Upload Nasha Mukti Kendra Photo</h6>
+                                        <Field name="image1">
+                                            {({ field,form }: FieldProps) => (
+                                                <Upload draggable onChange={(files) => onUpload(files, 'image1') } />
+                                            )}
+                                            
+                                        </Field>
                                     </Grid>
+                                    <Grid item xs={12} sm={6} style={{
+                                        paddingTop: "0px"
+                                    }}>
+                                        <h6>Upload Nasha Mukti Kendra  Verification Document</h6>
+                                        <Field name="image2">
+                                            {({ field, form }: FieldProps) => (
+                                                <Upload draggable onChange={(files) => onUpload(files, 'image2')} />
+                                            )}
+                                        </Field>
 
-
+                                    </Grid>
 
                                     <Grid item xs={12} sm={12} style={{
                                         paddingTop: "0px"

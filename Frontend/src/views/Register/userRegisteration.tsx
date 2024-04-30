@@ -133,16 +133,11 @@ const validationSchema = Yup.object().shape({
 
 
 
-
-
-
-const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
+const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
 
     const submit = () => {
-
         console.log('submitted')
     }
-
 
     const openDialog = () => {
         setIsOpen(true)
@@ -153,33 +148,24 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
         setIsOpen(false)
     }
 
-    // const onDialogOk = (e: MouseEvent) => {
-    //     console.log('onDialogOk', e)
-    //     setIsOpen(false)
-    // }
-
-
     return (
 
-
         <>
-            {/* <Button variant="solid" onClick={() => openDialog()}>
-                Custom Size Dialog
-            </Button> */}
             <Dialog
                 isOpen={dialogIsOpen}
-
                 onClose={onDialogClose}
+                width={800}
+                height={490}
                 onRequestClose={onDialogClose}
-                className="max-h-[100vh] overflow-y-auto "
+                shouldFocusAfterRender={true}
             >
+                <h2>User Registration</h2>
+                <div className="max-h-96 overflow-y-auto">
                 <div className="flex flex-col h-full justify-between">
-                    <Alert showIcon className="mb-4" >
-                        Please be patient, this page is under development
-                    </Alert>
+                    
+
                     <Formik
                         const initialValues={{
-
                             name: '',
                             age: '',
                             gender: '',
@@ -189,16 +175,10 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                             addictionType: '',
                             addictionDuration: '',
                             durationOfTreatment: 0,
-                            // isTreatmentCompleted: false,
-                            // underTreatment: true,
                             employmentStatus: '',
-                            // nashaMuktiCentreName: 'Nasha Mukti Kendra_22',
-                            // nashaMuktiCentreAddress: 'H.No. 657, Gill Zila, Ballia 760768',
-                            // nashaMuktiCentreCode: 'NMK022',
                             joiningDate: Date.now(),
                             counsellingCount: '',
                             counsellorName: '',
-                            // Add more fields as needed
                         }}
                         validationSchema={validationSchema}
                         onSubmit={(values, { resetForm, setSubmitting }) => {
@@ -254,19 +234,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                         <Grid item xs={6} sm={6} style={{
                                             paddingTop: "0px"
                                         }}>
-                                            {/* <FormItem
-                                        label="Gender"
-                                    // invalid={errors.ownerName && touched.ownerName}
-                                    // errorMessage={errors.ownerName}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="gender"
-                                            placeholder="Genger"
-                                            component={Input}
-                                        />
-                                    </FormItem> */}
+
                                             <FormItem
                                                 asterisk
                                                 label="Select Gender"
@@ -299,19 +267,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                         <Grid item xs={6} sm={6} style={{
                                             paddingTop: "0px"
                                         }}>
-                                            {/* <FormItem
-                                        label="State"
-                                    // invalid={errors.contactNumber && touched.contactNumber}
-                                    // errorMessage={errors.contactNumber}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="state"
-                                            placeholder="State"
-                                            component={Input}
-                                        />
-                                    </FormItem> */}
+
                                             <FormItem
                                                 asterisk
                                                 label="Select State"
@@ -433,8 +389,6 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                         <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                             <FormItem
                                                 label="Duration of Treatment"
-                                            // invalid={errors.durationOfTreatment && touched.durationOfTreatment}
-                                            // errorMessage={errors.durationOfTreatment}
                                             >
                                                 <Field
                                                     type="number"
@@ -446,37 +400,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                             </FormItem>
                                         </Grid>
 
-                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Is Treatment Completed"
-                                    // invalid={errors.isTreatmentCompleted && touched.isTreatmentCompleted}
-                                    // errorMessage={errors.isTreatmentCompleted}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="isTreatmentCompleted"
-                                            placeholder="Is Treatment Completed"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid> */}
 
-                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Under Treatment"
-                                    // invalid={errors.underTreatment && touched.underTreatment}
-                                    // errorMessage={errors.underTreatment}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="underTreatment"
-                                            placeholder="Under Treatment"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid> */}
 
                                         <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                             <FormItem
@@ -508,68 +432,10 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                             </FormItem>
                                         </Grid>
 
-                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Nasha Mukti Centre Name"
-                                    // invalid={errors.nashaMuktiCentreName && touched.nashaMuktiCentreName}
-                                    // errorMessage={errors.nashaMuktiCentreName}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="nashaMuktiCentreName"
-                                            placeholder="Nasha Mukti Centre Name"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid> */}
 
-                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Nasha Mukti Centre Address"
-                                    // invalid={errors.nashaMuktiCentreAddress && touched.nashaMuktiCentreAddress}
-                                    // errorMessage={errors.nashaMuktiCentreAddress}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="nashaMuktiCentreAddress"
-                                            placeholder="Nasha Mukti Centre Address"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid> */}
-
-                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Nasha Mukti Centre Code"
-                                    // invalid={errors.nashaMuktiCentreCode && touched.nashaMuktiCentreCode}
-                                    // errorMessage={errors.nashaMuktiCentreCode}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="nashaMuktiCentreCode"
-                                            placeholder="Nasha Mukti Centre Code"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid> */}
 
                                         <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                            {/* <FormItem
-                                        label="Joining Date"
-                                    // invalid={errors.joiningDate && touched.joiningDate}
-                                    // errorMessage={errors.joiningDate}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="joiningDate"
-                                            placeholder="Joining Date"
-                                            component={Input}
-                                        />
-                                    </FormItem> */}
+
                                             <FormItem
                                                 asterisk
                                                 label="Joining Date"
@@ -642,20 +508,13 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
                                                 </Button>
                                             </FormItem>
                                         </Grid>
-
-
-
-
-
-
-
-
                                     </Grid>
                                 </FormContainer>
                             </Form>
                         )}
                     </Formik>
                 </div >
+                </div>
             </Dialog >
         </>
     )

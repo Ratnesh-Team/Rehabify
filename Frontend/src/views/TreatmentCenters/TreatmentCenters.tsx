@@ -88,7 +88,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
             <div className="flex flex-wrap justify-around gap-6">
                 {displayedCards.map((card, index) => (
                     <div key={index} className="max-w-xs mb-6">
-                        <Link to={`/NMK?NMK_Code=${card.NMK_Code}`} className="max-w-xs mb-6">
+                        <Link to={`/NMK?NMK_Code=${card._id}`} className="max-w-xs mb-6">
                             <Card
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"

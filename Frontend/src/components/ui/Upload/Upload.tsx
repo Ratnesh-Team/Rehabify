@@ -85,7 +85,6 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((props, ref) => {
 
     const addNewFiles = (newFiles: FileList | null) => {
         let file = cloneDeep(files)
-        console.log(file)
         if (typeof uploadLimit === 'number' && uploadLimit !== 0) {
             if (Object.keys(file).length >= uploadLimit) {
                 if (uploadLimit === 1) {
@@ -103,7 +102,6 @@ const Upload = forwardRef<HTMLDivElement, UploadProps>((props, ref) => {
     const onNewFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
         const { files: newFiles } = e.target
         let result: boolean | string = true
-        console.log(e.target.files)
         if (beforeUpload) {
             result = beforeUpload(newFiles, files)
 
