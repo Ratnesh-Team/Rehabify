@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import Select from '@/components/ui/Select'
 import { useNavigate } from 'react-router-dom'
-import userRegisteration from './userRegisteration'
+
 import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
@@ -17,7 +17,7 @@ import Upload from '@/components/ui/Upload'
 import { Alert } from '@/components/ui'
 import DatePicker from '@/components/ui/DatePicker'
 import type { FieldProps } from 'formik'
-
+import UserRegisteration from './userRegisteration'
 
 
 type Option = {
@@ -116,6 +116,10 @@ const validationSchema = Yup.object().shape({
 
 
 const index = () => {
+    const [dialogIsOpen, setIsOpen] = useState<boolean>(false);
+    const openDialog = () => {
+        setIsOpen(true)
+    }
 
     const navigate = useNavigate();
     const submit = () => {
@@ -132,8 +136,10 @@ const index = () => {
             </Alert>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
-                <Button variant='solid' onClick={handle} >Register</Button>
+                <Button variant='solid' onClick={openDialog} >Register User</Button>
             </Box>
+            {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setIsOpen} />}
+
             <div style={{ marginTop: "2rem" }}>
                 <Formik
                     initialValues={{

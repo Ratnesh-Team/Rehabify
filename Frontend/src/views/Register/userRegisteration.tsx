@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from '@mui/material'
+
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -16,6 +17,7 @@ import { Alert } from '@/components/ui'
 import Select from '@/components/ui/Select'
 import type { FieldProps } from 'formik'
 import DatePicker from '@/components/ui/DatePicker'
+import Dialog from '@/components/ui/Dialog'
 
 
 //write schema for form validation from the default values
@@ -134,99 +136,125 @@ const validationSchema = Yup.object().shape({
 
 
 
-const userRegisteration = () => {
+const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
+
     const submit = () => {
 
         console.log('submitted')
     }
+
+
+    const openDialog = () => {
+        setIsOpen(true)
+    }
+
+    const onDialogClose = (e: MouseEvent) => {
+        console.log('onDialogClose', e)
+        setIsOpen(false)
+    }
+
+    // const onDialogOk = (e: MouseEvent) => {
+    //     console.log('onDialogOk', e)
+    //     setIsOpen(false)
+    // }
+
+
     return (
-        <div style={{ marginTop: "2rem" }}>
-            <Alert showIcon className="mb-4" >
-                Please be patient, this page is under development
-            </Alert>
-            <Formik
-                const initialValues={{
 
-                    name: '',
-                    age: '',
-                    gender: '',
-                    state: '',
-                    district: '',
-                    guardianName: '',
-                    addictionType: '',
-                    addictionDuration: '',
-                    durationOfTreatment: 0,
-                    // isTreatmentCompleted: false,
-                    // underTreatment: true,
-                    employmentStatus: '',
-                    // nashaMuktiCentreName: 'Nasha Mukti Kendra_22',
-                    // nashaMuktiCentreAddress: 'H.No. 657, Gill Zila, Ballia 760768',
-                    // nashaMuktiCentreCode: 'NMK022',
-                    joiningDate: Date.now(),
-                    counsellingCount: '',
-                    counsellorName: '',
-                    // Add more fields as needed
-                }}
-                validationSchema={validationSchema}
-                onSubmit={(values, { resetForm, setSubmitting }) => {
-                    console.log(values)
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2))
-                        setSubmitting(false)
-                        resetForm()
-                    }, 400)
-                }}
+
+        <>
+            {/* <Button variant="solid" onClick={() => openDialog()}>
+                Custom Size Dialog
+            </Button> */}
+            <Dialog
+                isOpen={dialogIsOpen}
+
+                onClose={onDialogClose}
+                onRequestClose={onDialogClose}
+                className="max-h-[100vh] overflow-y-auto "
             >
-                {({ values, touched, errors, resetForm }) => (
-                    <Form>
-                        <FormContainer >
+                <div className="flex flex-col h-full justify-between">
+                    <Alert showIcon className="mb-4" >
+                        Please be patient, this page is under development
+                    </Alert>
+                    <Formik
+                        const initialValues={{
+
+                            name: '',
+                            age: '',
+                            gender: '',
+                            state: '',
+                            district: '',
+                            guardianName: '',
+                            addictionType: '',
+                            addictionDuration: '',
+                            durationOfTreatment: 0,
+                            // isTreatmentCompleted: false,
+                            // underTreatment: true,
+                            employmentStatus: '',
+                            // nashaMuktiCentreName: 'Nasha Mukti Kendra_22',
+                            // nashaMuktiCentreAddress: 'H.No. 657, Gill Zila, Ballia 760768',
+                            // nashaMuktiCentreCode: 'NMK022',
+                            joiningDate: Date.now(),
+                            counsellingCount: '',
+                            counsellorName: '',
+                            // Add more fields as needed
+                        }}
+                        validationSchema={validationSchema}
+                        onSubmit={(values, { resetForm, setSubmitting }) => {
+                            console.log(values)
+                            setTimeout(() => {
+                                alert(JSON.stringify(values, null, 2))
+                                setSubmitting(false)
+                                resetForm()
+                            }, 400)
+                        }}
+                    >
+                        {({ values, touched, errors, resetForm }) => (
+                            <Form>
+                                <FormContainer >
+                                    <Grid container spacing={3}>
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px",
+                                        }}>
+                                            <FormItem
+                                                label="Name"
+                                                invalid={errors.name && touched.name}
+                                                errorMessage={errors.name}
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="name"
+                                                    placeholder="User Name"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </Grid>
+
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            <FormItem
+                                                label="Age"
+                                                invalid={errors.age && touched.age}
+                                                errorMessage={errors.age}
+                                            >
+                                                <Field
+                                                    type="number"
+                                                    autoComplete="off"
+                                                    name="age"
+                                                    placeholder="Age"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </Grid>
 
 
-
-                            <Grid container spacing={3}>
-
-                                <Grid item xs={6} sm={6} style={{
-
-                                    paddingTop: "0px",
-                                }}>
-                                    <FormItem
-                                        label="Name"
-                                        invalid={errors.name && touched.name}
-                                        errorMessage={errors.name}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="name"
-                                            placeholder="User Name"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    <FormItem
-                                        label="Age"
-                                        invalid={errors.age && touched.age}
-                                        errorMessage={errors.age}
-                                    >
-                                        <Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="age"
-                                            placeholder="Age"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    {/* <FormItem
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            {/* <FormItem
                                         label="Gender"
                                     // invalid={errors.ownerName && touched.ownerName}
                                     // errorMessage={errors.ownerName}
@@ -239,39 +267,39 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem> */}
-                                    <FormItem
-                                        asterisk
-                                        label="Select Gender"
-                                        invalid={errors.gender && touched.gender}
-                                        errorMessage={errors.gender}
-                                    >
-                                        <Field name="gender">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Select
-                                                    field={field}
-                                                    form={form}
-                                                    options={genderOptions}
-                                                    value={genderOptions.filter(
-                                                        (option) =>
-                                                            option.value ===
-                                                            values.gender
+                                            <FormItem
+                                                asterisk
+                                                label="Select Gender"
+                                                invalid={errors.gender && touched.gender}
+                                                errorMessage={errors.gender}
+                                            >
+                                                <Field name="gender">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <Select
+                                                            field={field}
+                                                            form={form}
+                                                            options={genderOptions}
+                                                            value={genderOptions.filter(
+                                                                (option) =>
+                                                                    option.value ===
+                                                                    values.gender
+                                                            )}
+                                                            onChange={(option) =>
+                                                                form.setFieldValue(
+                                                                    "gender",
+                                                                    option?.value
+                                                                )
+                                                            }
+                                                        />
                                                     )}
-                                                    onChange={(option) =>
-                                                        form.setFieldValue(
-                                                            "gender",
-                                                            option?.value
-                                                        )
-                                                    }
-                                                />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-                                </Grid>
+                                                </Field>
+                                            </FormItem>
+                                        </Grid>
 
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    {/* <FormItem
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            {/* <FormItem
                                         label="State"
                                     // invalid={errors.contactNumber && touched.contactNumber}
                                     // errorMessage={errors.contactNumber}
@@ -284,141 +312,141 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem> */}
-                                    <FormItem
-                                        asterisk
-                                        label="Select State"
-                                        invalid={errors.state && touched.state}
-                                        errorMessage={errors.state}
-                                    >
-                                        <Field name="state">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Select
-                                                    field={field}
-                                                    form={form}
-                                                    options={options}
-                                                    value={options.filter(
-                                                        (option) =>
-                                                            option.value ===
-                                                            values.state
+                                            <FormItem
+                                                asterisk
+                                                label="Select State"
+                                                invalid={errors.state && touched.state}
+                                                errorMessage={errors.state}
+                                            >
+                                                <Field name="state">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <Select
+                                                            field={field}
+                                                            form={form}
+                                                            options={options}
+                                                            value={options.filter(
+                                                                (option) =>
+                                                                    option.value ===
+                                                                    values.state
+                                                            )}
+                                                            onChange={(option) =>
+                                                                form.setFieldValue(
+                                                                    "state",
+                                                                    option?.value
+                                                                )
+                                                            }
+                                                        />
                                                     )}
-                                                    onChange={(option) =>
-                                                        form.setFieldValue(
-                                                            "state",
-                                                            option?.value
-                                                        )
-                                                    }
+                                                </Field>
+                                            </FormItem>
+                                        </Grid>
+
+
+                                        <Grid item xs={6} sm={6} style={{
+
+                                            paddingTop: "0px",
+                                        }}>
+                                            <FormItem
+                                                label="District"
+                                                invalid={errors.district && touched.district}
+                                                errorMessage={errors.district}
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="district"
+                                                    placeholder="District"
+                                                    component={Input}
                                                 />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-                                </Grid>
+                                            </FormItem>
+                                        </Grid>
+
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            <FormItem
+                                                label="Garurdian Name"
+                                                invalid={errors.guardianName && touched.guardianName}
+                                                errorMessage={errors.guardianName}
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="guardianName"
+                                                    placeholder="Garurdian Name"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </Grid>
 
 
-                                <Grid item xs={6} sm={6} style={{
-
-                                    paddingTop: "0px",
-                                }}>
-                                    <FormItem
-                                        label="District"
-                                        invalid={errors.district && touched.district}
-                                        errorMessage={errors.district}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="district"
-                                            placeholder="District"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    <FormItem
-                                        label="Garurdian Name"
-                                        invalid={errors.guardianName && touched.guardianName}
-                                        errorMessage={errors.guardianName}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="guardianName"
-                                            placeholder="Garurdian Name"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    <FormItem
-                                        asterisk
-                                        label="Select Addiction Type"
-                                        invalid={errors.addictionType && touched.addictionType}
-                                        errorMessage={errors.addictionType}
-                                    >
-                                        <Field name="addictionType">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Select
-                                                    field={field}
-                                                    form={form}
-                                                    options={addictionTypeOptions}
-                                                    value={addictionTypeOptions.filter(
-                                                        (option) =>
-                                                            option.value ===
-                                                            values.addictionType
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            <FormItem
+                                                asterisk
+                                                label="Select Addiction Type"
+                                                invalid={errors.addictionType && touched.addictionType}
+                                                errorMessage={errors.addictionType}
+                                            >
+                                                <Field name="addictionType">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <Select
+                                                            field={field}
+                                                            form={form}
+                                                            options={addictionTypeOptions}
+                                                            value={addictionTypeOptions.filter(
+                                                                (option) =>
+                                                                    option.value ===
+                                                                    values.addictionType
+                                                            )}
+                                                            onChange={(option) =>
+                                                                form.setFieldValue(
+                                                                    "addictionType",
+                                                                    option?.value
+                                                                )
+                                                            }
+                                                        />
                                                     )}
-                                                    onChange={(option) =>
-                                                        form.setFieldValue(
-                                                            "addictionType",
-                                                            option?.value
-                                                        )
-                                                    }
+                                                </Field>
+                                            </FormItem>
+                                        </Grid>
+
+                                        <Grid item xs={6} sm={6} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            <FormItem
+                                                label="Addiction Duration"
+                                                invalid={errors.addictionDuration && touched.addictionDuration}
+                                                errorMessage={errors.addictionDuration}
+                                            >
+                                                <Field
+                                                    type="number"
+                                                    autoComplete="off"
+                                                    name="addictionDuration"
+                                                    placeholder="Addiction Duration"
+                                                    component={Input}
                                                 />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-                                </Grid>
+                                            </FormItem>
+                                        </Grid>
 
-                                <Grid item xs={6} sm={6} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    <FormItem
-                                        label="Addiction Duration"
-                                        invalid={errors.addictionDuration && touched.addictionDuration}
-                                        errorMessage={errors.addictionDuration}
-                                    >
-                                        <Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="addictionDuration"
-                                            placeholder="Addiction Duration"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
+                                        <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <FormItem
+                                                label="Duration of Treatment"
+                                            // invalid={errors.durationOfTreatment && touched.durationOfTreatment}
+                                            // errorMessage={errors.durationOfTreatment}
+                                            >
+                                                <Field
+                                                    type="number"
+                                                    autoComplete="off"
+                                                    name="durationOfTreatment"
+                                                    placeholder="Duration of Treatment"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </Grid>
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Duration of Treatment"
-                                    // invalid={errors.durationOfTreatment && touched.durationOfTreatment}
-                                    // errorMessage={errors.durationOfTreatment}
-                                    >
-                                        <Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="durationOfTreatment"
-                                            placeholder="Duration of Treatment"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Is Treatment Completed"
                                     // invalid={errors.isTreatmentCompleted && touched.isTreatmentCompleted}
@@ -434,7 +462,7 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid> */}
 
-                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Under Treatment"
                                     // invalid={errors.underTreatment && touched.underTreatment}
@@ -450,37 +478,37 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid> */}
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        asterisk
-                                        label="Employment Status"
-                                        invalid={errors.employmentStatus && touched.employmentStatus}
-                                        errorMessage={errors.employmentStatus}
-                                    >
-                                        <Field name="employmentStatus">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <Select
-                                                    field={field}
-                                                    form={form}
-                                                    options={employmentOptions}
-                                                    value={employmentOptions.filter(
-                                                        (option) =>
-                                                            option.value ===
-                                                            values.employmentStatus
+                                        <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <FormItem
+                                                asterisk
+                                                label="Employment Status"
+                                                invalid={errors.employmentStatus && touched.employmentStatus}
+                                                errorMessage={errors.employmentStatus}
+                                            >
+                                                <Field name="employmentStatus">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <Select
+                                                            field={field}
+                                                            form={form}
+                                                            options={employmentOptions}
+                                                            value={employmentOptions.filter(
+                                                                (option) =>
+                                                                    option.value ===
+                                                                    values.employmentStatus
+                                                            )}
+                                                            onChange={(option) =>
+                                                                form.setFieldValue(
+                                                                    "employmentStatus",
+                                                                    option?.value
+                                                                )
+                                                            }
+                                                        />
                                                     )}
-                                                    onChange={(option) =>
-                                                        form.setFieldValue(
-                                                            "employmentStatus",
-                                                            option?.value
-                                                        )
-                                                    }
-                                                />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-                                </Grid>
+                                                </Field>
+                                            </FormItem>
+                                        </Grid>
 
-                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Name"
                                     // invalid={errors.nashaMuktiCentreName && touched.nashaMuktiCentreName}
@@ -496,7 +524,7 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid> */}
 
-                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Address"
                                     // invalid={errors.nashaMuktiCentreAddress && touched.nashaMuktiCentreAddress}
@@ -512,7 +540,7 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid> */}
 
-                                {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                        {/* <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
                                     <FormItem
                                         label="Nasha Mukti Centre Code"
                                     // invalid={errors.nashaMuktiCentreCode && touched.nashaMuktiCentreCode}
@@ -528,8 +556,8 @@ const userRegisteration = () => {
                                     </FormItem>
                                 </Grid> */}
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    {/* <FormItem
+                                        <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            {/* <FormItem
                                         label="Joining Date"
                                     // invalid={errors.joiningDate && touched.joiningDate}
                                     // errorMessage={errors.joiningDate}
@@ -542,78 +570,78 @@ const userRegisteration = () => {
                                             component={Input}
                                         />
                                     </FormItem> */}
-                                    <FormItem
-                                        asterisk
-                                        label="Joining Date"
-                                        invalid={errors.joiningDate && touched.joiningDate}
-                                        errorMessage={errors.joiningDate}
-                                    >
-                                        <Field name="joiningDate" placeholder="Date">
-                                            {({ field, form }: FieldProps<FormModel>) => (
-                                                <DatePicker
-                                                    field={field}
-                                                    form={form}
-                                                    value={new Date(values.joiningDate)} // Convert string to Date object
-                                                    onChange={(date) => {
-                                                        form.setFieldValue(
-                                                            "joiningDate",
-                                                            date
-                                                        )
-                                                    }}
+                                            <FormItem
+                                                asterisk
+                                                label="Joining Date"
+                                                invalid={errors.joiningDate && touched.joiningDate}
+                                                errorMessage={errors.joiningDate}
+                                            >
+                                                <Field name="joiningDate" placeholder="Date">
+                                                    {({ field, form }: FieldProps<FormModel>) => (
+                                                        <DatePicker
+                                                            field={field}
+                                                            form={form}
+                                                            value={new Date(values.joiningDate)} // Convert string to Date object
+                                                            onChange={(date) => {
+                                                                form.setFieldValue(
+                                                                    "joiningDate",
+                                                                    date
+                                                                )
+                                                            }}
+                                                        />
+                                                    )}
+                                                </Field>
+                                            </FormItem>
+                                        </Grid>
+
+                                        <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <FormItem
+                                                label="Counsellor Name"
+                                                invalid={errors.counsellorName && touched.counsellorName}
+                                                errorMessage={errors.counsellorName}
+                                            >
+                                                <Field
+                                                    type="text"
+                                                    autoComplete="off"
+                                                    name="counsellorName"
+                                                    placeholder="Counsellor Name"
+                                                    component={Input}
                                                 />
-                                            )}
-                                        </Field>
-                                    </FormItem>
-                                </Grid>
+                                            </FormItem>
+                                        </Grid>
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Counsellor Name"
-                                        invalid={errors.counsellorName && touched.counsellorName}
-                                        errorMessage={errors.counsellorName}
-                                    >
-                                        <Field
-                                            type="text"
-                                            autoComplete="off"
-                                            name="counsellorName"
-                                            placeholder="Counsellor Name"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
+                                        <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <FormItem
+                                                label="Counselling Count"
+                                                invalid={errors.counsellingCount && touched.counsellingCount}
+                                                errorMessage={errors.counsellingCount}
+                                            >
+                                                <Field
+                                                    type="number"
+                                                    autoComplete="off"
+                                                    name="counsellingCount"
+                                                    placeholder="Counselling Count"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </Grid>
 
-                                <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
-                                    <FormItem
-                                        label="Counselling Count"
-                                        invalid={errors.counsellingCount && touched.counsellingCount}
-                                        errorMessage={errors.counsellingCount}
-                                    >
-                                        <Field
-                                            type="number"
-                                            autoComplete="off"
-                                            name="counsellingCount"
-                                            placeholder="Counselling Count"
-                                            component={Input}
-                                        />
-                                    </FormItem>
-                                </Grid>
-
-                                <Grid item xs={12} sm={12} style={{
-                                    paddingTop: "0px"
-                                }}>
-                                    <FormItem>
-                                        <Button
-                                            type="reset"
-                                            className="ltr:mr-2 rtl:ml-2"
-                                            onClick={() => resetForm()}
-                                        >
-                                            Reset
-                                        </Button>
-                                        <Button variant="solid" type="submit" onClick={submit}>
-                                            Submit
-                                        </Button>
-                                    </FormItem>
-                                </Grid>
+                                        <Grid item xs={12} sm={12} style={{
+                                            paddingTop: "0px"
+                                        }}>
+                                            <FormItem>
+                                                <Button
+                                                    type="reset"
+                                                    className="ltr:mr-2 rtl:ml-2"
+                                                    onClick={() => resetForm()}
+                                                >
+                                                    Reset
+                                                </Button>
+                                                <Button variant="solid" type="submit" onClick={submit}>
+                                                    Submit
+                                                </Button>
+                                            </FormItem>
+                                        </Grid>
 
 
 
@@ -622,13 +650,15 @@ const userRegisteration = () => {
 
 
 
-                            </Grid>
-                        </FormContainer>
-                    </Form>
-                )}
-            </Formik>
-        </div >
+                                    </Grid>
+                                </FormContainer>
+                            </Form>
+                        )}
+                    </Formik>
+                </div >
+            </Dialog >
+        </>
     )
 }
 
-export default userRegisteration
+export default UserRegisteration;
