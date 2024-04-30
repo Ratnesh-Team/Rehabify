@@ -168,13 +168,12 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }) => {
             </Button> */}
             <Dialog
                 isOpen={dialogIsOpen}
-                width={800}
+
                 onClose={onDialogClose}
                 onRequestClose={onDialogClose}
-
-
+                className="max-h-[100vh] overflow-y-auto "
             >
-                <div className="h-[70vh]  overflow-x-auto mt-10" style={{ scrollbarWidth: "none" }}>
+                <div className="flex flex-col h-full justify-between">
                     <Alert showIcon className="mb-4" >
                         Please be patient, this page is under development
                     </Alert>
