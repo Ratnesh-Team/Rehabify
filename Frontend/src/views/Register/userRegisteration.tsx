@@ -190,8 +190,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                 <Form>
                                     <FormContainer >
                                         <Grid container spacing={3}>
-                                            <Grid item xs={6} sm={6} style={{
-                                                paddingTop: "0px",
+                                            <Grid item xs={12} sm={6} style={{
                                             }}>
                                                 <FormItem
                                                     label="Name"
@@ -208,8 +207,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
-                                                paddingTop: "0px"
+                                            <Grid item xs={12} sm={6} style={{
                                             }}>
                                                 <FormItem
                                                     label="Age"
@@ -227,7 +225,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
 
@@ -260,7 +258,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
 
@@ -294,7 +292,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
 
                                                 paddingTop: "0px",
                                             }}>
@@ -313,7 +311,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -332,7 +330,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -364,7 +362,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -382,7 +380,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
                                                     label="Duration of Treatment"
                                                 >
@@ -398,7 +396,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
 
 
 
-                                            <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
                                                     asterisk
                                                     label="Employment Status"
@@ -430,7 +428,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
 
 
 
-                                            <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
 
                                                 <FormItem
                                                     asterisk
@@ -456,7 +454,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
                                                     label="Counsellor Name"
                                                     invalid={errors.counsellorName && touched.counsellorName}
@@ -472,7 +470,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{ paddingTop: "0px" }}>
+                                            <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
                                                     label="Counselling Count"
                                                     invalid={errors.counsellingCount && touched.counsellingCount}

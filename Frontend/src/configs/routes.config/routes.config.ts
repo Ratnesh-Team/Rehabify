@@ -48,7 +48,7 @@ export const protectedRoutes = [
     {
         key: 'register',
         path: '/Register',
-        component: lazy(() => import('@/views/Register')),
+        component: lazy(() => import('@/views/Register/landingpage')),
         authority: ['ADMIN'],
     },
     {

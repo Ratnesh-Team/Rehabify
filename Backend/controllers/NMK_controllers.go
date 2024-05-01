@@ -24,7 +24,11 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		var nmkList []models.NMK
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
-
+        
+		if Email := queryParams.Get("email"); Email != "" {
+			Email := queryParams.Get("email")
+			filter["Email"] = Email
+		}
 		if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
 			id := queryParams.Get("NMK_Code")
 			ObjectID, err := primitive.ObjectIDFromHex(id)
@@ -72,6 +76,7 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		})
 	}
 }
+
 func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var nmk models.NMK

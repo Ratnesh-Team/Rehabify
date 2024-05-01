@@ -69,7 +69,7 @@ const navigationConfig: NavigationTree[] = [
     {
         key: 'register',
         path: '/Register',
-        title: ' NMK Registration ',
+        title: 'Manage NMK',
         translateKey: 'Register',
         icon: 'users',
         type: NAV_ITEM_TYPE_ITEM,

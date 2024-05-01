@@ -40,10 +40,10 @@ const Controlled: React.FC<Props> = () => {
 
     return (
         <div style={blur ? { filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none' } : {}}>
-            <div className="flex justify-between">
+            <div className="flex  flex-col justify end  sm:flex-row  justify-between">
 
                 <div><h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1></div>
-                <div> <Button variant="solid" onClick={openDialog}>Register Doctor</Button></div>
+                <div className="flex justify-end mb-2"> <Button variant="solid" onClick={openDialog}>Register Doctor</Button></div>
 
             </div>
 
@@ -70,10 +70,10 @@ const Controlled: React.FC<Props> = () => {
             {selectedDoctor && (
                 <Dialog isOpen={true} onClose={handleCloseDialog} >
                     {/* Render dialog content here */}
-                    <div className="p-4">
-                        <div className='flex justify-between'>
+                    <div className="p-4 ">
+                        <div className="flex justify-between">
 
-                            <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="square-full h-32 w-32 mb-4 rounded" />
+                            <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="flex square-full h-1/3 w-1/3 mb-4 rounded" />
                             <div className="flex flex-col">
                                 <h2 className="text-2xl font-bold mb-2">{selectedDoctor.Name}</h2>
                                 <p className="mb-2">

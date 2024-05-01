@@ -14,7 +14,7 @@ type NMK struct {
 	District      string `json:"District" bson:"District"`
 	Pincode      int `json:"Pincode" bson:"Pincode"`
 	IsVerified    bool `json:"IsVerified" bson:"IsVerified"`
-	EstablishedYear  string `json:"Established_Year" bson:"Established_Year"`
+	EstablishedYear  int `json:"Established_Year" bson:"Established_Year"`
 	NMK_Image     string `json:"NMK_Image" bson:"NMK_Image"`
 	NMK_Verification_Image string `json:"NMK_Verification_Image" bson:"NMK_Verification_Image"`
 }

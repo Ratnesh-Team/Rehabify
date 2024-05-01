@@ -175,8 +175,8 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                 <Form>
                                     <FormContainer >
                                         <Grid container spacing={3}>
-                                            <Grid item xs={6} sm={6} style={{
-                                                paddingTop: "0px",
+                                            <Grid item xs={12} sm={6} style={{
+
                                             }}>
                                                 <FormItem
                                                     label="Name"
@@ -193,8 +193,8 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
-                                                paddingTop: "0px"
+                                            <Grid item xs={12} sm={6} style={{
+
                                             }}>
                                                 <FormItem
                                                     label="Description"
@@ -212,7 +212,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
 
@@ -231,7 +231,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
 
@@ -251,7 +251,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
 
                                                 paddingTop: "0px",
                                             }}>
@@ -270,7 +270,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -289,7 +289,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                             </Grid>
 
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -307,7 +307,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={6} sm={6} style={{
+                                            <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem

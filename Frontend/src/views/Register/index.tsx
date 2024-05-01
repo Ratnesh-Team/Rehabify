@@ -104,12 +104,10 @@ const validationSchema = Yup.object().shape({
 
 
 const index = () => {
-    const [dialogIsOpen, setIsOpen] = useState<boolean>(false);
+    
     const [files,setFiles] = useState<string>("")
     const [files2,setFiles2] = useState<string>("")
-    const openDialog = () => {
-        setIsOpen(true)
-    }
+    
 
     const onUpload = async (files: File[], imageField: string) => {
         const formData = new FormData();
@@ -147,9 +145,9 @@ const index = () => {
         <>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
-                <Button variant='solid' onClick={openDialog} >Register User</Button>
+              
             </Box>
-            {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setIsOpen} />}
+           
 
             <div style={{ marginTop: "2rem" }}>
                 <Formik
