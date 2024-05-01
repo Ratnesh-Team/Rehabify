@@ -3,15 +3,21 @@ import { Card, Pagination, Input, Dialog, Button } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
 import CardData from './types';
 import '@fortawesome/fontawesome-free/css/all.css';
+import AddDoctor from './addDoctor';
 
 
 interface Props { }
 
 const Controlled: React.FC<Props> = () => {
+    const [dialogIsOpen, setIsOpen] = useState<boolean>(false);
     const [page, setPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedDoctor, setSelectedDoctor] = useState<CardData | null>(null);
     const [blur, setBlur] = useState(false);
+
+    const openDialog = () => {
+        setIsOpen(true)
+    }
 
     const onPageChange = (newPage: number) => {
         setPage(newPage);
@@ -34,9 +40,18 @@ const Controlled: React.FC<Props> = () => {
 
     return (
         <div style={blur ? { filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none' } : {}}>
-            <h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1>
+            <div className="flex justify-between">
+
+                <div><h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1></div>
+                <div> <Button variant="solid" onClick={openDialog}>Register Doctor</Button></div>
+
+            </div>
+
+
+            {dialogIsOpen && <AddDoctor dialogIsOpen={dialogIsOpen} setIsOpen={setIsOpen} />}
             {/* Search Input */}
             <div className="flex justify-between items-center mb-4">
+
                 <div className="flex-grow"></div> {/* Empty div to push the search input to the right */}
                 <div > {/* Adjust the width of the search input container */}
                     <Input
