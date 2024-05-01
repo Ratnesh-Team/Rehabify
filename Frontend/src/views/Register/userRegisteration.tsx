@@ -156,7 +156,8 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                 shouldFocusAfterRender={true}
             >
                 <h2>User Registration</h2>
-                <div className="max-h-96 overflow-y-auto">
+                <br />
+                <div className="custom-scrollbar">
                     <div className="flex flex-col h-full justify-between">
 
 

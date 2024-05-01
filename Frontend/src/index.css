@@ -1,1 +1,16 @@
 @import "./assets/styles/app.css";
+.custom-scrollbar {
+    max-height: 55vh; 
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+    width: 6px;
+}

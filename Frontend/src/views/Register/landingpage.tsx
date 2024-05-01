@@ -50,8 +50,13 @@ function LandingPage() { // Capitalized function name for convention
                 <h1>Waiting for approval</h1>
             ) : flag === 'three' ? (
                 <>
-                    <Button variant='solid' onClick={openDialog}>Register User</Button>
-                    {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} />}
+                    <div style={{ textAlign: 'center', marginTop: '30vh' }}>
+                        <pre>Your Uploaded document is Verified</pre>
+                        <pre>You can now add Users to your Kendra</pre>
+                        <br />
+                        <Button variant='solid' onClick={openDialog}>Register User</Button>
+                        {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} />}
+                    </div>
                 </>
             ) : null}
         </div>
