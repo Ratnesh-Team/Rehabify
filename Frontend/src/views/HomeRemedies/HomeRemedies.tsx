@@ -4,8 +4,11 @@ import { cardData, fetchData } from '../HomeRemedies/cardData';
 import CardData from './types';
 import { Link } from 'react-router-dom';
 
+interface Props {
+    numberOfCardsToShow: number; // Prop to specify the number of cards to display
+}
 
-const Homeremedies: React.FC = () => {
+const Homeremedies: React.FC<Props> = ({ numberOfCardsToShow }) => {
     const [isLoading, setIsLoading] = useState(true);
     const [cards, setCards] = useState<CardData[]>([]);
 
@@ -16,14 +19,16 @@ const Homeremedies: React.FC = () => {
         });
     }, []);
 
+    const displayedCards = cards.slice(0, numberOfCardsToShow);
+
     return (
         <div className="flex flex-col items-center">
             <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
             {isLoading ? (
                 <div className='centre'>Loading...</div>
             ) : (
-                <div className="flex flex-wrap justify-around gap-6" >
-                    {cards.map((card) => (
+                <div className="flex flex-wrap justify-around gap-6">
+                    {displayedCards.map((card) => (
                         <div key={card.ID} className="max-w-xs mb-6">
                             <Link to={`/blog${card.ID}`} className="max-w-xs mb-6">
                                 <Card
