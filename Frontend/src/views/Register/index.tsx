@@ -14,11 +14,12 @@ import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
-import { Alert } from '@/components/ui'
+import { Alert, Notification, toast } from '@/components/ui'
 import DatePicker from '@/components/ui/DatePicker'
 import type { FieldProps } from 'formik'
 import UserRegisteration from './userRegisteration'
 import { image } from 'd3-fetch'
+import { Base_Url } from '@/configs/app.config'
 
 
 type Option = {
@@ -98,16 +99,17 @@ const validationSchema = Yup.object().shape({
     state: Yup.string().required('State Required'),
     district: Yup.string().required('District Required'),
     pinCode: Yup.string().required('Pincode Required'),
-    yearOfRegistrtion: Yup.string().required('Date Required!').nullable(),
+    yaerOfRegistration: Yup.string().required('Date Required!').nullable(),
 
 })
 
 
 const index = () => {
-    
-    const [files,setFiles] = useState<string>("")
-    const [files2,setFiles2] = useState<string>("")
-    
+    const [notification, setNotification] = useState<string | null>(null);
+
+    const [files, setFiles] = useState<string>("")
+    const [files2, setFiles2] = useState<string>("")
+
 
     const onUpload = async (files: File[], imageField: string) => {
         const formData = new FormData();
@@ -121,7 +123,7 @@ const index = () => {
             });
             const data = await response.json();
             console.log('Image uploaded to Cloudinary:', data.secure_url);
-            
+
             if (imageField === 'image1') {
                 setFiles(data.secure_url);
             } else if (imageField === 'image2') {
@@ -133,21 +135,57 @@ const index = () => {
 
         }
     };
+
     const navigate = useNavigate();
-    const submit = () => {
-        console.log('submitted')
-    }
+
     const handle = () => {
         navigate('/Register/userRegistration')
     }
+
+    const openNotification = (
+        type: 'success' | 'warning' | 'danger' | 'info',
+        Message: string
+    ) => {
+        toast.push(
+            <Notification
+                title={type.charAt(0).toUpperCase() + type.slice(1)}
+                type={type}
+            >
+                {Message}
+            </Notification>
+        )
+    }
+
+    const submit = async (values: any) => {
+        try {
+            const response = await fetch(Base_Url + '/addNmk', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+            const data = await response.json();
+            console.log('Success:', data);
+            if (data.status === 200) {
+                openNotification('success', 'NMK Registered Successfully');
+                navigate('/Register/approval')
+            }
+            else {
+                openNotification('danger', 'Failed to Register NMK');
+            }
+        } catch (error) {
+            
+        }
+    };
 
     return (
         <>
             <Box display="flex" justifyContent={"space-between"}>
                 <Typography variant='h4' fontWeight="Bold"> Register for NMK Here </Typography>
-              
+
             </Box>
-           
+
 
             <div style={{ marginTop: "2rem" }}>
                 <Formik
@@ -160,30 +198,45 @@ const index = () => {
                         state: '',
                         district: '',
                         pinCode: '',
-                        yearOfRegistrtion: Date.now(),
+                        yaerOfRegistration:'',
                         image1: '',
                         image2: '',
 
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={(values, { resetForm, setSubmitting }) => {
-                        
-                        values.image1 = files
-                        values.image2 = files2
-                        console.log(values)
+                    onSubmit={(value, { resetForm, setSubmitting }) => {
+                        // Define the values object
+                        value.image1 = files;
+                        value.image2 = files2;
+                        const data = {
+                            "Name": value.name,
+                            "Address": value.address,
+                            "Owner_Name": value.ownerName,
+                            "Contact_Number": parseInt(value.contactNumber),
+                            "Email": value.email,
+                            "ImageURL": value.image1,
+                            "State": value.state,
+                            "District": value.district,
+                            "Pincode": parseInt(value.pinCode), // Convert to integer
+                            "IsVerified": false,
+                            "Established_Year": parseInt(value.yaerOfRegistration),
+                            "NMK_Verification_Image": value.image2,
+                        };
+                        submit(data);
                         setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2))
-                            setSubmitting(false)
-                            resetForm()
-                        }, 400)
+                            // alert(JSON.stringify(value, null, 2));
+                            setSubmitting(false);
+                            resetForm();
+                        }, 400);
                     }}
+
                 >
                     {({ values, touched, errors, resetForm }) => (
                         <Form>
                             <FormContainer >
                                 <Grid container spacing={3}>
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -202,7 +255,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -221,7 +274,7 @@ const index = () => {
                                     </Grid>
 
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -239,7 +292,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
                                         <FormItem
@@ -256,7 +309,7 @@ const index = () => {
                                             />
                                         </FormItem>
                                     </Grid>
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -290,7 +343,7 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -308,7 +361,7 @@ const index = () => {
                                             />
                                         </FormItem>
                                     </Grid>
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
@@ -327,33 +380,24 @@ const index = () => {
                                         </FormItem>
                                     </Grid>
 
-                                    <Grid item xs={12}sm={6} style={{
+                                    <Grid item xs={12} sm={6} style={{
 
                                         paddingTop: "0px",
                                     }}>
 
 
                                         <FormItem
-                                            asterisk
-                                            label="Year Of Registration"
-                                            invalid={errors.yearOfRegistrtion && touched.yearOfRegistrtion}
-                                            errorMessage={errors.yearOfRegistrtion}
+                                            label="Year of Registration"
+                                            invalid={errors.yaerOfRegistration && touched.yaerOfRegistration}
+                                            errorMessage={errors.yaerOfRegistration}
                                         >
-                                            <Field name="yearOfRegistrtion" placeholder="Date">
-                                                {({ field, form }: FieldProps<FormModel>) => (
-                                                    <DatePicker
-                                                        field={field}
-                                                        form={form}
-                                                        value={new Date(values.yearOfRegistrtion)} // Convert string to Date object
-                                                        onChange={(date) => {
-                                                            form.setFieldValue(
-                                                                "yearOfRegistrtion",
-                                                                date
-                                                            )
-                                                        }}
-                                                    />
-                                                )}
-                                            </Field>
+                                            <Field
+                                                type="number"
+                                                autoComplete="off"
+                                                name="yaerOfRegistration"
+                                                placeholder="Year of Registration"
+                                                component={Input}
+                                            />
                                         </FormItem>
                                     </Grid>
 
@@ -381,12 +425,12 @@ const index = () => {
                                     <Grid item xs={12} sm={6} style={{
                                         paddingTop: "0px"
                                     }}>
-                                <h6>Upload Nasha Mukti Kendra Photo</h6>
+                                        <h6>Upload Nasha Mukti Kendra Photo</h6>
                                         <Field name="image1">
-                                            {({ field,form }: FieldProps) => (
-                                                <Upload draggable onChange={(files) => onUpload(files, 'image1') } />
+                                            {({ field, form }: FieldProps) => (
+                                                <Upload draggable onChange={(files) => onUpload(files, 'image1')} />
                                             )}
-                                            
+
                                         </Field>
                                     </Grid>
                                     <Grid item xs={12} sm={6} style={{
@@ -423,7 +467,7 @@ const index = () => {
                         </Form>
                     )}
                 </Formik>
-            </div>
+            </div >
 
 
 

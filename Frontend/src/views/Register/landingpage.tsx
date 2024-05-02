@@ -4,12 +4,14 @@ import Index from './index'; // Assuming index is a component, capitalized for c
 import { Button } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
 import { useAppSelector } from '@/store';
+import { useNavigate } from 'react-router-dom'
+import Approval from './approval';
 
 function LandingPage() { // Capitalized function name for convention
     const [flag, setFlag] = useState<string>('');
     const { email } = useAppSelector((state) => state.auth.user);
     const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
-
+    const navigate = useNavigate();
     const openDialog = () => {
         setDialogIsOpen(true);
     };
@@ -47,7 +49,7 @@ function LandingPage() { // Capitalized function name for convention
             {flag === 'one' ? (
                 <Index />
             ) : flag === 'two' ? (
-                <h1>Waiting for approval</h1>
+                Approval()
             ) : flag === 'three' ? (
                 <>
                     <div style={{ textAlign: 'center', marginTop: '30vh' }}>
