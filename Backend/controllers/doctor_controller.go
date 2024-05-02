@@ -1,12 +1,14 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/Ratnesh-Team/Rehabify/models"
 	"github.com/Ratnesh-Team/Rehabify/repository"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // GetNMKCodes is a handler to get all NMK codes.
@@ -59,6 +61,43 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 			"status":  http.StatusOK,
 			"message": "NMK codes fetched successfully",
 			"data":    doctorlist,
+		})
+	}
+}
+
+// this is schema
+func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
+	fmt.Println("123")
+	return func(c *gin.Context) {
+		var doctor models.DoctorData
+		if err := c.BindJSON(&doctor); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "Failed to parse request body",
+				"data":    nil,
+			})
+			return
+		}
+
+		// Insert the NMK code into the repository
+		doctor.IsVerified = false
+		id, err := nmkRepo.InsertOne(doctor)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  http.StatusInternalServerError,
+				"message": "Failed to insert Doctor",
+				"data":    nil,
+			})
+			return
+		}
+
+		fmt.Println("Doctor", id)
+		// Assign the ID to the doctor struct
+		doctor.ID = id.(primitive.ObjectID).Hex()
+		c.JSON(http.StatusOK, gin.H{
+			"status":  http.StatusCreated,
+			"message": "NMK code inserted successfully",
+			"data":    doctor,
 		})
 	}
 }

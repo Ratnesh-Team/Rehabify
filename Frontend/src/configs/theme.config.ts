@@ -27,17 +27,17 @@ export type ThemeConfig = {
  * Since some configurations need to be match with specific themes,
  * we recommend to use the configuration that generated from demo.
  */
-export const themeConfig: ThemeConfig = {
-    themeColor: 'green',
-    direction: 'ltr',
-    mode: 'light',
-    primaryColorLevel: 600,
-    cardBordered: true,
-    panelExpand: false,
-    controlSize: 'md',
-    navMode: 'transparent',
-    layout: {
-        type: 'modern',
-        sideNavCollapse: false,
-    },
+export const themeConfig: ThemeConfig ={
+  "themeColor": "orange",
+  "direction": "ltr",
+  "mode": "light",
+  "primaryColorLevel": 400,
+  "cardBordered": true,
+  "panelExpand": false,
+  "controlSize": "md",
+  "navMode": "transparent",
+  "layout": {
+    "type": "modern",
+    "sideNavCollapse": false
+  },
 }
