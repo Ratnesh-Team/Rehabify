@@ -77,19 +77,29 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 			return
 		}
 		defer cursor.Close(c.Request.Context())
-
-		for cursor.Next(c.Request.Context()) {
-			var user models.User
-			if err := cursor.Decode(&user); err != nil {
-				resp := responses.ApplicationResponse{
-					Status:  http.StatusInternalServerError,
-					Message: "Error decoding user",
-				}
-				c.JSON(http.StatusInternalServerError, resp)
-				return
+		err = cursor.All(c.Request.Context(), &users)
+		if err != nil {
+			resp := responses.ApplicationResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "Error decoding user",
 			}
-			users = append(users, user)
+			c.JSON(http.StatusInternalServerError, resp)
+			return
+
 		}
+
+		// for cursor.Next(c.Request.Context()) {
+		// 	var user models.User
+		// 	if err := cursor.Decode(&user); err != nil {
+		// 		resp := responses.ApplicationResponse{
+		// 			Status:  http.StatusInternalServerError,
+		// 			Message: "Error decoding user",
+		// 		}
+		// 		c.JSON(http.StatusInternalServerError, resp)
+		// 		return
+		// 	}
+		// 	users = append(users, user)
+		// }
 
 		resp := responses.ApplicationResponse{
 			Status:  http.StatusOK,

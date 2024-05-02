@@ -25,6 +25,7 @@ type Person = {
     Nasha_Mukti_Centre_Address: string;
     Joining_Date: string;
     Gender: string;
+    Employment_Status: number;
 
 };
 
@@ -52,9 +53,9 @@ const SimpleTable = () => {
             accessorKey: 'Gender',
         },
         {
-            header: 'NMK Name',
+            header: 'Joing Date',
             accessorKey: 'Joining_Date',
-        },
+        }
     ];
 
     const [data, setData] = useState<Person[]>([]);
@@ -93,11 +94,12 @@ const SimpleTable = () => {
                 }
 
                 const mappedData: Person[] = responseData.data.map((item: any) => ({
-                    Name: item.Name,
+                    Name: "*******",
                     Addiction_Type: item.Addiction_Type,
                     State: item.State,
                     Gender: item.Gender,
                     Joining_Date: item.Joining_Date,
+                    Employment_Status: item.Employment_Status === 0 ? "No" : "Yes"
                 }));
 
                 setData(mappedData);

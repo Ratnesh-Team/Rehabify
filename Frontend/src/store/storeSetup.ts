@@ -27,7 +27,7 @@ const persistConfig = {
     key: PERSIST_STORE_NAME,
     keyPrefix: '',
     storage,
-    whitelist: ['auth', 'locale'],
+    whitelist: ['auth', 'theme', 'locale'],
 }
 
 interface CustomStore extends Store<RootState, AnyAction> {
@@ -66,8 +66,8 @@ export function injectReducer<S>(key: string, reducer: Reducer<S, Action>) {
         store.replaceReducer(
             persistReducer(
                 persistConfig,
-                rootReducer(store.asyncReducers) as Reducer
-            )
+                rootReducer(store.asyncReducers) as Reducer,
+            ),
         )
     }
     persistor.persist()

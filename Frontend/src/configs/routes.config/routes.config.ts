@@ -36,7 +36,7 @@ export const protectedRoutes = [
     {
         key: 'home-remedies',
         path: '/home-remedies',
-        component: lazy(() => import('@/views/HomeRemedies')),
+        component: lazy(() => import('@/views/HomeRemedies/HomeRemedies')),
         authority: ['USER'],
     },
     {
@@ -48,7 +48,7 @@ export const protectedRoutes = [
     {
         key: 'register',
         path: '/Register',
-        component: lazy(() => import('@/views/Register')),
+        component: lazy(() => import('@/views/Register/landingpage')),
         authority: ['ADMIN'],
     },
     {
@@ -58,9 +58,36 @@ export const protectedRoutes = [
         authority: ['USER'],
     },
     {
-        key: 'userRegistration',
-        path: '/Register/userRegistration',
-        component: lazy(() => import('@/views/Register/userRegisteration')),
+        key: 'approval',
+        path: '/Register/approval',
+        component: lazy(() => import('@/views/Register/approval')),
         authority: ['ADMIN'],
     },
+    {
+        key: 'doctor',
+        path: '/Doctor',
+        component: lazy(() => import('@/views/Doctor')),
+        authority: ['USER'],
+    },
+    {
+        key: 'blog1',
+        path: '/blog1',
+        component: lazy(() => import('@/views/HomeRemedies/blog1')),
+        authority: ['USER'],
+    },
+    {
+        key: 'blog2',
+        path: '/blog2',
+        component: lazy(() => import('@/views/HomeRemedies/blog2')),
+    },
+    {
+        key: 'blog3',
+        path: '/blog3',
+        component: lazy(() => import('@/views/HomeRemedies/blog3')),
+    },
+    {
+        key: 'blog4',
+        path: '/blog4',
+        component: lazy(() => import('@/views/HomeRemedies/blog4')),
+    }
 ]

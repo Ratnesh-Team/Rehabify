@@ -21,6 +21,7 @@ const HeaderActionsEnd = () => {
         <>
            <ModeSwitcher />
             <SidePanel />
+            
             <UserDropdown hoverable={false} />
         </>
     )

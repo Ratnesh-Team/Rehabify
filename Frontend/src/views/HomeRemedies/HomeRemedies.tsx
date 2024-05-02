@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card } from '@/components/ui';
 import { cardData, fetchData } from '../HomeRemedies/cardData';
-import CardData from './types'; 
+import CardData from './types';
 import { Link } from 'react-router-dom';
 
 
@@ -11,7 +11,7 @@ const Homeremedies: React.FC = () => {
 
     useEffect(() => {
         fetchData().then(() => {
-            setCards(cardData);     
+            setCards(cardData);
             setIsLoading(false);
         });
     }, []);
@@ -25,7 +25,7 @@ const Homeremedies: React.FC = () => {
                 <div className="flex flex-wrap justify-around gap-6" >
                     {cards.map((card) => (
                         <div key={card.ID} className="max-w-xs mb-6">
-                            <Link to={`/home-remedies?id=${card.ID}`} className="max-w-xs mb-6">
+                            <Link to={`/blog${card.ID}`} className="max-w-xs mb-6">
                                 <Card
                                     clickable
                                     className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
@@ -48,8 +48,8 @@ const Homeremedies: React.FC = () => {
                                 >
                                     <h4 className="font-bold my-3">{card.Title}</h4>
                                     <p className="text-sm h-20 overflow-hidden">
-                                        {card.Content.split(" ").length > 20 
-                                            ? `${card.Content.split(" ").slice(0, 20).join(" ")}...` 
+                                        {card.Content.split(" ").length > 20
+                                            ? `${card.Content.split(" ").slice(0, 20).join(" ")}...`
                                             : card.Content}
                                     </p>
                                 </Card>

@@ -7,6 +7,7 @@ import (
 	"github.com/Ratnesh-Team/Rehabify/repository"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // GetNMKCodes is a handler to get all NMK codes.
@@ -23,10 +24,23 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		var nmkList []models.NMK
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
+        
+		if Email := queryParams.Get("email"); Email != "" {
+			Email := queryParams.Get("email")
+			filter["Email"] = Email
+		}
 		if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
-			filter["NMK_Code"] = NMK_Code
-		} else {
-			filter = nil
+			id := queryParams.Get("NMK_Code")
+			ObjectID, err := primitive.ObjectIDFromHex(id)
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{
+					"status":  http.StatusBadRequest,
+					"message": "Invalid NMK code",
+					"data":    nil,
+				})
+				return
+			}
+			filter["_id"] = ObjectID
 		}
 
 		// Fetch all NMK codes from the repository
@@ -59,6 +73,37 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 			"status":  http.StatusOK,
 			"message": "NMK codes fetched successfully",
 			"data":    nmkList,
+		})
+	}
+}
+
+func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var nmk models.NMK
+		if err := c.BindJSON(&nmk); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "Failed to bind NMK data",
+				"data":    nil,
+			})
+			return
+		}
+		nmk.IsVerified = false
+
+		// Insert NMK data into the repository
+		if _, err := nmkRepo.InsertOne(nmk); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  http.StatusInternalServerError,
+				"message": "Failed to insert NMK data",
+				"data":    nil,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  http.StatusOK,
+			"message": "NMK data inserted successfully",
+			"data":    nmk,
 		})
 	}
 }

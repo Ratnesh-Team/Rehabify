@@ -14,10 +14,13 @@ func RehabifyRoutes(router *gin.Engine) {
 	NMK := config.GetRepoCollection("NMK")
 	home_remedies := config.GetRepoCollection("Home-Remedies")
 	AuthDB := config.GetRepoCollection("authDB")
-	
+	DoctorDB:= config.GetRepoCollection("DoctorDB")
+
 	router.GET("/users", controllers.GetUsers(user))
 	router.GET("/NMK", controllers.GetNMK(NMK))
 	router.GET("/home-remedies", controllers.GetHomeremediesDetails(home_remedies))
 	router.POST("/signUp", controllers.AddUser(AuthDB))
 	router.POST("/signIn", controllers.VerifyUser(AuthDB))
+	router.GET("/doctor", controllers.GetDoctor(DoctorDB))
+	router.POST("/addNmk", controllers.AddNMK(NMK))
 }
