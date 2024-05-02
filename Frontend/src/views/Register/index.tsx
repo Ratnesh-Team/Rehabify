@@ -20,6 +20,7 @@ import type { FieldProps } from 'formik'
 import UserRegisteration from './userRegisteration'
 import { image } from 'd3-fetch'
 import { Base_Url } from '@/configs/app.config'
+import { useAppSelector } from '@/store'
 
 
 type Option = {
@@ -73,8 +74,8 @@ type FormModel = {
 
     yearOfRegistration: Date | null
 
-
 }
+
 
 
 const validationSchema = Yup.object().shape({
@@ -105,6 +106,9 @@ const validationSchema = Yup.object().shape({
 
 
 const index = () => {
+    const { email } = useAppSelector(
+        (state) => state.auth.user
+    )
     const [notification, setNotification] = useState<string | null>(null);
 
     const [files, setFiles] = useState<string>("")
@@ -194,7 +198,7 @@ const index = () => {
                         address: '',
                         ownerName: '',
                         contactNumber: '',
-                        email: '',
+                        email: email,
                         state: '',
                         district: '',
                         pinCode: '',
@@ -213,7 +217,7 @@ const index = () => {
                             "Address": value.address,
                             "Owner_Name": value.ownerName,
                             "Contact_Number": parseInt(value.contactNumber),
-                            "Email": value.email,
+                            "Email": email,
                             "ImageURL": value.image1,
                             "State": value.state,
                             "District": value.district,
@@ -268,6 +272,7 @@ const index = () => {
                                                 autoComplete="off"
                                                 name="email"
                                                 placeholder="Email"
+                                                disabled={true}
                                                 component={Input}
                                             />
                                         </FormItem>
