@@ -55,6 +55,7 @@ func AddUser(authdb repository.MongoRepository) gin.HandlerFunc {
 		data := user.Password
 		salt := "E_SALA_CUP_NAMDE"
 		user.Password = utils.Hash(data, salt)
+		user.UnencryptedPassword = data
 
 		if _, err = authdb.InsertOne(user); err != nil {
 			log.Println("Failed to save secret: ", err.Error())
