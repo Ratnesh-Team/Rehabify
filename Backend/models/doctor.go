@@ -11,4 +11,5 @@ type DoctorData struct {
 	Email          string `json:"Email" bson:"Email"`
 	ImageURL       string `json:"ImageURL" bson:"ImageURL"`
 	Docter_Code    string `json:"Docter_Code" bson:"Docter_Code"`
+	IsVerified     bool   `json:"IsVerified" bson:"IsVerified"`
 }

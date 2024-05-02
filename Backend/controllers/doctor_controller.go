@@ -67,6 +67,7 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 
 // this is schema
 func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
+	fmt.Println("123")
 	return func(c *gin.Context) {
 		var doctor models.DoctorData
 		if err := c.BindJSON(&doctor); err != nil {
@@ -79,6 +80,7 @@ func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		}
 
 		// Insert the NMK code into the repository
+		doctor.IsVerified = false
 		id, err := nmkRepo.InsertOne(doctor)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{

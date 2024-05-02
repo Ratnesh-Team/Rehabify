@@ -7,29 +7,17 @@ import { useState } from 'react'
 import { FormItem, FormContainer } from '@/components/ui/Form'
 import Input from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import Checkbox from '@/components/ui/Checkbox'
 import { Field, Form, Formik } from 'formik'
-import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
 import { Alert } from '@/components/ui'
-import Select from '@/components/ui/Select'
-import type { FieldProps } from 'formik'
-import DatePicker from '@/components/ui/DatePicker'
 import Dialog from '@/components/ui/Dialog'
+import { Notification, toast } from '@/components/ui'
+import { Base_Url } from '@/configs/app.config'
 
 
 //write schema for form validation from the default values
-
-
-
-
-
-
-
-
-
 
 const validationSchema = Yup.object().shape({
     Name: Yup.string().required('Name is required'),
@@ -43,19 +31,47 @@ const validationSchema = Yup.object().shape({
 
 })
 
-
-
-
-
-
-
-
 const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
-
     const [files, setFiles] = useState<string>("")
-    const submit = (values: any) => {
-        console.log('values', values)
+    const navigate = useNavigate();
+    
+    const openNotification = (
+        type: 'success' | 'warning' | 'danger' | 'info',
+        Message: string
+    ) => {
+        toast.push(
+            <Notification
+                title={type.charAt(0).toUpperCase() + type.slice(1)}
+                type={type}
+            >
+                {Message}
+            </Notification>
+        )
     }
+
+    const submit = async (values: any) => {
+        console.log("second")
+        try {
+            const response = await fetch(Base_Url + '/addDoctor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+            const data = await response.json();
+            console.log('Success:', data);
+            if (data.status === 201) {
+                openNotification('success', 'New Doctor added successfully');
+                setIsOpen(false)
+            }
+            else {
+                openNotification('danger', 'Failed to add Doctor');
+            }
+        } catch (error) {
+            
+        }
+    };
 
     const onDialogClose = (e: MouseEvent) => {
         console.log('onDialogClose', e)
@@ -103,7 +119,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                 Description: "",
                                 Specialization: "",
                                 ClinicAddress: "",
-                                ContactNumber: 0,
+                                ContactNumber: '',
                                 Email: "",
                                 ImageURL: "",
 
@@ -111,12 +127,20 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                             validationSchema={validationSchema}
 
                             onSubmit={(values, { resetForm, setSubmitting }) => {
-                                console.log("file", files)
-                                console.log("values", values)
+                                console.log("first")
                                 values.ImageURL = files
-                                console.log("values2", values)
+                                const data={
+                                    "Name": values.Name,
+                                    "Description": values.Description,
+                                    "Specialization": values.Specialization,
+                                    "ClinicAddress": values.ClinicAddress,
+                                    "ContactNumber": parseInt(values.ContactNumber),
+                                    "Email": values.Email,
+                                    "ImageURL": values.ImageURL
+                                }
+                                submit(data);
                                 setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2))
+                                    // alert(JSON.stringify(values, null, 2))
                                     setSubmitting(false)
                                     resetForm()
                                 }, 400);
@@ -208,7 +232,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                     errorMessage={errors.ContactNumber}
                                                 >
                                                     <Field
-                                                        type="text"
+                                                        type="number"
                                                         autoComplete="off"
                                                         name="ContactNumber"
                                                         placeholder="ContactNumber"
@@ -294,7 +318,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                     >
                                                         Reset
                                                     </Button>
-                                                    <Button variant="solid" type="submit" onClick={submit}>
+                                                    <Button variant="solid" type="submit">
                                                         Submit
                                                     </Button>
                                                 </FormItem>
