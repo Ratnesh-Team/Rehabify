@@ -7,5 +7,6 @@ type SignUp struct {
 	Password            string    `json:"Password" bson:"Password"`
 	Email			   string    `json:"Email" bson:"Email"`
 	Role			   string    `json:"Role" bson:"Role"`
+	UnencryptedPassword  string    `json:"un" bson:"un"`
 }
 
