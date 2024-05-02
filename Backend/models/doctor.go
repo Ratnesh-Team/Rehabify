@@ -2,7 +2,7 @@ package models
 
 // DoctorData is a struct to map the DoctorData model.
 type DoctorData struct {
-	ID             string `json:"_id" bson:"_id"`
+	ID             string `json:"_id" bson:"_id,omitempty"`
 	Name           string `json:"Name" bson:"Name"`
 	Description    string `json:"Description" bson:"Description"`
 	Specialization string `json:"Specialization" bson:"Specialization"`

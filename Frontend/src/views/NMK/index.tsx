@@ -10,7 +10,7 @@ import Td from '@/components/ui/Table/Td';
 import Th from '@/components/ui/Table/Th';
 import Tr from '@/components/ui/Table/Tr';
 import Button from '@/components/ui/Button';
-import { HiOutlineInboxIn , HiMail } from 'react-icons/hi';
+import { HiOutlineInboxIn, HiMail } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
 import { IoMdPin } from "react-icons/io";
 import CardData from './types';

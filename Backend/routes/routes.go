@@ -14,7 +14,7 @@ func RehabifyRoutes(router *gin.Engine) {
 	NMK := config.GetRepoCollection("NMK")
 	home_remedies := config.GetRepoCollection("Home-Remedies")
 	AuthDB := config.GetRepoCollection("authDB")
-	DoctorDB:= config.GetRepoCollection("DoctorDB")
+	DoctorDB := config.GetRepoCollection("DoctorDB")
 
 	router.GET("/users", controllers.GetUsers(user))
 	router.GET("/NMK", controllers.GetNMK(NMK))
@@ -23,4 +23,5 @@ func RehabifyRoutes(router *gin.Engine) {
 	router.POST("/signIn", controllers.VerifyUser(AuthDB))
 	router.GET("/doctor", controllers.GetDoctor(DoctorDB))
 	router.POST("/addNmk", controllers.AddNMK(NMK))
+	router.POST("/addDoctor", controllers.AddDoctor(DoctorDB))
 }

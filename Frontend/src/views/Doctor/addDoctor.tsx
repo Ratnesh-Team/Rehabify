@@ -22,87 +22,14 @@ import Dialog from '@/components/ui/Dialog'
 
 //write schema for form validation from the default values
 
-type Option = {
-    value: string
-    label: string
-}
-
-const genderOptions: Option[] = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'other', label: 'Other' },
-]
-
-const employmentOptions: Option[] = [
-    { value: 'employed', label: 'Employed' },
-    { value: 'unemployed', label: 'Unemployed' },
-    { value: 'student', label: 'Student' },
-    { value: 'retired', label: 'Retired' },
-    { value: 'housewife', label: 'Housewife' },
-
-]
-
-const addictionTypeOptions: Option[] = [
-    { value: 'alcohol', label: 'Alcohol' },
-    { value: 'tobacco', label: 'Tobacco' },
-    { value: 'cannabis', label: 'Cannabis' },
-    { value: 'opiods', label: 'Opiods' },
-    { value: 'benzodiazepines', label: 'Benzodiazepines' },
-    { value: 'cocaine', label: 'Cocaine' },
-    { value: 'amphetamines', label: 'Amphetamines' },
-    { value: 'hallucinogens', label: 'Hallucinogens' },
-    { value: 'inhalants', label: 'Inhalants' },
-    { value: 'phencyclidine', label: 'Phencyclidine' },
-    { value: 'other', label: 'Other' },
-]
 
 
-const options: Option[] = [
-    { value: 'Andhra Pradesh', label: 'Andhra Pradesh' },
-    { value: 'Arunachal Pradesh', label: 'Arunachal Pradesh' },
-    { value: 'Assam', label: 'Assam' },
-    { value: 'Bihar', label: 'Bihar' },
-    { value: 'Chhattisgarh', label: 'Chhattisgarh' },
-    { value: 'Goa', label: 'Goa' },
-    { value: 'Gujarat', label: 'Gujarat' },
-    { value: 'Haryana', label: 'Haryana' },
-    { value: 'Himachal Pradesh', label: 'Himachal Pradesh' },
-    { value: 'Jharkhand', label: 'Jharkhand' },
-    { value: 'Karnataka', label: 'Karnataka' },
-    { value: 'Kerala', label: 'Kerala' },
-    { value: 'Madhya Pradesh', label: 'Madhya Pradesh' },
-    { value: 'Maharashtra', label: 'Maharashtra' },
-    { value: 'Manipur', label: 'Manipur' },
-    { value: 'Meghalaya', label: 'Meghalaya' },
-    { value: 'Mizoram', label: 'Mizoram' },
-    { value: 'Nagaland', label: 'Nagaland' },
-    { value: 'Odisha', label: 'Odisha' },
-    { value: 'Punjab', label: 'Punjab' },
-    { value: 'Rajasthan', label: 'Rajasthan' },
-    { value: 'Sikkim', label: 'Sikkim' },
-    { value: 'Tamil Nadu', label: 'Tamil Nadu' },
-    { value: 'Telangana', label: 'Telangana' },
-    { value: 'Tripura', label: 'Tripura' },
-    { value: 'Uttar Pradesh', label: 'Uttar Pradesh' },
-    { value: 'Uttarakhand', label: 'Uttarakhand' },
-    { value: 'West Bengal', label: 'West Bengal' },
-    { value: 'Andaman and Nicobar Islands', label: 'Andaman and Nicobar Islands' },
-    { value: 'Chandigarh', label: 'Chandigarh' },
-    { value: 'Dadra and Nagar Haveli and Daman and Diu', label: 'Dadra and Nagar Haveli and Daman and Diu' },
-    { value: 'Delhi', label: 'Delhi' },
-    { value: 'Lakshadweep', label: 'Lakshadweep' },
-    { value: 'Puducherry', label: 'Puducherry' },
-]
-type FormModel = {
-
-    state: string
-    gender: string
-    employmentStatus: string
-    addictionType: string
-    yearOfRegistration: Date | null
 
 
-}
+
+
+
+
 
 const validationSchema = Yup.object().shape({
     Name: Yup.string().required('Name is required'),
@@ -111,8 +38,8 @@ const validationSchema = Yup.object().shape({
     ClinicAddress: Yup.string().required('ClinicAddress is required'),
     ContactNumber: Yup.number().required('ContactNumber is required'),
     Email: Yup.string().email("Invalid Email").required('Email is required'),
-    ImageURL: Yup.string().required('ImageURL is required'),
-    Doctor_Code: Yup.string().required('Doctor Code is required'),
+    // ImageURL: Yup.string().required('ImageURL is required'),
+
 
 })
 
@@ -125,14 +52,34 @@ const validationSchema = Yup.object().shape({
 
 const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
 
-    const submit = () => {
-        console.log('submitted')
+    const [files, setFiles] = useState<string>("")
+    const submit = (values: any) => {
+        console.log('values', values)
     }
 
     const onDialogClose = (e: MouseEvent) => {
         console.log('onDialogClose', e)
         setIsOpen(false)
     }
+    const onUpload = async (files: File[]) => {
+        const formData = new FormData();
+        formData.append('file', files[0]);
+        formData.append('upload_preset', 'pbfwqcie'); // Use your Cloudinary upload preset
+
+        try {
+            const response = await fetch('https://api.cloudinary.com/v1_1/daosik5yi/image/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            console.log('Image uploaded to Cloudinary:', data.secure_url);
+            setFiles(data.secure_url);
+
+        } catch (error) {
+            console.error('Error uploading image to Cloudinary:', error);
+
+        }
+    };
 
     return (
 
@@ -152,32 +99,34 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
 
                         <Formik
                             const initialValues={{
-                                Name: "Dr. Rahul Verma",
-                                Description: "Compassionate cardiologist specializing in heart rehabilitation.",
-                                Specialization: "Cardiology",
-                                ClinicAddress: "321 Oak Lane, Bangalore",
-                                ContactNumber: 91234567893,
-                                Email: "rahulverma@example.com",
-                                ImageURL: "https://thumbs.dreamstime.com/b/portrait-indian-doctor-portrait-male-indian-doctor-serious-expression-crossed-arms-wearing-white-coat-having-open-137577527.jpg",
-                                Doctor_Code: "DOC003"
+                                Name: "",
+                                Description: "",
+                                Specialization: "",
+                                ClinicAddress: "",
+                                ContactNumber: 0,
+                                Email: "",
+                                ImageURL: "",
+
                             }}
                             validationSchema={validationSchema}
+
                             onSubmit={(values, { resetForm, setSubmitting }) => {
-                                console.log(values)
+                                console.log("file", files)
+                                console.log("values", values)
+                                values.ImageURL = files
+                                console.log("values2", values)
                                 setTimeout(() => {
                                     alert(JSON.stringify(values, null, 2))
                                     setSubmitting(false)
                                     resetForm()
-                                }, 400)
+                                }, 400);
                             }}
                         >
                             {({ touched, errors, resetForm }) => (
                                 <Form>
                                     <FormContainer >
                                         <Grid container spacing={3}>
-                                            <Grid item xs={12} sm={6} style={{
-
-                                            }}>
+                                            <Grid item xs={12} sm={6} >
                                                 <FormItem
                                                     label="Name"
                                                     invalid={errors.Name && touched.Name}
@@ -193,9 +142,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                 </FormItem>
                                             </Grid>
 
-                                            <Grid item xs={12} sm={6} style={{
-
-                                            }}>
+                                            <Grid item xs={12} sm={6} >
                                                 <FormItem
                                                     label="Description"
                                                     invalid={errors.Description && touched.Description}
@@ -289,7 +236,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                             </Grid>
 
 
-                                            <Grid item xs={12} sm={6} style={{
+                                            {/* <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -305,9 +252,18 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                         component={Input}
                                                     />
                                                 </FormItem>
-                                            </Grid>
+                                            </Grid> } */}
 
                                             <Grid item xs={12} sm={6} style={{
+                                                paddingTop: "0px"
+                                            }}>
+                                                <h6>Upload Nasha Mukti Kendra Photo</h6>
+
+                                                <Upload draggable onChange={(file) => onUpload(file)} />
+                                            </Grid>
+
+
+                                            {/* <Grid item xs={12} sm={6} style={{
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
@@ -323,7 +279,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                         component={Input}
                                                     />
                                                 </FormItem>
-                                            </Grid>
+                                            </Grid> */}
 
 
 
