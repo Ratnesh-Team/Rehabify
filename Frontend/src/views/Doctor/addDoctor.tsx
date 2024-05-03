@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
 const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
     const [files, setFiles] = useState<string>("")
     const navigate = useNavigate();
-    
+
     const openNotification = (
         type: 'success' | 'warning' | 'danger' | 'info',
         Message: string
@@ -50,7 +50,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
     }
 
     const submit = async (values: any) => {
-        console.log("second")
+        console.log(values, JSON.stringify(values))
         try {
             const response = await fetch(Base_Url + '/addDoctor', {
                 method: 'POST',
@@ -69,7 +69,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                 openNotification('danger', 'Failed to add Doctor');
             }
         } catch (error) {
-            
+
         }
     };
 
@@ -129,7 +129,7 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                             onSubmit={(values, { resetForm, setSubmitting }) => {
                                 console.log("first")
                                 values.ImageURL = files
-                                const data={
+                                const data = {
                                     "Name": values.Name,
                                     "Description": values.Description,
                                     "Specialization": values.Specialization,

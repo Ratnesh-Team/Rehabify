@@ -6,10 +6,13 @@ import { Base_Url } from '@/configs/app.config';
 import { useAppSelector } from '@/store';
 import { useNavigate } from 'react-router-dom'
 import Approval from './approval';
+import NewNMK from './newNMK';
+import moveToNmK from './moveToNmK';
 
 function LandingPage() { // Capitalized function name for convention
     const [flag, setFlag] = useState<string>('');
     const { email } = useAppSelector((state) => state.auth.user);
+    const [id, setId] = useState<string>('')
     const [dialogIsOpen, setDialogIsOpen] = useState<boolean>(false);
     const navigate = useNavigate();
     const openDialog = () => {
@@ -33,6 +36,7 @@ function LandingPage() { // Capitalized function name for convention
             if (responseData.status === 200 && responseData.data !== null && responseData.data[0].IsVerified === true) {
                 console.log('User already registered');
                 setFlag('three');
+                setId(responseData.data[0]._id)
             }
             console.log('API Response:', responseData);
         } catch (error) {
@@ -51,15 +55,8 @@ function LandingPage() { // Capitalized function name for convention
             ) : flag === 'two' ? (
                 Approval()
             ) : flag === 'three' ? (
-                <>
-                    <div style={{ textAlign: 'center', marginTop: '30vh' }}>
-                        <pre>Your Uploaded document is Verified</pre>
-                        <pre>You can now add Users to your Kendra</pre>
-                        <br />
-                        <Button variant='solid' onClick={openDialog}>Register User</Button>
-                        {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} />}
-                    </div>
-                </>
+                // NewNMK()
+                moveToNmK({ id }) // Pass an object with the id property
             ) : null}
         </div>
     );
