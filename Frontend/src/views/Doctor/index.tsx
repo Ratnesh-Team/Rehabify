@@ -94,10 +94,11 @@ const Controlled: React.FC<Props> = () => {
                             <i className="fas fa-map-marker-alt"></i> Address: {selectedDoctor.ClinicAddress}
                         </p>
                         <div className='flex flex-row-reverse'>
-                            <a href="https://wa.me/?text=I'm%20interested%20in%20booking%20an%20appointment" target="_blank" rel="noopener noreferrer">
+                            <a href={`https://wa.me/+91${selectedDoctor.ContactNumber}?text=I'm%20interested%20in%20booking%20an%20appointment`} target="_blank" rel="noopener noreferrer">
                                 <Button variant="solid">Book Appointment</Button>
                             </a>
                         </div>
+
                     </div>
                 </Dialog>
             )}
