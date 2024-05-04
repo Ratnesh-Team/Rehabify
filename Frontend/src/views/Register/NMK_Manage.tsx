@@ -127,6 +127,7 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
     const [totalData, setTotalData] = useState(0);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [dataSubmitted, setDataSubmitted] = useState(false);
     const searchParams = new URLSearchParams(location.search);
     const NMK_Code = id
 
@@ -138,50 +139,51 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
         { value: 40, label: '40 / page' },
         { value: 50, label: '50 / page' },
     ];
+    const fetchData = async () => {
+        try {
+            const response = await fetch(`${Base_Url}/users?NMK_Code=${NMK_Code}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const responseData = await response.json();
+
+            console.log('API Response:', responseData);
+
+            if (!Array.isArray(responseData.data)) {
+                console.error('Invalid data format. Expected an array:', responseData.data);
+                return;
+            }
+
+            const mappedData: Person[] = responseData.data.map((item: any) => ({
+                Name: item.Name,
+                Age: item.Age,
+                Gender: item.Gender,
+                State: item.State,
+                District: item.District,
+                Guardian_Name: item.Guardian_Name,
+                Addiction_Type: item.Addiction_Type,
+                Addictio_Duration: item.Addiction_Duration,
+                Duration_of_Treatment: item['Duration_of-Treatment'], // Adjusted property name
+                Is_Treatment_Completed: item.Is_Treatment_Completed===true?"Yes":"No",
+                Under_Treatment: item.Under_Treatment===true?"Yes":"No",
+                Employment_Status: item.Employment_Status===1?"Employed":"Unemployed",
+                Joining_Date: item.Joining_Date, // Ensure proper formatting
+                Counselling_Count: item.Counselling_Count,
+                Counsellor_Name: item.Counsellor_Name,
+            }));
+
+            setData(mappedData);
+            setFilteredData(mappedData); // Initialize filtered data with all data
+            setTotalData(mappedData.length);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setLoading(false);
+        }
+    };
+    fetchData();
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${Base_Url}/users?NMK_Code=${NMK_Code}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
-
-                console.log('API Response:', responseData);
-
-                if (!Array.isArray(responseData.data)) {
-                    console.error('Invalid data format. Expected an array:', responseData.data);
-                    return;
-                }
-
-                const mappedData: Person[] = responseData.data.map((item: any) => ({
-                    Name: item.Name,
-                    Age: item.Age,
-                    Gender: item.Gender,
-                    State: item.State,
-                    District: item.District,
-                    Guardian_Name: item.Guardian_Name,
-                    Addiction_Type: item.Addiction_Type,
-                    Addictio_Duration: item.Addiction_Duration,
-                    Duration_of_Treatment: item['Duration_of-Treatment'], // Adjusted property name
-                    Is_Treatment_Completed: item.Is_Treatment_Completed===true?"Yes":"No",
-                    Under_Treatment: item.Under_Treatment===true?"Yes":"No",
-                    Employment_Status: item.Employment_Status===1?"Employed":"Unemployed",
-                    Joining_Date: item.Joining_Date, // Ensure proper formatting
-                    Counselling_Count: item.Counselling_Count,
-                    Counsellor_Name: item.Counsellor_Name,
-                }));
-
-                setData(mappedData);
-                setFilteredData(mappedData); // Initialize filtered data with all data
-                setTotalData(mappedData.length);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            }
-        };
         fetchData();
     }, []);
 
@@ -258,6 +260,14 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
         fetchCards();
     }, []);
 
+    useEffect(() => {
+        if (dataSubmitted) {
+            console.log("first")
+            fetchData();
+        }
+    }, [dataSubmitted]);
+
+
     return (
 
         <div>
@@ -289,14 +299,14 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
                     </div>
                 </div>
             ))
-            };
+            }
 
 
             <div className="flex-grow">
                 <div className='flex justify-between mb-2'>
                     <h3 className="font-semibold">Nasha Mukti Kendra Patient</h3>
                     <Button variant='solid' onClick={openDialog}>Add User</Button>
-                    {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} />}
+                    {dialogIsOpen && <UserRegisteration dialogIsOpen={dialogIsOpen} setIsOpen={setDialogIsOpen} setDataSubmitted={setDataSubmitted} />}
                 </div>
                 <div className="flex justify-between items-center mb-4">
                     <span></span>
@@ -310,7 +320,6 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
                         <Button
                             className="mr-2 px-3 py-4"
                             variant="solid"
-                            loading={loading}
                             icon={<HiOutlineInboxIn />}
                             onClick={handleDownloadJSON}
                         ></Button>
