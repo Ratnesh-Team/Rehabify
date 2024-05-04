@@ -144,7 +144,7 @@ const openNotification = (
 
 
 
-const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
+const UserRegisteration = ({ dialogIsOpen, setIsOpen, setDataSubmitted }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void, setDataSubmitted: (dataSubmitted: boolean) => void  }) => {
     const submit = async (values: any) => {
         try {
             const response = await fetch(Base_Url + '/addPatient', {
@@ -159,6 +159,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
             if (data.status === 200) {
                 openNotification('success', 'Patient Added Successfully');
                 setIsOpen(false);
+                setDataSubmitted(true);
             }
 
         } catch (error) {
@@ -374,7 +375,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             }}>
                                                 <FormItem
                                                     asterisk
-                                                    label="Garurdian Name"
+                                                    label="Guardian Name"
                                                     invalid={errors.guardianName && touched.guardianName}
                                                     errorMessage={errors.guardianName}
                                                 >
@@ -382,7 +383,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                         type="text"
                                                         autoComplete="off"
                                                         name="guardianName"
-                                                        placeholder="Garurdian Name"
+                                                        placeholder="Gaurdian Name"
                                                         component={Input}
                                                     />
                                                 </FormItem>
