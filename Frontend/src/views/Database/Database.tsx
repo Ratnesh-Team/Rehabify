@@ -21,6 +21,8 @@ import Tr from '@/components/ui/Table/Tr';
 import Button from '@/components/ui/Button';
 import { HiOutlineInboxIn } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
+import { Alert } from '@/components/ui';
+import { DoubleSidedImage } from '@/components/shared';
 
 type Person = {
     Name: string;
@@ -35,6 +37,7 @@ type Option = {
     value: number;
     label: string;
 };
+
 
 const PaginationTable = () => {
     const columns = useMemo<ColumnDef<Person>[]>(
@@ -66,6 +69,8 @@ const PaginationTable = () => {
         ],
         []
     );
+    const [serverError, setServerError] = useState(false);
+
 
     const [data, setData] = useState<Person[]>([]);
     const [filteredData, setFilteredData] = useState<Person[]>([]);
@@ -107,7 +112,7 @@ const PaginationTable = () => {
                     Gender: item.Gender,
                     Nasha_Mukti_Centre_Name: item.Nasha_Mukti_Centre_Name,
                     Under_Treatment: item.Under_Treatment === "true" ? "no" : "yes",
-                    Is_Employed: item.Employment_Status === 0 ? "No" : "Yes", 
+                    Is_Employed: item.Employment_Status === 0 ? "No" : "Yes",
                 }));
 
                 setData(mappedData);
@@ -116,6 +121,7 @@ const PaginationTable = () => {
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setServerError(true);
                 setLoading(false);
             }
         };
@@ -185,6 +191,19 @@ const PaginationTable = () => {
 
     return (
         <div>
+            {serverError ? (
+                <div className='flex flex-col items-center justify-center'>
+                    <Alert showIcon className="mb-4" type="danger">
+                        The server is not running. Please try again later.
+                    </Alert>
+                    <DoubleSidedImage
+                        src="/img/others/img-2.png"
+                        darkModeSrc="/img/others/img-2-dark.png"
+                        alt="Access Denied!"
+                    />
+                </div>
+            ) : (
+                <>
             <div>
                 <h1  className="font-semibold">Users Data</h1>
             </div>
@@ -260,7 +279,10 @@ const PaginationTable = () => {
                     />
                 </div>
             </div>
+            </>)
+            }
         </div>
+
     );
 };
 

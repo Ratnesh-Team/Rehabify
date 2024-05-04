@@ -125,10 +125,14 @@ func VerifyUser(authdb repository.MongoRepository) gin.HandlerFunc {
 		}
 		userResponse.User.Email = existingUser[0].Email
 		userResponse.User.UserName = existingUser[0].Username
-		userResponse.User.Avatar = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+		userResponse.User.Avatar = "https://avatar.iran.liara.run/public"
+		if existingUser[0].Role == "superadmin" {
+			userResponse.User.Authority = []string{"SUPERADMIN", "USER"}
+		}
 		if existingUser[0].Role == "admin" {
 			userResponse.User.Authority = []string{"ADMIN", "USER"}
-		} else {
+		} 
+		if existingUser[0].Role == "user" {
 			userResponse.User.Authority = []string{"USER"}
 		}
 

@@ -6,8 +6,8 @@ import { Base_Url } from '@/configs/app.config';
 import { useAppSelector } from '@/store';
 import { useNavigate } from 'react-router-dom'
 import Approval from './approval';
-import NewNMK from './newNMK';
-import moveToNmK from './moveToNmK';
+import SimpleTable from './NMK_Manage';
+
 
 function LandingPage() { // Capitalized function name for convention
     const [flag, setFlag] = useState<string>('');
@@ -21,7 +21,7 @@ function LandingPage() { // Capitalized function name for convention
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`${Base_Url}/NMK?email=${email}`);
+            const response = await fetch(`${Base_Url}/NMK?email=${email}&role=admin`);
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
             }
@@ -36,7 +36,10 @@ function LandingPage() { // Capitalized function name for convention
             if (responseData.status === 200 && responseData.data !== null && responseData.data[0].IsVerified === true) {
                 console.log('User already registered');
                 setFlag('three');
-                setId(responseData.data[0]._id)
+                localStorage.setItem('Nasha_Mukti_Centre_Code', responseData.data[0]._id);
+                localStorage.setItem('Nasha_Mukti_Centre_Address', responseData.data[0].Address);
+                localStorage.setItem('Nasha_Mukti_Centre_Name', responseData.data[0].Name);
+                setId(responseData.data[0]._id);
             }
             console.log('API Response:', responseData);
         } catch (error) {
@@ -55,8 +58,7 @@ function LandingPage() { // Capitalized function name for convention
             ) : flag === 'two' ? (
                 Approval()
             ) : flag === 'three' ? (
-                // NewNMK()
-                moveToNmK({ id }) // Pass an object with the id property
+                        <SimpleTable id={id}/>
             ) : null}
         </div>
     );

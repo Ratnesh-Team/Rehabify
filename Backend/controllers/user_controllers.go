@@ -109,3 +109,36 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 		c.JSON(http.StatusOK, resp)
 	}
 }
+
+
+func AddPatient(userRepo repository.MongoRepository) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var user models.User
+		if err := c.BindJSON(&user); err != nil {
+			resp := responses.ApplicationResponse{
+				Status:  http.StatusBadRequest,
+				Message: "Failed to bind user data",
+			}
+			c.JSON(http.StatusBadRequest, resp)
+			return
+		}
+
+		// Insert the user into the repository
+		id, err := userRepo.InsertOne(user)
+		if err != nil {
+			resp := responses.ApplicationResponse{
+				Status:  http.StatusInternalServerError,
+				Message: "Error inserting user",
+			}
+			c.JSON(http.StatusInternalServerError, resp)
+			return
+		}
+
+		resp := responses.ApplicationResponse{
+			Status:  http.StatusOK,
+			Message: "User inserted successfully",
+			Data:    id,
+		}
+		c.JSON(http.StatusOK, resp)
+	}
+}
