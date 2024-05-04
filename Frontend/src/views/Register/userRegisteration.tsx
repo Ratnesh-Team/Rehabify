@@ -13,33 +13,34 @@ import { HiOutlineEyeOff, HiOutlineEye } from 'react-icons/hi'
 import * as Yup from 'yup'
 import type { MouseEvent } from 'react'
 import Upload from '@/components/ui/Upload'
-import { Alert } from '@/components/ui'
+import { Alert, Notification, toast } from '@/components/ui'
 import Select from '@/components/ui/Select'
 import type { FieldProps } from 'formik'
 import DatePicker from '@/components/ui/DatePicker'
 import Dialog from '@/components/ui/Dialog'
+import { Base_Url } from '@/configs/app.config'
 
 
 //write schema for form validation from the default values
 
 type Option = {
-    value: string
+    value: number | string
     label: string
 }
+
+const Nasha_Mukti_Centre_Name = localStorage.getItem('Nasha_Mukti_Centre_Name')
+const Nasha_Mukti_Centre_Address = localStorage.getItem('Nasha_Mukti_Centre_Address')
+const Nasha_Mukti_Centre_Code = localStorage.getItem('Nasha_Mukti_Centre_Code')
+
 
 const genderOptions: Option[] = [
     { value: 'male', label: 'Male' },
     { value: 'female', label: 'Female' },
     { value: 'other', label: 'Other' },
 ]
-
 const employmentOptions: Option[] = [
-    { value: 'employed', label: 'Employed' },
-    { value: 'unemployed', label: 'Unemployed' },
-    { value: 'student', label: 'Student' },
-    { value: 'retired', label: 'Retired' },
-    { value: 'housewife', label: 'Housewife' },
-
+    { value: 1, label: 'Employed' },
+    { value: 0, label: 'Unemployed' },
 ]
 
 const addictionTypeOptions: Option[] = [
@@ -105,12 +106,12 @@ type FormModel = {
 }
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    age: Yup.string().required('Age is required'),
+    name: Yup.string().required('Name is required').min(3, 'Name is too short').max(50, 'Name is too long'),
+    age: Yup.string().required('Age is required').min(1, 'Age is too short').max(3, 'Age is too long'),
     gender: Yup.string().required('gender is required'),
     state: Yup.string().required('State is required'),
-    district: Yup.string().required('District is required'),
-    guardianName: Yup.string().required('Guardian Name is required'),
+    district: Yup.string().required('District is required').min(3, 'District is too short').max(50, 'District is too long'),
+    guardianName: Yup.string().required('Guardian Name is required').min(3, 'Guardian Name is too short').max(50, 'Guardian Name is too long'),
     addictionType: Yup.string().required('Addiction Type is required'),
     addictionDuration: Yup.number().required('Addiction Duration is required'),
     durationOfTreatment: Yup.number().required('Duration of Treatment is required'),
@@ -126,19 +127,48 @@ const validationSchema = Yup.object().shape({
     // Add more fields as needed
 })
 
-
-
-
+const openNotification = (
+    type: 'success' | 'warning' | 'danger' | 'info',
+    Message: string
+) => {
+    toast.push(
+        <Notification
+            title={type.charAt(0).toUpperCase() + type.slice(1)}
+            type={type}
+        >
+            {Message}
+        </Notification>
+    )
+}
 
 
 
 
 const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOpen: (isOpen: boolean) => void }) => {
+    const submit = async (values: any) => {
+        try {
+            const response = await fetch(Base_Url + '/addPatient', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+            });
+            const data = await response.json();
+            console.log('Success:', data);
+            if (data.status === 200) {
+                openNotification('success', 'Patient Added Successfully');
+                setIsOpen(false);
+            }
 
-    const submit = () => {
-        console.log('submitted')
-    }
+        } catch (error) {
+            console.error('Error submitting form:', error);
 
+        }
+    };
+
+
+    const [notification, setNotification] = useState<string | null>(null);
     const onDialogClose = (e: MouseEvent) => {
         console.log('onDialogClose', e)
         setIsOpen(false)
@@ -171,7 +201,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                 guardianName: '',
                                 addictionType: '',
                                 addictionDuration: '',
-                                durationOfTreatment: 0,
+                                durationOfTreatment: '',
                                 employmentStatus: '',
                                 joiningDate: Date.now(),
                                 counsellingCount: '',
@@ -179,9 +209,33 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                             }}
                             validationSchema={validationSchema}
                             onSubmit={(values, { resetForm, setSubmitting }) => {
+                                const timestamp = values.joiningDate
+                                const date = new Date(timestamp);
+                                const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+
+                                const data = {
+                                    "Name": values.name,
+                                    "Age": parseInt(values.age),
+                                    "Gender": values.gender,
+                                    "State": values.state,
+                                    "District": values.district,
+                                    "Guardian_Name": values.guardianName,
+                                    "Addiction_Type": values.addictionType,
+                                    "Addiction_Duration": values.addictionDuration,
+                                    "Duration_of_Treatment": values.durationOfTreatment,
+                                    "Is_Treatment_Completed": false,
+                                    "Under_Treatment": true,
+                                    "Employment_Status": parseInt(values.employmentStatus),
+                                    "Nasha_Mukti_Centre_Name": Nasha_Mukti_Centre_Name,
+                                    "Nasha_Mukti_Centre_Address": Nasha_Mukti_Centre_Address,
+                                    "Nasha_Mukti_Centre_Code": Nasha_Mukti_Centre_Code,
+                                    "Joining_Date": formattedDate,
+                                    "Counselling_Count": parseInt(values.counsellingCount),
+                                    "Counsellor_Name": values.counsellorName
+                                };
+                                submit(data);
                                 console.log(values)
                                 setTimeout(() => {
-                                    alert(JSON.stringify(values, null, 2))
                                     setSubmitting(false)
                                     resetForm()
                                 }, 400)
@@ -194,6 +248,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             <Grid item xs={12} sm={6} style={{
                                             }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Name"
                                                     invalid={errors.name && touched.name}
                                                     errorMessage={errors.name}
@@ -211,6 +266,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                             <Grid item xs={12} sm={6} style={{
                                             }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Age"
                                                     invalid={errors.age && touched.age}
                                                     errorMessage={errors.age}
@@ -298,6 +354,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 paddingTop: "0px",
                                             }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="District"
                                                     invalid={errors.district && touched.district}
                                                     errorMessage={errors.district}
@@ -316,6 +373,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Garurdian Name"
                                                     invalid={errors.guardianName && touched.guardianName}
                                                     errorMessage={errors.guardianName}
@@ -367,6 +425,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Addiction Duration"
                                                     invalid={errors.addictionDuration && touched.addictionDuration}
                                                     errorMessage={errors.addictionDuration}
@@ -375,7 +434,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                         type="number"
                                                         autoComplete="off"
                                                         name="addictionDuration"
-                                                        placeholder="Addiction Duration"
+                                                        placeholder="Addiction Duration  in Years"
                                                         component={Input}
                                                     />
                                                 </FormItem>
@@ -389,7 +448,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                         type="number"
                                                         autoComplete="off"
                                                         name="durationOfTreatment"
-                                                        placeholder="Duration of Treatment"
+                                                        placeholder="Duration of Treatment in Months"
                                                         component={Input}
                                                     />
                                                 </FormItem>
@@ -457,6 +516,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
 
                                             <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Counsellor Name"
                                                     invalid={errors.counsellorName && touched.counsellorName}
                                                     errorMessage={errors.counsellorName}
@@ -473,15 +533,17 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
 
                                             <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
+                                                    asterisk
                                                     label="Counselling Count"
                                                     invalid={errors.counsellingCount && touched.counsellingCount}
                                                     errorMessage={errors.counsellingCount}
                                                 >
                                                     <Field
+
                                                         type="number"
                                                         autoComplete="off"
                                                         name="counsellingCount"
-                                                        placeholder="Counselling Count"
+                                                        placeholder="Counselling Count days"
                                                         component={Input}
                                                     />
                                                 </FormItem>
@@ -491,6 +553,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean,
                                                 paddingTop: "0px"
                                             }}>
                                                 <FormItem>
+
                                                     <Button
                                                         type="reset"
                                                         className="ltr:mr-2 rtl:ml-2"

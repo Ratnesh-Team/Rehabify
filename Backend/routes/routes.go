@@ -24,4 +24,6 @@ func RehabifyRoutes(router *gin.Engine) {
 	router.GET("/doctor", controllers.GetDoctor(DoctorDB))
 	router.POST("/addNmk", controllers.AddNMK(NMK))
 	router.POST("/addDoctor", controllers.AddDoctor(DoctorDB))
+	router.POST("/addPatient", controllers.AddPatient(user))
+	router.POST("/NMK/approve", controllers.ApproveNMK(NMK))
 }

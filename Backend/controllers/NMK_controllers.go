@@ -24,6 +24,12 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		var nmkList []models.NMK
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
+		if role := queryParams.Get("role"); role == "superadmin"{
+			filter["IsVerified"] = false
+		} else if role == "admin"{
+			}else {
+			filter["IsVerified"] = true
+		}
         
 		if Email := queryParams.Get("email"); Email != "" {
 			Email := queryParams.Get("email")
@@ -104,6 +110,41 @@ func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 			"status":  http.StatusOK,
 			"message": "NMK data inserted successfully",
 			"data":    nmk,
+		})
+	}
+}
+
+// /NMK/${id}/approve
+func ApproveNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		queryParams := c.Request.URL.Query()
+		id := queryParams.Get("id")
+		ObjectID, err := primitive.ObjectIDFromHex(id)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{
+				"status":  http.StatusBadRequest,
+				"message": "Invalid NMK code",
+				"data":    nil,
+			})
+			return
+		}
+
+		// Update the NMK code in the repository
+		filter := bson.M{"_id": ObjectID}
+		update := bson.M{"$set": bson.M{"IsVerified": true}}
+		if err := nmkRepo.UpdateOne(filter, update,nil); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"status":  http.StatusInternalServerError,
+				"message": "Failed to approve NMK code",
+				"data":    nil,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"status":  http.StatusOK,
+			"message": "NMK code approved successfully",
+			"data":    nil,
 		})
 	}
 }

@@ -11,45 +11,51 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// GetNMKCodes is a handler to get all NMK codes.
-// It fetches all NMK codes from the repository and returns them as a response.
-// @Summary Get all NMK codes
-// @Description Get all NMK codes
-// @Tags NMK
+// GetDoctor is a handler to get all doctors.
+// It fetches all doctors from the repository and returns them as a response.
+// @Summary Get all doctors
+// @Description Get all doctors
+// @Tags Doctors
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.NMK
-// @Router /NMK [get]
+// @Success 200 {object} models.DoctorData
+// @Router /doctors [get]
 func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var doctorlist []models.DoctorData
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
-		if Doctor_Code := queryParams.Get("Doctor_Code"); Doctor_Code != "" {
-			filter["Docter_Code"] = Doctor_Code
+
+		// Check if role is "superadmin", if so, set IsVerified to false
+		if role := queryParams.Get("role"); role == "superadmin" {
+			filter["IsVerified"] = false
 		} else {
-			filter = nil
+			filter["IsVerified"] = true
 		}
 
-		// Fetch all NMK codes from the repository
+		if Doctor_Code := queryParams.Get("Doctor_Code"); Doctor_Code != "" {
+			filter["Docter_Code"] = Doctor_Code
+		}
+
+		// Fetch all doctors from the repository
 		cursor, err := nmkRepo.Find(filter)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"status":  http.StatusInternalServerError,
-				"message": "Failed to fetch NMK codes",
+				"message": "Failed to fetch doctors",
 				"data":    nil,
 			})
 			return
 		}
 		defer cursor.Close(c.Request.Context())
 
-		// Decode each document and append to the NMK list
+		// Decode each document and append to the doctor list
 		for cursor.Next(c.Request.Context()) {
 			var doctor models.DoctorData
 			if err := cursor.Decode(&doctor); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{
 					"status":  http.StatusInternalServerError,
-					"message": "Failed to decode NMK document",
+					"message": "Failed to decode doctor document",
 					"data":    nil,
 				})
 				return
@@ -59,11 +65,13 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 
 		c.JSON(http.StatusOK, gin.H{
 			"status":  http.StatusOK,
-			"message": "NMK codes fetched successfully",
+			"message": "Doctors fetched successfully",
 			"data":    doctorlist,
 		})
 	}
 }
+
+
 
 // this is schema
 func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {

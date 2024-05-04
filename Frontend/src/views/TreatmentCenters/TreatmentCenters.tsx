@@ -20,30 +20,33 @@ const Controlled: React.FC<Props> = () => {
             {/* Search Input */}
             <div className="flex justify-between items-center mb-4">
                 <div className="flex-grow"></div> {/* Empty div to push the search input to the right */}
-                <div > {/* Adjust the width of the search input container */}
+                <div> {/* Adjust the width of the search input container */}
                     <Input
                         type="text"
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        className="px-3 py-4" 
+                        className="px-3 py-4"
                     />
                 </div>
             </div>
             <div className="flex flex-col items-center">
                 {/* Pass searchTerm to TreatmentCentres component */}
-                <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} />
+                <TreatmentCentres
+                    page={page}
+                    onPageChange={onPageChange}
+                    searchTerm={searchTerm}
+                />
             </div>
         </div>
-
     );
 };
 
-const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number) => void; searchTerm: string }> = ({
-    page,
-    onPageChange,
-    searchTerm,
-}) => {
+const TreatmentCentres: React.FC<{
+    page: number;
+    onPageChange: (newPage: number) => void;
+    searchTerm: string;
+}> = ({ page, onPageChange, searchTerm }) => {
     const [cards, setCards] = useState<CardData[]>([]);
     const pageSize = 6;
 
@@ -93,18 +96,27 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 clickable
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                 header={
-                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden">
-                                        <img src={card.ImageURL} alt="card header" />
+                                    <div
+                                        className="rounded-tl-lg rounded-tr-lg overflow-hidden"
+                                        style={{ height: '200px', width: '100%' }} // Adjust height as needed
+                                    >
+                                        <img
+                                            src={card.ImageURL}
+                                            alt="card header"
+                                            style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                                        />
                                     </div>
-                                }
+                                }   
                                 headerClass="p-0"
                                 footerBorder={false}
                                 headerBorder={true}
                             >
                                 <span>
-                                    <h3 className="text-emerald-600 font-bold ">{card.Name}</h3>
+                                    <h3 className="text-emerald-600 font-bold">{card.Name}</h3>
                                 </span>
-                                <p className="text-sm overflow-hidden whitespace-nowrap ">{card.Address}</p>
+                                <p className="text-sm overflow-hidden whitespace-nowrap">
+                                    {card.Address}
+                                </p>
                                 <p className="font-semibold">{card.Owner_Name}</p>
                             </Card>
                         </Link>
@@ -112,11 +124,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 ))}
             </div>
 
-            <Pagination
-                total={totalPages}
-                currentPage={page}
-                onChange={onPageChange}
-            />
+            <Pagination total={totalPages} currentPage={page} onChange={onPageChange} />
         </>
     );
 };

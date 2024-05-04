@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Pagination, Input, Dialog, Button } from '@/components/ui';
+import { Card, Pagination, Input, Dialog, Button, Alert } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
 import CardData from './types';
 import '@fortawesome/fontawesome-free/css/all.css';
 import AddDoctor from './addDoctor';
+import { DoubleSidedImage } from '@/components/shared';
 
 
 interface Props { }
@@ -40,7 +41,7 @@ const Controlled: React.FC<Props> = () => {
 
     return (
         <div style={blur ? { filter: 'blur(8px)', pointerEvents: 'none', userSelect: 'none' } : {}}>
-            <div className="flex  flex-col justify end  sm:flex-row  justify-between">
+            <div className="flex flex-col justify end  sm:flex-row  justify-between">
 
                 <div><h1 className="text-3xl font-bold mb-6">Doctor Appointment</h1></div>
                 <div className="flex justify-end mb-2"> <Button variant="solid" onClick={openDialog}>Register Doctor</Button></div>
@@ -90,7 +91,7 @@ const Controlled: React.FC<Props> = () => {
                         <p className="mb-2 font-bold">{selectedDoctor.Description}</p>
 
 
-                        <p className="mb-2">
+                        <p className="mb-2" style={{ maxHeight: '3.6rem', overflow: 'hidden' }}>
                             <i className="fas fa-map-marker-alt"></i> Address: {selectedDoctor.ClinicAddress}
                         </p>
                         <div className='flex flex-row-reverse'>
@@ -113,6 +114,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     searchTerm,
     onCardClick,
 }) => {
+    const [serverError, setServerError] = useState(false);
     const [cards, setCards] = useState<CardData[]>([]);
     const pageSize = 6;
 
@@ -127,6 +129,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setServerError(true);
             }
         };
 
@@ -152,6 +155,19 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     const displayedCards = filteredCards.slice(startIndex, endIndex);
 
     return (
+        <div>  {serverError ? (
+            <div className='flex flex-col items-center justify-center'>
+                <Alert showIcon className="mb-4" type="danger">
+                    The server is not running. Please try again later.
+                </Alert>
+                <DoubleSidedImage
+                    src="/img/others/img-2.png"
+                    darkModeSrc="/img/others/img-2-dark.png"
+                    alt="Access Denied!"
+                />
+            </div>
+        ) : (
+        
         <>
             <div className="flex flex-wrap justify-around gap-6">
                 {displayedCards.map((card, index) => (
@@ -163,10 +179,8 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                 className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                 header={
                                     <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
-                                        <img src={card.ImageURL} alt="card header" />
+                                        <img src={card.ImageURL} alt="card header" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
                                     </div>
-
-
                                 }
                                 footer={
                                     <div className='flex flex-row-reverse'>
@@ -181,7 +195,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                     <h3 className="text-emerald-600 font-bold ">{card.Name}</h3>
                                 </span>
                                 <p className="text-sm"> <i className="fas fa-stethoscope"></i>{card.Specialization}</p>
-                                <p className="font-semibold">{card.Description}</p>
+                                <p className="font-semibold" style={{ overflow: 'hidden' }}>{card.Description}</p>
                                 <p className="mb-2">
                                     <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
                                 </p>
@@ -196,7 +210,9 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 currentPage={page}
                 onChange={onPageChange}
             />
-        </>
+        </>)
+        }
+        </div>
     );
 };
 

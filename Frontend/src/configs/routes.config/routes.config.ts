@@ -66,7 +66,7 @@ export const protectedRoutes = [
     {
         key: 'doctor',
         path: '/Doctor',
-        component: lazy(() => import('@/views/Doctor')),
+        component: lazy(() => import('@/views/Doctor/popup')),
         authority: ['USER'],
     },
     {
@@ -89,5 +89,10 @@ export const protectedRoutes = [
         key: 'blog4',
         path: '/blog4',
         component: lazy(() => import('@/views/HomeRemedies/blog4')),
-    }
+    },
+    {
+        key: 'super-admin',
+        path: '/superadmin',
+        component: lazy(() => import('@/views/superadmin')),
+    },
 ]
