@@ -50,7 +50,7 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                                 
                                     <div className="font-semibold text-base">
                                         Rehabify Team
-                                        <div className="opacity-80">Devlopers</div>
+                                        <div className="opacity-80">Developers</div>
                                 
                                 </div>
                             </div>
