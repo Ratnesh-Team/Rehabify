@@ -65,6 +65,7 @@ const SimpleTable = () => {
     const [totalData, setTotalData] = useState(0);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+    const [dataPresent, setDataPresent] = useState(true);
     const searchParams = new URLSearchParams(location.search);
     const NMK_Code = searchParams.get('NMK_Code');
 
@@ -90,9 +91,11 @@ const SimpleTable = () => {
 
                 if (!Array.isArray(responseData.data)) {
                     console.error('Invalid data format. Expected an array:', responseData.data);
+                    setLoading(false)
+                    setDataPresent(false)
                     return;
                 }
-
+             
                 const mappedData: Person[] = responseData.data.map((item: any) => ({
                     Name: "*******",
                     Addiction_Type: item.Addiction_Type,
@@ -103,6 +106,7 @@ const SimpleTable = () => {
                 }));
 
                 setData(mappedData);
+                setDataPresent(true);
                 setFilteredData(mappedData); // Initialize filtered data with all data
                 setTotalData(mappedData.length);
                 setLoading(false);
@@ -216,7 +220,7 @@ const SimpleTable = () => {
                     </div>
                 </div>
             ))
-            };
+            }
 
 
             <div className="flex-grow">
@@ -258,6 +262,12 @@ const SimpleTable = () => {
                         {loading ? (
                             <Tr>
                                 <Td colSpan={columns.length}>Loading...</Td>
+                            </Tr>
+                        ) : !dataPresent ? (
+                            <Tr>
+                                <Td colSpan={columns.length} style={{ fontWeight: 'bold', textAlign: 'center' }}>
+                                    Patients not yet Registered.
+                                </Td>
                             </Tr>
                         ) : (
                             filteredData.map((person, index) => (
