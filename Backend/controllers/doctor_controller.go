@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/Ratnesh-Team/Rehabify/models"
@@ -71,11 +70,9 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	}
 }
 
-
-
 // this is schema
 func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
-	fmt.Println("123")
+	// fmt.Println("123")
 	return func(c *gin.Context) {
 		var doctor models.DoctorData
 		if err := c.BindJSON(&doctor); err != nil {
@@ -99,7 +96,7 @@ func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 			return
 		}
 
-		fmt.Println("Doctor", id)
+		// fmt.Println("Doctor", id)
 		// Assign the ID to the doctor struct
 		doctor.ID = id.(primitive.ObjectID).Hex()
 		c.JSON(http.StatusOK, gin.H{

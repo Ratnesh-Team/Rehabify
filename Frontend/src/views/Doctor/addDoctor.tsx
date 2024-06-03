@@ -263,53 +263,13 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                                         </FormItem>
                                                     </Grid>
 
-
-                                                    {/* <Grid item xs={12} sm={6} style={{
-                                                paddingTop: "0px"
-                                            }}>
-                                                <FormItem
-                                                    label="ImageURL"
-                                                    invalid={errors.ImageURL && touched.ImageURL}
-                                                    errorMessage={errors.ImageURL}
-                                                >
-                                                    <Field
-                                                        type="text"
-                                                        autoComplete="off"
-                                                        name="ImageURL"
-                                                        placeholder="ImageURL"
-                                                        component={Input}
-                                                    />
-                                                </FormItem>
-                                            </Grid> } */}
-
                                                     <Grid item xs={12} sm={6} style={{
                                                         paddingTop: "0px"
                                                     }}>
-                                                        <h6>Upload Nasha Mukti Kendra Photo</h6>
+                                                        <h6>Upload Doctor Photo</h6>
 
                                                         <Upload draggable onChange={(file) => onUpload(file)} />
                                                     </Grid>
-
-
-                                                    {/* <Grid item xs={12} sm={6} style={{
-                                                paddingTop: "0px"
-                                            }}>
-                                                <FormItem
-                                                    label="Doctor_Code"
-                                                    invalid={errors.Doctor_Code && touched.Doctor_Code}
-                                                    errorMessage={errors.Doctor_Code}
-                                                >
-                                                    <Field
-                                                        type="text"
-                                                        autoComplete="off"
-                                                        name="Doctor_Code"
-                                                        placeholder="Doctor's Code"
-                                                        component={Input}
-                                                    />
-                                                </FormItem>
-                                            </Grid> */}
-
-
 
                                                     <Grid item xs={12} sm={12} style={{
                                                         paddingTop: "0px"
