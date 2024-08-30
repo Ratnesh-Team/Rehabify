@@ -3,10 +3,11 @@
 Thank you for your interest in contributing to Rehabify! We welcome contributions from the community to help improve our project. Please take a moment to review this document for guidelines on how to contribute.
 
 ## Table of Contents
-- [Getting Started](#getting-started)
-- [Contributing Guidelines](#contributing-guidelines)
-- [Submitting a Pull Request](#submitting-a-pull-request)
-- [License](#license)
+- [Contributing to Rehabify](#contributing-to-rehabify)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+  - [Contributing Guidelines](#contributing-guidelines)
+  - [Submitting a Pull Request](#submitting-a-pull-request)
 
 ## Getting Started
 To get started with contributing to Rehabify, follow these steps:
@@ -39,5 +40,6 @@ To submit a pull request, follow these steps:
 
 
 If you have any questions or need further assistance, please reach out to the project maintainers.
+
 
 Happy contributing!
