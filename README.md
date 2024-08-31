@@ -4,7 +4,7 @@
 
  ## Super Admin Credentials
 
-- **Email**: superadmin@example.com
+- **Email**: superadmin@gmail.com
 - **Password**: password@1
 
 ## Admin Credentials
