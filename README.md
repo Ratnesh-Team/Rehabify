@@ -42,7 +42,7 @@ Rehabify is a comprehensive management platform designed for rehabilitation and 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/Rehabify.git
+    https://github.com/Ratnesh-Team/Rehabify.git
     cd Rehabify/Backend
     ```
 
