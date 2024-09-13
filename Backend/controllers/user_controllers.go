@@ -28,6 +28,18 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var users []models.User
 
+		role, _ := c.Get("role")
+		// here role is interface and store as key value pair get role now 
+
+		if  role != "superadmin" && role != "admin" && role != "user" {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status":  http.StatusUnauthorized,
+				"message": "Unauthorized",
+				"data":    nil,
+			})
+			return
+		}
+
 		// Get all query parameters
 		queryParams := c.Request.URL.Query()
 
