@@ -20,7 +20,7 @@ func RehabifyRoutes(router *gin.Engine) {
 
 	router.GET("/users",middleware.AuthMiddleware(),controllers.GetUsers(user))
 	router.GET("/NMK", controllers.GetNMK(NMK))
-	router.GET("/home-remedies", controllers.GetHomeremediesDetails(home_remedies))
+	router.GET("/home-remedies",middleware.AuthMiddleware(), controllers.GetHomeremediesDetails(home_remedies))
 	router.POST("/signUp", controllers.AddUser(AuthDB))
 	router.POST("/signIn", controllers.VerifyUser(AuthDB))
 	router.GET("/doctor", controllers.GetDoctor(DoctorDB))

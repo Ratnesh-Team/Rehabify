@@ -34,7 +34,7 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 		if  role != "superadmin" && role != "admin" && role != "user" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status":  http.StatusUnauthorized,
-				"message": "Unauthorized",
+				"message": "Unauthorized Acting  Smart 😒",
 				"data":    nil,
 			})
 			return
