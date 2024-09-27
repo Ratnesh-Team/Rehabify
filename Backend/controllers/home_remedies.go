@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -22,6 +23,19 @@ import (
 func GetHomeremediesDetails(HomeremediesRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var HomeremediesList []models.Homeremedies
+
+		role, _ := c.Get("role")
+		// here role is interface and store as key value pair get role now
+		fmt.Println(role)
+
+		if role != "superadmin" && role != "admin" && role != "user" {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status":  http.StatusUnauthorized,
+				"message": "Unauthorized Acting  Smart 😒  ",
+				"data":    nil,
+			})
+			return
+		}
 
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}

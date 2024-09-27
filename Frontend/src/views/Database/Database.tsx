@@ -2,6 +2,8 @@ import React, { useState, useMemo, useEffect } from 'react';
 import Table from '@/components/ui/Table';
 import Pagination from '@/components/ui/Pagination';
 import Select from '@/components/ui/Select';
+import { PERSIST_STORE_NAME } from '@/constants/app.constant'
+import deepParseJson from '@/utils/deepParseJson'
 import {
     useReactTable,
     getCoreRowModel,
@@ -88,11 +90,22 @@ const PaginationTable = () => {
         { value: 40, label: '40 / page' },
         { value: 50, label: '50 / page' },
     ];
+    const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
+    const persistData = deepParseJson(rawPersistData)
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let accessToken = (persistData as any).auth.session.token
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(Base_Url + '/users');
+                const response = await fetch(Base_Url + '/users', {
+                    method: 'GET', // Specify method if needed
+                    headers: {
+                        'Content-Type': 'application/json', // Set content type
+                        'Authorization': `Bearer ${accessToken}`,// Add Authorization header
+                    },
+                });
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }

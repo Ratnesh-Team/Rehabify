@@ -5,6 +5,8 @@ import (
 	"github.com/Ratnesh-Team/Rehabify/config"
 	"github.com/Ratnesh-Team/Rehabify/controllers"
 	"github.com/gin-gonic/gin"
+	"github.com/Ratnesh-Team/Rehabify/middleware"
+	
 )
 
 // SetupRoutes initializes and returns the Gin router with defined routes
@@ -16,9 +18,9 @@ func RehabifyRoutes(router *gin.Engine) {
 	AuthDB := config.GetRepoCollection("authDB")
 	DoctorDB := config.GetRepoCollection("DoctorDB")
 
-	router.GET("/users", controllers.GetUsers(user))
+	router.GET("/users",middleware.AuthMiddleware(),controllers.GetUsers(user))
 	router.GET("/NMK", controllers.GetNMK(NMK))
-	router.GET("/home-remedies", controllers.GetHomeremediesDetails(home_remedies))
+	router.GET("/home-remedies",middleware.AuthMiddleware(), controllers.GetHomeremediesDetails(home_remedies))
 	router.POST("/signUp", controllers.AddUser(AuthDB))
 	router.POST("/signIn", controllers.VerifyUser(AuthDB))
 	router.GET("/doctor", controllers.GetDoctor(DoctorDB))

@@ -21,6 +21,9 @@ import (
 // @Router /NMK [get]
 func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		 
+		//extract the role from the context
+		
 		var nmkList []models.NMK
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
