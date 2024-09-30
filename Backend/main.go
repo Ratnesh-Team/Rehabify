@@ -8,6 +8,7 @@ import (
 	"github.com/Ratnesh-Team/Rehabify/config"
 	"github.com/Ratnesh-Team/Rehabify/routes"
 	"github.com/gin-gonic/gin"
+	_"github.com/Ratnesh-Team/Rehabify/docs"
 	cors "github.com/itsjamie/gin-cors"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -30,7 +31,7 @@ func main() {
 	router.Use(cors.Middleware(corsConfig))
 	routes.RehabifyRoutes(router)
 
-	// swagger url is http://localhost:3000/swagger/index.html
+	// swagger url is http://localhost:3000/swagger-ui/index.html
 
 	router.GET("/swagger-ui/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

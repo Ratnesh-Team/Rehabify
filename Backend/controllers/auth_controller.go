@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/Ratnesh-Team/Rehabify/models"
 	"github.com/Ratnesh-Team/Rehabify/repository"
@@ -53,7 +54,7 @@ func AddUser(authdb repository.MongoRepository) gin.HandlerFunc {
 		}
 		// Continue with user registration
 		data := user.Password
-		salt := "E_SALA_CUP_NAMDE"
+		salt := os.Getenv("SALT")
 		user.Password = utils.Hash(data, salt)
 		user.UnencryptedPassword = data
 
@@ -81,7 +82,7 @@ func VerifyUser(authdb repository.MongoRepository) gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		salt := "E_SALA_CUP_NAMDE"
+		salt := os.Getenv("SALT")
 		data := user.Password
 		password := utils.Hash(data, salt)
 		filter := bson.M{}

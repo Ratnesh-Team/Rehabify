@@ -1,4 +1,46 @@
 definitions:
+  models.DoctorData:
+    properties:
+      _id:
+        type: string
+      ClinicAddress:
+        type: string
+      ContactNumber:
+        type: integer
+      Description:
+        type: string
+      Docter_Code:
+        type: string
+      Email:
+        type: string
+      ImageURL:
+        type: string
+      IsVerified:
+        type: boolean
+      Name:
+        type: string
+      Specialization:
+        type: string
+    type: object
+  models.Homeremedies:
+    properties:
+      author:
+        type: string
+      body:
+        type: string
+      category:
+        type: string
+      content:
+        type: string
+      date:
+        type: string
+      id:
+        type: integer
+      image:
+        type: string
+      title:
+        type: string
+    type: object
   models.NMK:
     properties:
       _id:
@@ -7,15 +49,29 @@ definitions:
         type: string
       Contact_Number:
         type: integer
+      District:
+        type: string
       Email:
         type: string
+      Established_Year:
+        type: integer
       ImageURL:
         type: string
+      IsVerified:
+        type: boolean
       NMK_Code:
+        type: string
+      NMK_Image:
+        type: string
+      NMK_Verification_Image:
         type: string
       Name:
         type: string
       Owner_Name:
+        type: string
+      Pincode:
+        type: integer
+      State:
         type: string
     type: object
   models.User:
@@ -62,6 +118,21 @@ definitions:
 info:
   contact: {}
 paths:
+  /Homeremedies:
+    get:
+      consumes:
+      - application/json
+      description: Get all Homeremedies details
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Homeremedies'
+      summary: Get all Homeremedies details
+      tags:
+      - Homeremedies
   /NMK:
     get:
       consumes:
@@ -77,6 +148,21 @@ paths:
       summary: Get all NMK codes
       tags:
       - NMK
+  /doctors:
+    get:
+      consumes:
+      - application/json
+      description: Get all doctors
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DoctorData'
+      summary: Get all doctors
+      tags:
+      - Doctors
   /users:
     get:
       consumes:
