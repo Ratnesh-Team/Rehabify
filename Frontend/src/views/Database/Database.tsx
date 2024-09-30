@@ -25,6 +25,7 @@ import { HiOutlineInboxIn } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
 import { Alert } from '@/components/ui';
 import { DoubleSidedImage } from '@/components/shared';
+import { getUsers } from '@/services/UserService';
 
 type Person = {
     Name: string;
@@ -99,24 +100,16 @@ const PaginationTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(Base_Url + '/users', {
-                    method: 'GET', // Specify method if needed
-                    headers: {
-                        'Content-Type': 'application/json', // Set content type
-                        'Authorization': `Bearer ${accessToken}`,// Add Authorization header
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
+                setLoading(true);
+                const response = await getUsers();
+                const responseData = response.data
+                console.log('API Response:', response.data);
 
-                console.log('API Response:', responseData);
-
-                if (!Array.isArray(responseData.data)) {
-                    console.error('Invalid data format. Expected an array:', responseData.data);
+                if (!Array.isArray(response.data)) {
+                    console.error('Invalid data format. Expected an array:', response.data);
                     return;
                 }
+
 
                 const mappedData: Person[] = responseData.data.map((item: any) => ({
                     Name: "******",
