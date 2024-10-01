@@ -17,6 +17,8 @@ import CardData from './types';
 import { DocumentTextIcon, PhoneIcon } from '@heroicons/react/20/solid';
 
 import { IoMdPerson } from "react-icons/io";
+import { getUsers } from '@/services/UserService';
+import { getNMK } from '@/services/NMKService';
 
 type Person = {
     Name: string;
@@ -81,13 +83,8 @@ const SimpleTable = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${Base_Url}/users?NMK_Code=${NMK_Code}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
-
-                console.log('API Response:', responseData);
+                const response =  await getUsers({ NMK_Code: NMK_Code });
+                const responseData = response.data;
 
                 if (!Array.isArray(responseData.data)) {
                     console.error('Invalid data format. Expected an array:', responseData.data);
@@ -167,11 +164,8 @@ const SimpleTable = () => {
     useEffect(() => {
         const fetchCards = async () => {
             try {
-                const response = await fetch(`${Base_Url}/NMK?NMK_Code=${NMK_Code}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
+                const response = await getNMK({ NMK_Code: NMK_Code });
+                const responseData = response.data;
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
