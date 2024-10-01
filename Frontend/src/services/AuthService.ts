@@ -1,5 +1,7 @@
-import { Base_Url } from '@/configs/app.config'
+// import { Base_Url } from '@/configs/app.config'
+import { env } from 'process'
 import ApiService from './ApiService'
+
 import type {
     SignInCredential,
     SignUpCredential,
@@ -9,9 +11,10 @@ import type {
     SignUpResponse,
 } from '@/@types/auth'
 
+const Base_Url= import.meta.env.VITE_BASE_URL;
 export async function apiSignIn(data: SignInCredential) {
     return ApiService.fetchData<any>({
-        url: Base_Url + '/signIn',
+        url: 'signIn',
         method: 'post',
         data,
     })
@@ -19,7 +22,7 @@ export async function apiSignIn(data: SignInCredential) {
 
 export async function apiSignUp(data: SignUpCredential) {
     return ApiService.fetchData<SignUpResponse>({
-        url: Base_Url + '/signUp',
+        url: 'signUp',
         method: 'post',
         data,
     })

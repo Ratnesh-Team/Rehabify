@@ -16,6 +16,7 @@ import Dialog from '@/components/ui/Dialog'
 import { Notification, toast } from '@/components/ui'
 import { Base_Url } from '@/configs/app.config'
 import { DoubleSidedImage } from '@/components/shared'
+import { addDoctor } from '@/services/DoctorService'
 
 
 //write schema for form validation from the default values
@@ -53,17 +54,10 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
     }
 
     const submit = async (values: any) => {
-        console.log(values, JSON.stringify(values))
+     
         try {
-            const response = await fetch(Base_Url + '/addDoctor', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(values),
-            });
-            const data = await response.json();
-            console.log('Success:', data);
+            const response = await addDoctor(values)
+            const data = await response.data;
             if (data.status === 201) {
                 openNotification('success', 'New Doctor added successfully');
                 setIsOpen(false)
@@ -131,7 +125,6 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                     validationSchema={validationSchema}
 
                                     onSubmit={(values, { resetForm, setSubmitting }) => {
-                                        console.log("first")
                                         values.ImageURL = files
                                         const data = {
                                             "Name": values.Name,
@@ -144,7 +137,6 @@ const AddDoctor = ({ dialogIsOpen, setIsOpen }: { dialogIsOpen: boolean, setIsOp
                                         }
                                         submit(data);
                                         setTimeout(() => {
-                                            // alert(JSON.stringify(values, null, 2))
                                             setSubmitting(false)
                                             resetForm()
                                         }, 400);

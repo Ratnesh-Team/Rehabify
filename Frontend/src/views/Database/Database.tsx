@@ -25,13 +25,14 @@ import { HiOutlineInboxIn } from 'react-icons/hi';
 import Input from '@/components/ui/Input';
 import { Alert } from '@/components/ui';
 import { DoubleSidedImage } from '@/components/shared';
+import { getUsers } from '@/services/UserService';
 
 type Person = {
     Name: string;
     Addiction_Type: string;
     State: string;
-    Nasha_Mukti_Centre_Address: string;
     Nasha_Mukti_Centre_Name: string;
+    Nasha_Mukti_Centre_Address: string;
     Gender: string;
 };
 
@@ -90,40 +91,32 @@ const PaginationTable = () => {
         { value: 40, label: '40 / page' },
         { value: 50, label: '50 / page' },
     ];
-    const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
-    const persistData = deepParseJson(rawPersistData)
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let accessToken = (persistData as any).auth.session.token
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(Base_Url + '/users', {
-                    method: 'GET', // Specify method if needed
-                    headers: {
-                        'Content-Type': 'application/json', // Set content type
-                        'Authorization': `Bearer ${accessToken}`,// Add Authorization header
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
 
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const response = await getUsers();
+
+                // Convert the response to JSON
+                const responseData = response.data.data;
                 console.log('API Response:', responseData);
 
-                if (!Array.isArray(responseData.data)) {
-                    console.error('Invalid data format. Expected an array:', responseData.data);
+                // Ensure responseData is an array
+                if (!Array.isArray(responseData)) {
+                    console.error('Invalid data format. Expected an array:', responseData);
                     return;
                 }
 
-                const mappedData: Person[] = responseData.data.map((item: any) => ({
+                const mappedData: Person[] = responseData.map((item: any) => ({
                     Name: "******",
                     Addiction_Type: item.Addiction_Type,
                     State: item.State,
                     Gender: item.Gender,
                     Nasha_Mukti_Centre_Name: item.Nasha_Mukti_Centre_Name,
+                    Nasha_Mukti_Centre_Address: item.Nasha_Mukti_Centre_Address,
                     Under_Treatment: item.Under_Treatment === "true" ? "no" : "yes",
                     Is_Employed: item.Employment_Status === 0 ? "No" : "Yes",
                 }));

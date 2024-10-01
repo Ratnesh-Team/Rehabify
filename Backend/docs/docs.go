@@ -15,6 +15,29 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/Homeremedies": {
+            "get": {
+                "description": "Get all Homeremedies details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Homeremedies"
+                ],
+                "summary": "Get all Homeremedies details",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Homeremedies"
+                        }
+                    }
+                }
+            }
+        },
         "/NMK": {
             "get": {
                 "description": "Get all NMK codes",
@@ -33,6 +56,29 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/models.NMK"
+                        }
+                    }
+                }
+            }
+        },
+        "/doctors": {
+            "get": {
+                "description": "Get all doctors",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Doctors"
+                ],
+                "summary": "Get all doctors",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DoctorData"
                         }
                     }
                 }
@@ -89,6 +135,70 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.DoctorData": {
+            "type": "object",
+            "properties": {
+                "ClinicAddress": {
+                    "type": "string"
+                },
+                "ContactNumber": {
+                    "type": "integer"
+                },
+                "Description": {
+                    "type": "string"
+                },
+                "Docter_Code": {
+                    "type": "string"
+                },
+                "Email": {
+                    "type": "string"
+                },
+                "ImageURL": {
+                    "type": "string"
+                },
+                "IsVerified": {
+                    "type": "boolean"
+                },
+                "Name": {
+                    "type": "string"
+                },
+                "Specialization": {
+                    "type": "string"
+                },
+                "_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Homeremedies": {
+            "type": "object",
+            "properties": {
+                "author": {
+                    "type": "string"
+                },
+                "body": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
         "models.NMK": {
             "type": "object",
             "properties": {
@@ -98,19 +208,40 @@ const docTemplate = `{
                 "Contact_Number": {
                     "type": "integer"
                 },
+                "District": {
+                    "type": "string"
+                },
                 "Email": {
                     "type": "string"
+                },
+                "Established_Year": {
+                    "type": "integer"
                 },
                 "ImageURL": {
                     "type": "string"
                 },
+                "IsVerified": {
+                    "type": "boolean"
+                },
                 "NMK_Code": {
+                    "type": "string"
+                },
+                "NMK_Image": {
+                    "type": "string"
+                },
+                "NMK_Verification_Image": {
                     "type": "string"
                 },
                 "Name": {
                     "type": "string"
                 },
                 "Owner_Name": {
+                    "type": "string"
+                },
+                "Pincode": {
+                    "type": "integer"
+                },
+                "State": {
                     "type": "string"
                 },
                 "_id": {

@@ -5,6 +5,7 @@ import CardData from './types';
 import '@fortawesome/fontawesome-free/css/all.css';
 import AddDoctor from './addDoctor';
 import { DoubleSidedImage } from '@/components/shared';
+import { getDoctor } from '@/services/DoctorService';
 
 
 interface Props { }
@@ -121,11 +122,8 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     useEffect(() => {
         const fetchCards = async () => {
             try {
-                const response = await fetch(Base_Url + '/doctor');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
+                const response = await getDoctor();
+                const responseData = await response.data;
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

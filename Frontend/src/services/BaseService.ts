@@ -7,9 +7,10 @@ import store, { signOutSuccess } from '../store'
 
 const unauthorizedCode = [401]
 
+
 const BaseService = axios.create({
     timeout: 60000,
-    baseURL: appConfig.apiPrefix,
+    baseURL: import.meta.env.VITE_BASE_URL,
 })
 
 BaseService.interceptors.request.use(
