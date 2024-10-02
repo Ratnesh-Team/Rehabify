@@ -7,6 +7,7 @@ import { useAppSelector } from '@/store';
 import { useNavigate } from 'react-router-dom'
 import Approval from './approval';
 import SimpleTable from './NMK_Manage';
+import { getNMK } from '@/services/NMKService';
 
 
 function LandingPage() { // Capitalized function name for convention
@@ -21,11 +22,9 @@ function LandingPage() { // Capitalized function name for convention
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`${Base_Url}/NMK?email=${email}&role=admin`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const responseData = await response.json();
+            const response = await  getNMK({ email: email??`` });
+            const responseData = response.data;
+           
             if (responseData.status === 200 && responseData.data === null) {
                 setFlag('one');
             }

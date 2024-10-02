@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, Pagination, Input } from '@/components/ui'; // Import Input from your UI components
 import { Base_Url } from '@/configs/app.config';
 import CardData from './types';
+import { getNMK } from '@/services/NMKService';
 
 interface Props { }
 
@@ -53,11 +54,8 @@ const TreatmentCentres: React.FC<{
     useEffect(() => {
         const fetchCards = async () => {
             try {
-                const response = await fetch(Base_Url + '/NMK');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const responseData = await response.json();
+                const response = await  getNMK();
+                const responseData = await response.data;
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

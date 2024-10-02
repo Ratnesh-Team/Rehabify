@@ -7,3 +7,11 @@ export async function getNMK(params?: { [key: string]: string | null }) {
         params: params, // Add query parameters here
     })
 }
+
+export async function addNMK(values: any) {
+    return ApiService.fetchData<any>({
+        url: '/addNmk',
+        method: 'POST',
+        data: values,
+    })
+}
