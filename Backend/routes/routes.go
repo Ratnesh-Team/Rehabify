@@ -19,11 +19,11 @@ func RehabifyRoutes(router *gin.Engine) {
 	DoctorDB := config.GetRepoCollection("DoctorDB")
 
 	router.GET("/users",middleware.AuthMiddleware(),controllers.GetUsers(user))
-	router.GET("/NMK", controllers.GetNMK(NMK))
+	router.GET("/NMK",middleware.AuthMiddleware(), controllers.GetNMK(NMK))
 	router.GET("/home-remedies",middleware.AuthMiddleware(), controllers.GetHomeremediesDetails(home_remedies))
 	router.POST("/signUp", controllers.AddUser(AuthDB))
 	router.POST("/signIn", controllers.VerifyUser(AuthDB))
-	router.GET("/doctor", controllers.GetDoctor(DoctorDB))
+	router.GET("/doctor", middleware.AuthMiddleware(), controllers.GetDoctor(DoctorDB))
 	router.POST("/addNmk", controllers.AddNMK(NMK))
 	router.POST("/addDoctor", controllers.AddDoctor(DoctorDB))
 	router.POST("/addPatient", controllers.AddPatient(user))

@@ -22,8 +22,8 @@ import (
 func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Extract the role from the context
-		role, exists := c.Get("role")
-		if !exists || (role != "superadmin" && role != "admin" && role != "user") {
+		role, _ := c.Get("role")
+		if  (role != "superadmin" && role != "admin" && role != "user") {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status":  http.StatusUnauthorized,
 				"message": "Unauthorized: You do not have permission to access this resource.",
