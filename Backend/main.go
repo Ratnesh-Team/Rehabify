@@ -6,13 +6,13 @@ import (
 	"time"
 
 	"github.com/Ratnesh-Team/Rehabify/config"
+	_ "github.com/Ratnesh-Team/Rehabify/docs"
+	"github.com/Ratnesh-Team/Rehabify/middleware"
 	"github.com/Ratnesh-Team/Rehabify/routes"
 	"github.com/gin-gonic/gin"
-	_"github.com/Ratnesh-Team/Rehabify/docs"
 	cors "github.com/itsjamie/gin-cors"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-	
 )
 
 func main() {
@@ -29,6 +29,13 @@ func main() {
 
 	router := gin.Default()
 	router.Use(cors.Middleware(corsConfig))
+	// rate limiter route is the priortiy route so it should come at top
+	// in the middleware chaim.
+	router.Use(middleware.RateLimiterMiddlware())
+	// looger middleware
+	router.Use(gin.Logger())
+	// recover from error
+	router.Use(gin.Recovery())
 	routes.RehabifyRoutes(router)
 
 	// swagger url is http://localhost:3000/swagger-ui/index.html
