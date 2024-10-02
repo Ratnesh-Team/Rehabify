@@ -55,7 +55,7 @@ const TreatmentCentres: React.FC<{
         const fetchCards = async () => {
             try {
                 const response = await  getNMK();
-                const responseData = await response.data;
+                const responseData =  response.data;
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);

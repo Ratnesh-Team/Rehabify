@@ -10,8 +10,6 @@ export let cardData: CardData[] = [];
     const rawPersistData = localStorage.getItem(PERSIST_STORE_NAME)
     const persistData =    deepParseJson(rawPersistData) 
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let accessToken = (persistData as any).auth.session.token
 export const fetchData = async () => {
   try {
     const response = await  getHomeRemedies();
@@ -27,7 +25,4 @@ export const fetchData = async () => {
     console.error('Failed to fetch data:', error);
   }
 };
-
-fetchData();
-
 export default cardData;
