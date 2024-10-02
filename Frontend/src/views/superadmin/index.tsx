@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui';
 import { Base_Url } from '@/configs/app.config';
+import { getNMK } from '@/services/NMKService';
 import { PhoneIcon } from '@heroicons/react/20/solid';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react'
 import { HiMail } from 'react-icons/hi';
 import { IoMdPerson, IoMdPin } from 'react-icons/io';
@@ -14,11 +16,8 @@ const index: React.FC = () => {
 
     const fetchNonVerifiedData = async () => {
         try {
-            const response = await fetch(Base_Url + '/NMK?role=superadmin');
-            if (!response.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const responseData = await response.json();
+            const response = await getNMK({ role: 'superadmin' });
+            const responseData = await response.data;
             if (responseData.data !== null) {
                 setCards(responseData.data);
             } else {

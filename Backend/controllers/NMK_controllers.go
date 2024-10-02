@@ -35,18 +35,15 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 		var nmkList []models.NMK
 		queryParams := c.Request.URL.Query()
 		filter := bson.M{}
+		filter["IsVerified"] = true
 
 		// Set filter based on user role
-		if role == "superadmin" {
-			filter["IsVerified"] = false // Superadmins can see unverified NMK codes
-		} else if role == "admin" {
-			filter["IsVerified"] = true // Admins can only see verified NMK codes
-		} else {
-			filter["IsVerified"] = true // Users can only see verified NMK codes
-		}
 
 		if Email := queryParams.Get("email"); Email != "" {
 			filter["Email"] = Email
+		}
+		if Role := queryParams.Get("role"); Role != ""  && role == "superadmin" {
+			filter["IsVerified"] = false
 		}
 		if NMK_Code := queryParams.Get("NMK_Code"); NMK_Code != "" {
 			id, err := primitive.ObjectIDFromHex(NMK_Code)
