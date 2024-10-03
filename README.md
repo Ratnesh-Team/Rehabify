@@ -1,40 +1,40 @@
 
 
- ![Screenshot 2024-08-31 190300](https://github.com/user-attachments/assets/1b1b3514-183f-42f4-9d28-d33ebb74bb92)
-
- ## Super Admin Credentials
-
-- **Email**: superadmin@gmail.com
-- **Password**: password@1
-
-## Admin Credentials
-
-- **Email**: admin@gmail.com
-- **Password**: 123Qwe1
-
-## User Credentials
-
-- **Email**: user@gmail.com
-- **Password**: 123Qwe1
- 
 # Rehabify - Rehabilitation and Nasha Mukti Kendra Management Platform
+![Rehabify Screenshot](https://github.com/user-attachments/assets/1b1b3514-183f-42f4-9d28-d33ebb74bb92)
 
 ## Overview
 
-Rehabify is a comprehensive management platform designed for rehabilitation and Nasha Mukti Kendra centers. The platform allows Nasha Mukti Kendra admins to register, doctors to register, and users to search for the nearest Nasha Mukti Kendra. Additionally, a super admin can approve registrations and manage the platform.
+Rehabify is a comprehensive platform designed to streamline the management of rehabilitation and Nasha Mukti Kendra centers. The platform offers features such as admin registration, doctor registration, and a user-friendly search function for locating the nearest Nasha Mukti Kendra. The platform is overseen by a super admin, who approves registrations and manages the system.
 
-## Features
+## Key Features
 
-- **Admin Registration**: Nasha Mukti Kendra admins can register and manage their centers.
-- **Doctor Registration**: Doctors can register and be associated with specific centers.
-- **User Search**: Users can search for the nearest Nasha Mukti Kendra.
-- **Super Admin Approval**: Super admin can approve registrations and manage the platform.
-- **Authentication**: Secure login for super admin, admin, and users.
+- **Admin Registration**: Admins of Nasha Mukti Kendra centers can register and manage their centers.
+- **Doctor Registration**: Doctors can register and associate themselves with specific centers.
+- **User Search**: Users can search for nearby Nasha Mukti Kendra centers.
+- **Super Admin Control**: Super admin approves center registrations and manages the platform.
+- **Secure Authentication**: Role-based authentication for super admin, admin, and users.
+
+## Credentials
+
+- **Super Admin Credentials**:
+  - **Email**: superadmin@gmail.com
+  - **Password**: password@1
+
+- **Admin Credentials**:
+  - **Email**: admin@gmail.com
+  - **Password**: 123Qwe1
+
+- **User Credentials**:
+  - **Email**: user@gmail.com
+  - **Password**: 123Qwe1
 
 ## Project Structure
 
 - **Backend**: Built with Go and MongoDB.
 - **Frontend**: Built with React and TypeScript.
+
+---
 
 ## Setup Instructions
 
@@ -42,7 +42,7 @@ Rehabify is a comprehensive management platform designed for rehabilitation and 
 
 1. **Clone the repository**:
     ```bash
-    https://github.com/Ratnesh-Team/Rehabify.git
+    git clone https://github.com/Ratnesh-Team/Rehabify.git
     cd Rehabify/Backend
     ```
 
@@ -52,9 +52,9 @@ Rehabify is a comprehensive management platform designed for rehabilitation and 
     ```
 
 3. **Set up MongoDB**:
-   Create a `.env` file in the `Backend` directory and add the following environment variables:
+    - Create a `.env` file in the `Backend` directory with the following content:
     ```env
-    MONGOURI= your mongo url
+    MONGOURI=your-mongo-url
     ```
 
 4. **Run the backend server**:
@@ -79,24 +79,34 @@ Rehabify is a comprehensive management platform designed for rehabilitation and 
     npm start
     ```
 
+---
+
 ## Usage
 
 1. **Access the platform**:
-    - Open your browser and navigate to `http://localhost:5173` for the frontend.
-    - The backend server runs on `http://localhost:3000`.
+    - Frontend: Navigate to `http://localhost:5173`.
+    - Backend: The server runs on `http://localhost:3000`.
 
-2. **Login as Super Admin**:
-    - Use the provided super admin credentials to log in and manage the platform.
+2. **Login**:
+    - Use the super admin credentials to manage the platform.
+  
+3. **Search for a Nasha Mukti Kendra**:
+    - Use the search feature to locate nearby centers.
 
-3. **Search for Nasha Mukti Kendra**:
-    - Use the search functionality to find the nearest centers.
+---
 
 ## Contributing
 
-We welcome contributions! Please fork the repository and submit pull requests.
+We welcome contributions! Please follow these guidelines:
+
+- **Branching**: Ensure you raise a pull request to the `develop` branch.
+- **Forking**: Fork the repository, make your changes, and submit a pull request.
+- **Code Reviews**: All submissions will undergo code review.
+
+For any issues or suggestions, feel free to create an issue or contact us directly.
+
+---
 
 ## License
 
 This project is licensed under the MIT License.
-
-
