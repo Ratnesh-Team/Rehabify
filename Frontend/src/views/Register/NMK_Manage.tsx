@@ -19,6 +19,7 @@ import { DocumentTextIcon, PhoneIcon } from '@heroicons/react/20/solid';
 import { IoMdPerson } from "react-icons/io";
 import UserRegisteration from './userRegisteration';
 import { getNMK } from '@/services/NMKService';
+import { getUsers } from '../../services/UserService';
 
 type Person = {
     Name: string;
@@ -143,7 +144,7 @@ const SimpleTable: React.FC<Props> = ({ id }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await  getNMK({ NMK_Code: NMK_Code });
+                const response = await  getUsers({ NMK_Code: NMK_Code });
                 const responseData = await response.data;
                 if (!Array.isArray(responseData.data)) {
                     console.error('Invalid data format. Expected an array:', responseData.data);
