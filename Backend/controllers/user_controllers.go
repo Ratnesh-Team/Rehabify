@@ -1,14 +1,13 @@
 package controllers
 
 import (
+	"context"
 	"net/http"
-	"strconv"
 
-	"github.com/Ratnesh-Team/Rehabify/models"
-	"github.com/Ratnesh-Team/Rehabify/repository"
+	project "github.com/Ratnesh-Team/Rehabify/projects" // Import the SQLC-generated package
+
 	"github.com/Ratnesh-Team/Rehabify/responses"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 // GetUsers retrieves users based on query parameters.
@@ -24,94 +23,34 @@ import (
 // @Param Is_Treatment_Completed query bool false "Is Treatment Completed"
 // @Success 200 {object} models.User
 // @Router /users [get]
-func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
+// GetUsers retrieves users from PostgreSQL based on query parameters.
+func GetUsers(queries *project.Queries) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var users []models.User
-
+		// Check role from the context
 		role, _ := c.Get("role")
-		// here role is interface and store as key value pair get role now 
 
-		if  role != "superadmin" && role != "admin" && role != "user" {
+		// Ensure the user has the right role
+		if role != "superadmin" && role != "admin" && role != "user" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status":  http.StatusUnauthorized,
-				"message": "Unauthorized Acting  Smart 😒",
+				"message": "Unauthorized Acting Smart 😒",
 				"data":    nil,
 			})
 			return
 		}
 
-		// Get all query parameters
-		queryParams := c.Request.URL.Query()
+		ctx := context.Background()
 
-		// Create a filter based on query parameters
-		filter := bson.M{}
-
-		// Handle specific query parameters
-		if addictionType := queryParams.Get("Addiction_Type"); addictionType != "" {
-			filter["Addiction_Type"] = addictionType
-		}
-		if nashaMuktiCentreCode := queryParams.Get("NMK_Code"); nashaMuktiCentreCode != "" {
-			filter["Nasha_Mukti_Centre_Code"] = nashaMuktiCentreCode
-		}
-		if employmentStatusStr := queryParams.Get("Employment_Status"); employmentStatusStr != "" {
-			employmentStatus, err := strconv.Atoi(employmentStatusStr)
-			if err != nil {
-				resp := responses.ApplicationResponse{
-					Status:  http.StatusBadRequest,
-					Message: "Invalid Employment_Status value",
-				}
-				c.JSON(http.StatusBadRequest, resp)
-				return
-			}
-			filter["Employment_Status"] = employmentStatus
-		}
-		if isTreatmentCompletedStr := queryParams.Get("Is_Treatment_Completed"); isTreatmentCompletedStr != "" {
-			isTreatmentCompleted, err := strconv.ParseBool(isTreatmentCompletedStr)
-			if err != nil {
-				resp := responses.ApplicationResponse{
-					Status:  http.StatusBadRequest,
-					Message: "Invalid Is_Treatment_Completed value",
-				}
-				c.JSON(http.StatusBadRequest, resp)
-				return
-			}
-			filter["Is_Treatment-Completed"] = isTreatmentCompleted
-		}
-
-		// Fetch users based on the filter
-		cursor, err := userRepo.Find(filter)
+		// Fetch all users using SQLC ListUsers function
+		users, err := queries.ListUsers(ctx)
 		if err != nil {
 			resp := responses.ApplicationResponse{
 				Status:  http.StatusInternalServerError,
-				Message: "Error finding users",
+				Message: "Error fetching users from PostgreSQL",
 			}
 			c.JSON(http.StatusInternalServerError, resp)
 			return
 		}
-		defer cursor.Close(c.Request.Context())
-		err = cursor.All(c.Request.Context(), &users)
-		if err != nil {
-			resp := responses.ApplicationResponse{
-				Status:  http.StatusInternalServerError,
-				Message: "Error decoding user",
-			}
-			c.JSON(http.StatusInternalServerError, resp)
-			return
-
-		}
-
-		// for cursor.Next(c.Request.Context()) {
-		// 	var user models.User
-		// 	if err := cursor.Decode(&user); err != nil {
-		// 		resp := responses.ApplicationResponse{
-		// 			Status:  http.StatusInternalServerError,
-		// 			Message: "Error decoding user",
-		// 		}
-		// 		c.JSON(http.StatusInternalServerError, resp)
-		// 		return
-		// 	}
-		// 	users = append(users, user)
-		// }
 
 		resp := responses.ApplicationResponse{
 			Status:  http.StatusOK,
@@ -122,10 +61,12 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 	}
 }
 
-
-func AddPatient(userRepo repository.MongoRepository) gin.HandlerFunc {
+// AddPatient inserts a new user into the PostgreSQL database.
+func AddPatient(queries *project.Queries) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var user models.User
+		var user project.CreateUserParams
+
+		// Bind JSON input to user struct
 		if err := c.BindJSON(&user); err != nil {
 			resp := responses.ApplicationResponse{
 				Status:  http.StatusBadRequest,
@@ -135,12 +76,13 @@ func AddPatient(userRepo repository.MongoRepository) gin.HandlerFunc {
 			return
 		}
 
-		// Insert the user into the repository
-		id, err := userRepo.InsertOne(user)
+		// Insert the user into PostgreSQL using SQLC's CreateUser function
+		ctx := context.Background()
+		createdUser, err := queries.CreateUser(ctx, user)
 		if err != nil {
 			resp := responses.ApplicationResponse{
 				Status:  http.StatusInternalServerError,
-				Message: "Error inserting user",
+				Message: "Error inserting user into PostgreSQL",
 			}
 			c.JSON(http.StatusInternalServerError, resp)
 			return
@@ -149,7 +91,7 @@ func AddPatient(userRepo repository.MongoRepository) gin.HandlerFunc {
 		resp := responses.ApplicationResponse{
 			Status:  http.StatusOK,
 			Message: "User inserted successfully",
-			Data:    id,
+			Data:    createdUser.ID, // Returning the created user's ID
 		}
 		c.JSON(http.StatusOK, resp)
 	}
