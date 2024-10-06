@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Ratnesh-Team/Rehabify/config"
@@ -23,7 +24,7 @@ import (
 func main() {
 	config.LoadEnv()
 	config.ConnectPostgresDB()
-	connStr := "postgres://avnadmin:AVNS_uNdMPZ5uBOzSCINFE9B@rehabify-ratneshmaurya2311-3bf1.i.aivencloud.com:17645/defaultdb?sslmode=disable"
+	connStr := os.Getenv("POSTGRES_URI")
 	db, err := sql.Open("postgres", connStr)
 
 	if err != nil {
@@ -64,38 +65,3 @@ func main() {
 		log.Fatalf("There was an error with the http server: %v", err)
 	}
 }
-
-// package main
-
-// import (
-// 	"context"
-// 	"database/sql"
-// 	"fmt"
-// 	"log"
-
-// 	project "github.com/Ratnesh-Team/Rehabify/projects"
-// 	_ "github.com/lib/pq"
-// )
-
-// func main() {
-// 	connStr := "postgres://avnadmin:AVNS_uNdMPZ5uBOzSCINFE9B@rehabify-ratneshmaurya2311-3bf1.i.aivencloud.com:17645/defaultdb?sslmode=disable"
-// 	db, err := sql.Open("postgres", connStr)
-
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	defer db.Close()
-
-// 	ctx := context.Background()
-// 	queries := project.New(db)
-
-// 	// Get list users
-// 	userList, err := queries.ListUsers(ctx)
-
-// 	if err != nil {
-// 		log.Fatal(err)
-// 	}
-
-// 	fmt.Println(userList)
-// }

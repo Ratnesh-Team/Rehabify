@@ -12,7 +12,7 @@ import (
 var DB *sql.DB
 
 func ConnectPostgresDB() {
-	connStr := os.Getenv("POSTGRES_URI") // e.g., "postgres://user:password@localhost/dbname?sslmode=disable"
+	connStr := os.Getenv("POSTGRES_URI")
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal("Failed to connect to PostgreSQL:", err)
