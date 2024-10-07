@@ -1,0 +1,9 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "postgresql/query/user_query.sql"
+    schema: "postgresql/migration/user_schema.sql"
+    gen:
+      go:
+        package: "project"
+        out: "projects"
