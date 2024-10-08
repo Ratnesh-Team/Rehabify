@@ -66,6 +66,13 @@ function useAuth() {
             }
             // eslint-disable-next-line  @typescript-eslint/no-explicit-any
         } catch (errors: any) {
+            if (errors.message === 'Network Error') {
+                    return {
+                        status: 'failed',
+                        message: 'Network error: Please check your connection',
+                    }
+                }
+
             return {
                 status: 'failed',
                 message: errors?.response?.data?.message || errors.toString(),
@@ -89,6 +96,13 @@ function useAuth() {
             }
         } catch (error: any) {
             console.error('Error:', error)
+
+            if (error.message === 'Network Error') {
+                return {
+                    status: 'failed',
+                    message: 'Network error: Please check your connection.',
+                }
+            }
             if (
                 error.response &&
                 error.response.data &&

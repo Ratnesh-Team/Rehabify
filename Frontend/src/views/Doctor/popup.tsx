@@ -116,6 +116,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     onCardClick,
 }) => {
     const [serverError, setServerError] = useState(false);
+    const [networkError, setNetworkError] = useState(false);
     const [cards, setCards] = useState<CardData[]>([]);
     const pageSize = 6;
 
@@ -125,9 +126,13 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 const response = await getDoctor();
                 const responseData = await response.data;
                 setCards(responseData.data);
-            } catch (error) {
+            } catch (error:any) {
                 console.error('Error fetching data:', error);
-                setServerError(true);
+                if (error.message === 'Network Error') {
+                    setNetworkError(true) 
+                } else {
+                    setServerError(true);
+                }
             }
         };
 
@@ -153,7 +158,20 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     const displayedCards = filteredCards.slice(startIndex, endIndex);
 
     return (
-        <div>  {serverError ? (
+        <div>  
+            { networkError ? (
+                <div className='flex flex-col items-center justify-center'>
+                    <Alert showIcon className="mb-4" type="danger">
+                        Network error: Please check your connection.
+                    </Alert>
+                    <DoubleSidedImage
+                        src="/img/others/img-2.png"
+                        darkModeSrc="/img/others/img-2-dark.png"
+                        alt="Network Error"
+                    />
+                </div>
+            ) : 
+            serverError ? (
             <div className='flex flex-col items-center justify-center'>
                 <Alert showIcon className="mb-4" type="danger">
                     The server is not running. Please try again later.

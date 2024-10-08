@@ -16,13 +16,18 @@ export const fetchData = async () => {
     const responseData = await response.data;    
     
     if (!Array.isArray(responseData.data)) {
-      console.error('Invalid data format. Expected an array:', responseData.data);
-      return;
+      const errorMsg = 'Invalid data format. Expected an array'
+      console.error(errorMsg, responseData.data)
+      throw new Error(errorMsg)
     }
 
     cardData = responseData.data
-  } catch (error) {
-    console.error('Failed to fetch data:', error);
+  } catch (error:any) {
+    if (error.message === 'Network Error') {
+        throw new Error('Network error: Please check your connection.')
+    } else {
+        console.error('Failed to fetch data:', error);
+    }
   }
 };
 export default cardData;
