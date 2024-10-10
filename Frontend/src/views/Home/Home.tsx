@@ -4,6 +4,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowUpRight } from "react-icons/fi";
 import Homeremedies from '../HomeRemedies/HomeRemedies';
+import CountUp from "react-countup";
+import VisibilitySensor from 'react-visibility-sensor';
 
 const Home: React.FC = () => {
     return (
@@ -106,14 +108,54 @@ const Home: React.FC = () => {
 
             </div>
 
-
             <div className='flex flex-row justify-around items-center h-28 rounded-full bg-[#8fc8e8] px-2 py-4 mx-0 my-8'>
-                <h5 ><span className='text-[#f75700]'>100+</span> Registered
-                    Nasha Mukti Kendra</h5>
-                <h5 ><span className='text-[#f75700]'>50+</span> Registered
-                    NGO</h5>
-                <h5 ><span className='text-[#f75700]'>400+</span> Community Member</h5>
-            </div>
+    <div className='text-center'>
+        <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+            {({ isVisible }: { isVisible: boolean }) => (
+                <div>
+                    {isVisible ? (
+                        <h2 className='text-[#f75700] text-sm font-bold sm:text-xl'>
+                            <CountUp end={100} duration={3} />+
+                        </h2>
+                    ) : null}
+                    <h5 className='text-sm sm:text-xl max-w-xs'>Registered Nasha Mukti Kendra</h5>
+                </div>
+            )}
+        </VisibilitySensor>
+    </div>
+
+    <div className='text-center'>
+        <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+            {({ isVisible }: { isVisible: boolean }) => (
+                <div>
+                    {isVisible ? (
+                        <h2 className='text-[#f75700] text-sm font-bold sm:text-xl'>
+                            <CountUp end={50} duration={3} />+
+                        </h2>
+                    ) : null}
+                    <h5 className='text-sm sm:text-xl'>Registered NGO</h5>
+                </div>
+            )}
+        </VisibilitySensor>
+    </div>
+
+    <div className='text-center'>
+        <VisibilitySensor partialVisibility offset={{ bottom: 200 }}>
+            {({ isVisible }: { isVisible: boolean }) => (
+                <div>
+                    {isVisible ? (
+                        <h2 className='text-[#f75700] text-sm font-bold sm:text-xl'>
+                            <CountUp end={400} duration={3} />+
+                        </h2>
+                    ) : null}
+                    <h5 className='text-sm sm:text-xl'>Community Member</h5>
+                </div>
+            )}
+        </VisibilitySensor>
+    </div>
+</div>
+
+
 
 
             <div className='flex flex-col md:flex-row mx-0 md:mx-12 mt-14 mb-20 bg-[#edeaff] rounded-md'>
