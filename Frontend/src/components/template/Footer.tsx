@@ -2,7 +2,7 @@ import classNames from 'classnames'
 import Container from '@/components/shared/Container'
 import { APP_NAME } from '@/constants/app.constant'
 import { PAGE_CONTAINER_GUTTER_X } from '@/constants/theme.constant'
-
+import GoogleTranslate from '@/services/GoogleTranslate'
 export type FooterPageContainerType = 'gutterless' | 'contained'
 
 type FooterProps = {
@@ -12,29 +12,31 @@ type FooterProps = {
 const FooterContent = () => {
     return (
         <div className="flex items-center justify-between flex-auto w-full">
-            <span>
-                Copyright &copy; {`${new Date().getFullYear()}`}{' '}
-                <span className="font-semibold">{`${APP_NAME}`}</span> All
-                rights reserved.
-            </span>
-            <div className="">
-                <a
-                    className="text-gray"
-                    href="/#"
-                    onClick={(e) => e.preventDefault()}
-                >
-                    Term & Conditions
-                </a>
-                <span className="mx-2 text-muted"> | </span>
-                <a
-                    className="text-gray"
-                    href="/#"
-                    onClick={(e) => e.preventDefault()}
-                >
-                    Privacy & Policy
-                </a>
-            </div>
-        </div>
+  <span>
+    Copyright &copy; {`${new Date().getFullYear()}`}{" "}
+    <span className="font-semibold">{`${APP_NAME}`}</span> All rights reserved.
+  </span>
+  <div className="flex items-center space-x-2"> {/* Flex container with spacing */}
+  <GoogleTranslate />
+    <a
+      className="text-gray"
+      href="/#"
+      onClick={(e) => e.preventDefault()}
+    >
+      Term & Conditions
+    </a>
+    <span className="text-muted"> | </span>
+    <a
+      className="text-gray"
+      href="/#"
+      onClick={(e) => e.preventDefault()}
+    >
+      Privacy & Policy
+    </a>
+    
+  </div>
+</div>
+
     )
 }
 
