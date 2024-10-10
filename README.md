@@ -95,6 +95,9 @@ Rehabify is a comprehensive management platform designed for rehabilitation and 
 
 We welcome contributions! Please fork the repository and submit pull requests.
 
+## Our Valuable Contributors
+[![Contributors](https://contrib.rocks/image?repo=Ratnesh-Team/Rehabify)](https://github.com/Ratnesh-Team/Rehabify/graphs/contributors)
+
 ## License
 
 This project is licensed under the MIT License.
