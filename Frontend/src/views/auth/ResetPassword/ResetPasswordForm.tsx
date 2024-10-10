@@ -51,11 +51,16 @@ const ResetPasswordForm = (props: ResetPasswordFormProps) => {
                 setSubmitting(false)
                 setResetComplete(true)
             }
-        } catch (errors) {
+        } catch (errors:any) {
+              if (errors.message === 'Network Error') {
+            setMessage('Network error: Please check your connection.')
+            } 
+              else {
             setMessage(
                 (errors as AxiosError<{ message: string }>)?.response?.data
                     ?.message || (errors as Error).toString()
             )
+        }
             setSubmitting(false)
         }
     }
