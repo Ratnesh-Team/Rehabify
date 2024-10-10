@@ -93,6 +93,7 @@ const SignInForm = (props: SignInFormProps) => {
                             >
                                 <Field
                                     type="email"
+                                    className="font-bold text-black" 
                                     autoComplete="off"
                                     name="Email"
                                     placeholder="Email"
@@ -108,10 +109,12 @@ const SignInForm = (props: SignInFormProps) => {
                                 errorMessage={errors.password}
                             >
                                 <Field
+                                // i want to make input bold  also color black 
+                                className="font-bold text-black" 
                                     autoComplete="off"
                                     name="password"
                                     placeholder="Password"
-                                    component={PasswordInput}
+                                    component={Input}
                                 />
                             </FormItem>
                             <div className="flex justify-between mb-6">
