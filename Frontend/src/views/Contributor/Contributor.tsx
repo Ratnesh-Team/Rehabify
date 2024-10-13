@@ -26,15 +26,15 @@ const ContributorCard: React.FC<Contributor> = ({ login, avatar_url, html_url, c
     transition={{ type: 'spring', stiffness: 300 }}
     className="bg-white rounded-lg shadow-lg overflow-hidden"
   >
-    <div className="p-6 text-center">
-      <img src={avatar_url} alt={login} className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary" />
-      <h3 className="font-bold text-xl text-gray-800">{login}</h3>
+    <div className="p-6 text-center dark:bg-gray-800" >
+      <img src={avatar_url} alt={login} className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-primary dark:border-gray-700" />
+      <h3 className="font-bold text-xl dark:text-gray-100">{login}</h3>
       <p className="text-sm text-primary mb-2">{type}</p>
       <div className="mt-4 bg-primary-foreground rounded-full py-2 px-4 inline-block">
         <span className="font-semibold text-primary">{contributions} contributions</span>
       </div>
     </div>
-    <div className="bg-muted py-3 px-6 flex justify-between items-center">
+    <div className="bg-muted py-3 px-6 flex justify-between items-center dark:bg-gray-700">
       <a 
         href={html_url} 
         target="_blank" 
@@ -65,13 +65,13 @@ const StatCard: React.FC<StatCardProps> = ({ label, value, icon }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
-    className="bg-white rounded-lg shadow-lg p-6 flex items-center"
+    className="bg-white dark:bg-gray-800  rounded-lg shadow-lg p-6 flex items-center"
   >
     <div className="rounded-full bg-primary-foreground p-3 mr-4">
       {icon}
     </div>
     <div>
-      <h3 className="text-3xl font-bold text-gray-800">{value}</h3>
+      <h3 className="text-3xl font-bold  text-gray-800 dark:text-gray-100">{value}</h3>
       <p className="text-muted-foreground">{label}</p>
     </div>
   </motion.div>
@@ -118,7 +118,7 @@ export default function Contributor() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center text-center bg-cover bg-center" style={{backgroundImage: "url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2850&q=80')"}}>
+      <section className="relative h-[70vh] flex items-center justify-center text-center bg-cover bg-center " style={{backgroundImage: "url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2850&q=80')"}}>
         <div className="absolute inset-0 bg-black opacity-60" />
         <div className="relative z-10 space-y-6 max-w-4xl mx-auto px-4">
           <motion.h1 
@@ -130,7 +130,7 @@ export default function Contributor() {
             Welcome to our platform
           </motion.h1>
           <motion.p 
-            className="text-xl sm:text-2xl text-primary-foreground"
+            className="text-xl sm:text-2xl text-gray-400 "
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -146,7 +146,7 @@ export default function Contributor() {
               variant="solid"
               size="lg"
               className="mt-8"
-              onClick={() => document.getElementById('contribute')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => window.open('https://github.com/Ratnesh-Team/Rehabify', '_blank')}
             >
               Become a Contributor
             </Button>
@@ -155,11 +155,11 @@ export default function Contributor() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">Project Statistics</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <StatCard 
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-white">Project Statistics</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8   ">
+            <StatCard  
               label="Contributors" 
               value={contributors.length} 
               icon={<svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary" viewBox="0 0 20 20" fill="currentColor">
@@ -194,7 +194,7 @@ export default function Contributor() {
       {/* Contributors Grid */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-muted">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Meet Our Contributors</h2>
+          <h2 className="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Meet Our Contributors</h2>
           <AnimatePresence>
             {loading ? (
               <motion.div
@@ -226,11 +226,11 @@ export default function Contributor() {
       <section id="contribute" className="py-16 px-4 sm:px-6 lg:px-8 bg-primary text-white">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-6">Ready to Make an Impact?</h2>
-          <p className="text-xl mb-8 text-primary-foreground">
+          <p className="text-xl mb-8 text-gray-800  dark:text-gray-400">
             Join our community and help shape the future of Rehabify.
           </p>
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Input
+            {/* <Input
               type="email"
               placeholder="Enter your email"
               value={email}
@@ -239,7 +239,7 @@ export default function Contributor() {
             />
             <Button type="submit" variant="solid" size="md">
               Get Started
-            </Button>
+            </Button> */}
           </form>
           {notification.show && (
             <motion.div
