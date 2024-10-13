@@ -70,6 +70,12 @@ export const protectedRoutes = [
         authority: ['USER'],
     },
     {
+        key: 'contributor',
+        path: '/Contributor',
+        component: lazy(() => import('@/views/Contributor')),
+        authority: ['USER', 'ADMIN'],
+    },
+    {
         key: 'blog1',
         path: '/blog1',
         component: lazy(() => import('@/views/HomeRemedies/blog1')),
