@@ -6,6 +6,7 @@ import { MdGroups } from 'react-icons/md'
 import { FaBuildingNgo } from "react-icons/fa6";
 import { FaUserDoctor } from "react-icons/fa6";
 import { MdOutlineVerifiedUser } from "react-icons/md";
+import { AiOutlineTeam } from 'react-icons/ai';
 
 
 export type NavigationIcons = Record<string, JSX.Element>
