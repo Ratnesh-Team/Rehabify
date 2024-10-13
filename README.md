@@ -1,4 +1,4 @@
-# Rehabify - Nasha Mukti Kendra Management Platform 🏥🌿
+# Rehabify - Nasha Mukti Kendra Management Platform
 
 <table align="center">
     <thead align="center">
