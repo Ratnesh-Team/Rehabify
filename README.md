@@ -1,4 +1,4 @@
-# Rehabify - Rehabilitation and Nasha Mukti Kendra Management Platform 🏥🌿
+# Rehabify - Nasha Mukti Kendra Management Platform 🏥🌿
 
 <table align="center">
     <thead align="center">
@@ -79,11 +79,8 @@ For contributing to this repository, make sure you raise a pull request to the `
     go mod tidy
     ```
 
-3. **Set up MongoDB**:
-   Create a `.env` file in the `Backend` directory and add the following environment variables:
-    ```env
-    MONGOURI= your mongo url
-    ```
+3. **Create a .env File**:
+   Create a `.env` file in the `Backend` directory and add the environment variables mentioned in `sample.env` file 
 
 4. **Run the backend server**:
     ```bash
@@ -103,7 +100,10 @@ For contributing to this repository, make sure you raise a pull request to the `
     npm install
     ```
 
-3. **Run the frontend server**:
+3. **Create a .env File**:
+   Create a `.env` file in the `Frontkend` directory and add the environment variables mentioned in `sample.env` file 
+
+4. **Run the frontend server**:
     ```bash
     npm start
     ```
@@ -114,6 +114,7 @@ For contributing to this repository, make sure you raise a pull request to the `
 1. **Access the platform**:
     - Open your browser and navigate to `http://localhost:5173` for the frontend.
     - The backend server runs on `http://localhost:3000`.
+    - Api documentation is available on `http://localhost:3000/swagger-ui/index.html`
 
 2. **Login as Super Admin**:
     - Use the provided super admin credentials to log in and manage the platform.
