@@ -20,7 +20,6 @@ const navigationIcon: NavigationIcons = {
     doctor: <FaUserDoctor />, // Doctor icon
     ngo: <FaBuildingNgo />, // NGO icon
     Approval: <MdOutlineVerifiedUser />, // Doctor Appointment icon
-    Contributor: <AiOutlineTeam />, // Contributor icon
 
 }
 
