@@ -86,5 +86,15 @@ const navigationConfig: NavigationTree[] = [
         authority: ['SUPERADMIN'],
         subMenu: [],
     },
+    {
+        key: 'contributor',
+        path: '/contributor',
+        title: 'Contributor',
+        translateKey: 'Contributor',
+        icon: 'Contributor',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: ['ADMIN', 'USER'],
+        subMenu: [],
+    }
 ]
 export default navigationConfig
