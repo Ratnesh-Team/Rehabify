@@ -85,6 +85,6 @@ const navigationConfig: NavigationTree[] = [
         type: NAV_ITEM_TYPE_ITEM,
         authority: ['SUPERADMIN'],
         subMenu: [],
-    },
+    }
 ]
 export default navigationConfig
