@@ -18,7 +18,7 @@ const Side = ({ children, content, ...rest }: SideProps) => {
                 }}
             >
                 <Logo mode="dark" />
-                <div>
+                <div className='mb-[155px] ml-20'>
                     <div className="mb-6 flex item-col">
                         <div>
                             <div className="mb-6 flex items-center gap-4">
