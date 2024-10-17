@@ -21,7 +21,7 @@ export interface ButtonProps
     onClick?: (e: MouseEvent<HTMLButtonElement>) => void
     shape?: TypeAttributes.Shape
     size?: TypeAttributes.Size
-    variant?: 'solid' | 'twoTone' | 'plain' | 'default'
+    variant?: 'solid' | 'twoTone' | 'plain' | 'default' | 'greenTwoTone' // Added new variant here
 }
 
 type ButtonColor = {
@@ -131,6 +131,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
         return getBtnColor(btn)
     }
 
+    const greenTwoToneColor = () => { // New function for green two-tone variant
+        const btn = {
+            bgColor: active
+                ? `bg-green-200 dark:bg-green-50`
+                : `bg-green-50 dark:bg-green-500 dark:bg-opacity-20`,
+            textColor: `text-green-700 dark:text-green-50`,
+            hoverColor: active
+                ? ''
+                : `hover:bg-green-100 dark:hover:bg-green-500 dark:hover:bg-opacity-30`,
+            activeColor: `active:bg-green-200 dark:active:bg-green-500 dark:active:bg-opacity-40`,
+        }
+        return getBtnColor(btn)
+    }
+
     const defaultColor = () => {
         const btn = {
             bgColor: active
@@ -172,6 +186,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
                 return solidColor()
             case 'twoTone':
                 return twoToneColor()
+            case 'greenTwoTone': // Add case for the new variant
+                return greenTwoToneColor()
             case 'plain':
                 return plainColor()
             case 'default':
