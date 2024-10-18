@@ -57,8 +57,8 @@ const TreatmentCentres: React.FC<{
     useEffect(() => {
         const fetchCards = async () => {
             try {
-                const response = await  getNMK();
-                const responseData =  response.data;
+                const response = await getNMK();
+                const responseData = response.data;
                 setCards(responseData.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -92,64 +92,67 @@ const TreatmentCentres: React.FC<{
         <>
             <div className="flex flex-wrap justify-around gap-6">
                 {errorMessage ? (
-                <div className="flex flex-col items-center justify-center">
-                    <Alert showIcon className="mb-4" type="danger">
-                        {errorMessage}
-                    </Alert>
-                    <DoubleSidedImage
-                        src="/img/others/img-2.png"
-                        darkModeSrc="/img/others/img-2-dark.png"
-                        alt="Network Error"
-                    />
-                </div>
-                ):(
+                    <div className="flex flex-col items-center justify-center">
+                        <Alert showIcon className="mb-4" type="danger">
+                            {errorMessage}
+                        </Alert>
+                        <DoubleSidedImage
+                            src="/img/others/img-2.png"
+                            darkModeSrc="/img/others/img-2-dark.png"
+                            alt="Network Error"
+                        />
+                    </div>
+                ) : (
                     <div className="flex flex-wrap justify-around gap-6">
                         {displayedCards.map((card, index) => (
-                    <div key={index} className="max-w-xs mb-6">
-                        <Link
-                            to={`/NMK?NMK_Code=${card._id}`}
-                            className="max-w-xs mb-6"
-                        >
-                            <Card
-                                clickable
-                                className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
-                                header={
-                                    <div
-                                        className="rounded-tl-lg rounded-tr-lg overflow-hidden"
-                                        style={{
-                                            height: '200px',
-                                            width: '100%',
-                                        }} // Adjust height as needed
-                                    >
-                                        <img
-                                            src={card.ImageURL}
-                                            alt="card header"
-                                            style={{
-                                                objectFit: 'cover',
-                                                width: '100%',
-                                                height: '100%',
-                                            }}
-                                        />
-                                    </div>
-                                }
-                                headerClass="p-0"
-                                footerBorder={false}
-                                headerBorder={true}
+                            <div
+                                key={index}
+                                className="w-[300px] sm:w-[400px] mb-6" // fixed size of cards on small and large screens
                             >
-                                <span>
-                                    <h3 className="text-emerald-600 font-bold">
-                                        {card.Name}
-                                    </h3>
-                                </span>
-                                <p className="text-sm overflow-hidden whitespace-nowrap">
-                                    {card.Address}
-                                </p>
-                                <p className="font-semibold">
-                                    {card.Owner_Name}
-                                </p>
-                            </Card>
-                        </Link>
-                    </div>
+                                <Link
+                                    to={`/NMK?NMK_Code=${card._id}`}
+                                    className="block"
+                                >
+                                    <Card
+                                        clickable
+                                        className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                        header={
+                                            <div
+                                                className="rounded-tl-lg rounded-tr-lg overflow-hidden"
+                                                style={{
+                                                    height: '200px',
+                                                    width: '100%',
+                                                }}
+                                            >
+                                                <img
+                                                    src={card.ImageURL}
+                                                    alt="card header"
+                                                    style={{
+                                                        objectFit: 'cover',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                    }}
+                                                />
+                                            </div>
+                                        }
+                                        headerClass="p-0"
+                                        footerBorder={false}
+                                        headerBorder={true}
+                                    >
+                                        <span>
+                                            <h3 className="text-emerald-600 font-bold">
+                                                {card.Name}
+                                            </h3>
+                                        </span>
+                                        <p className="text-sm overflow-hidden whitespace-nowrap">
+                                            {card.Address}
+                                        </p>
+                                        <p className="font-semibold">
+                                            {card.Owner_Name}
+                                        </p>
+                                    </Card>
+                                </Link>
+                            </div>
                         ))}
                     </div>
                 )}
@@ -161,6 +164,7 @@ const TreatmentCentres: React.FC<{
                 onChange={onPageChange}
             />
         </>
+
     )
 };
 
