@@ -107,7 +107,7 @@ const TreatmentCentres: React.FC<{
                         {displayedCards.map((card, index) => (
                             <div
                                 key={index}
-                                className="w-[300px] sm:w-[400px] mb-6" // fixed size of cards on small and large screens
+                                className="w-[300px] max-w-xs sm:w-[400px] mb-6" // fixed size of cards on small and large screens
                             >
                                 <Link
                                     to={`/NMK?NMK_Code=${card._id}`}
