@@ -167,69 +167,70 @@ const Controlled: React.FC<Props> = () => {
 <div className="mt-4 border p-4 rounded-lg shadow-md max-h-[400px] overflow-y-auto">
 <div className="mt-4">
     <form className="flex flex-col gap-4">
-        <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Name</label>
-            <input
-                type="text"
-                name="name"
-                className="input-field"
-                placeholder="Enter your name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-            />
-            {formErrors.name && <span className="text-red-500">{formErrors.name}</span>}
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Contact Number</label>
-            <input
-                type="tel"
-                name="contactNumber"
-                className="input-field"
-                placeholder="+91"
-                value={formData.contactNumber}
-                onChange={handleChange}
-                required
-            />
-            {formErrors.contactNumber && <span className="text-red-500">{formErrors.contactNumber}</span>}
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-                type="email"
-                name="email"
-                className="input-field"
-                placeholder="Enter your email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-            />
-            {formErrors.email && <span className="text-red-500">{formErrors.email}</span>}
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Appointment Date</label>
-            <input
-                type="date"
-                name="appointmentDate"
-                className="input-field"
-                value={formData.appointmentDate}
-                onChange={handleChange}
-                required
-            />
-            {formErrors.appointmentDate && <span className="text-red-500">{formErrors.appointmentDate}</span>}
-        </div>
-        <div className="mb-4">
-            <label className="block text-sm font-medium mb-1">Appointment Time</label>
-            <input
-                type="time"
-                name="appointmentTime"
-                className="input-field"
-                value={formData.appointmentTime}
-                onChange={handleChange}
-                required
-            />
-            {formErrors.appointmentTime && <span className="text-red-500">{formErrors.appointmentTime}</span>}
-        </div>
+    <div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Name</label>
+    <input
+        type="text"
+        name="name"
+        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        placeholder="Enter your name"
+        value={formData.name}
+        onChange={handleChange}
+        required
+    />
+    {formErrors.name && <span className="text-red-500">{formErrors.name}</span>}
+</div>
+<div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Contact Number</label>
+    <input
+        type="tel"
+        name="contactNumber"
+        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        placeholder="+91"
+        value={formData.contactNumber}
+        onChange={handleChange}
+        required
+    />
+    {formErrors.contactNumber && <span className="text-red-500">{formErrors.contactNumber}</span>}
+</div>
+<div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Email</label>
+    <input
+        type="email"
+        name="email"
+        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        placeholder="Enter your email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+    />
+    {formErrors.email && <span className="text-red-500">{formErrors.email}</span>}
+</div>
+<div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Appointment Date</label>
+    <input
+        type="date"
+        name="appointmentDate"
+        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        value={formData.appointmentDate}
+        onChange={handleChange}
+        required
+    />
+    {formErrors.appointmentDate && <span className="text-red-500">{formErrors.appointmentDate}</span>}
+</div>
+<div className="mb-4">
+    <label className="block text-sm font-medium mb-1">Appointment Time</label>
+    <input
+        type="time"
+        name="appointmentTime"
+        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        value={formData.appointmentTime}
+        onChange={handleChange}
+        required
+    />
+    {formErrors.appointmentTime && <span className="text-red-500">{formErrors.appointmentTime}</span>}
+</div>
+
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSubmit}>
             Schedule Appointment
         </button>
