@@ -101,7 +101,7 @@ For contributing to this repository, make sure you raise a pull request to the `
     ```
 
 3. **Create a .env File**:
-   Create a `.env` file in the `Frontkend` directory and add the environment variables mentioned in `sample.env` file 
+   Create a `.env` file in the `Frontend` directory and add the environment variables mentioned in `sample.env` file 
 
 4. **Run the frontend server**:
     ```bash
