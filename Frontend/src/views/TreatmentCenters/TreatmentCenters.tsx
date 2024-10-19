@@ -21,8 +21,8 @@ const Controlled: React.FC<Props> = () => {
         <div>
             <h1 className="text-3xl font-bold mb-6">Treatment Centres</h1>
             {/* Search Input */}
-            <div className="flex justify-between items-center mb-4">
-                <div className="flex-grow"></div> {/* Empty div to push the search input to the right */}
+            <div className="flex  sm:ml-0 ml-4 justify-between items-center mb-4">
+                <div className="flex-grow sm:flex hidden"></div> {/* Empty div to push the search input to the right */}
                 <div> {/* Adjust the width of the search input container */}
                     <Input
                         type="text"
