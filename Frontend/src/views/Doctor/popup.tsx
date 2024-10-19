@@ -30,6 +30,21 @@ const Controlled: React.FC<Props> = () => {
 
     const handleCloseDialog = () => {
         setSelectedDoctor(null);
+        setFormData({
+            name: '',
+            contactNumber: '',
+            email: '',
+            appointmentDate: '',
+            appointmentTime: '',
+        })
+        setFormErrors({
+            name: '',
+            contactNumber: '',
+            email: '',
+            appointmentDate: '',
+            appointmentTime: '',
+        })
+        setShowForm(false);
     };
 
     useEffect(() => {
@@ -60,23 +75,23 @@ const Controlled: React.FC<Props> = () => {
         const phoneRegex = /^\+?\d{1,3}[- ]?\d{3}[- ]?\d{3}[- ]?\d{4}$/; // Example: +91-123-456-7890
 
         if (!formData.name) {
-            errors.name = 'Name is required';
+            errors.name = 'required';
         }
         if (!formData.contactNumber) {
-            errors.contactNumber = 'Contact number is required';
+            errors.contactNumber = 'required';
         } else if (!phoneRegex.test(formData.contactNumber)) {
             errors.contactNumber = 'Contact number is invalid';
         }
         if (!formData.email) {
-            errors.email = 'Email is required';
+            errors.email = 'required';
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            errors.email = 'Email is invalid';
+            errors.email = 'invalid Email';
         }
         if (!formData.appointmentDate) {
-            errors.appointmentDate = 'Appointment date is required';
+            errors.appointmentDate = 'required';
         }
         if (!formData.appointmentTime) {
-            errors.appointmentTime = 'Appointment time is required';
+            errors.appointmentTime = 'required';
         }
 
         setFormErrors(errors);
@@ -168,7 +183,9 @@ const Controlled: React.FC<Props> = () => {
 <div className="mt-4">
     <form className="flex flex-col gap-4">
     <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Name</label>
+    <label className="block text-sm font-medium mb-1">Name
+    {formErrors.name && <span className="text-red-500">{`   (${formErrors.name}*)`}</span>}
+    </label>
     <input
         type="text"
         name="name"
@@ -178,10 +195,12 @@ const Controlled: React.FC<Props> = () => {
         onChange={handleChange}
         required
     />
-    {formErrors.name && <span className="text-red-500">{formErrors.name}</span>}
+    
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Contact Number</label>
+    <label className="block text-sm font-medium mb-1">Contact Number
+    {formErrors.contactNumber && <span className="text-red-500">{`   (${formErrors.contactNumber}*)`}</span>}
+    </label>
     <input
         type="tel"
         name="contactNumber"
@@ -191,10 +210,11 @@ const Controlled: React.FC<Props> = () => {
         onChange={handleChange}
         required
     />
-    {formErrors.contactNumber && <span className="text-red-500">{formErrors.contactNumber}</span>}
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Email</label>
+    <label className="block text-sm font-medium mb-1">Email
+    {formErrors.email && <span className="text-red-500">{`   (${formErrors.email}*)`}</span>}
+    </label>
     <input
         type="email"
         name="email"
@@ -204,10 +224,11 @@ const Controlled: React.FC<Props> = () => {
         onChange={handleChange}
         required
     />
-    {formErrors.email && <span className="text-red-500">{formErrors.email}</span>}
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Appointment Date</label>
+    <label className="block text-sm font-medium mb-1">Appointment Date
+    {formErrors.appointmentDate && <span className="text-red-500">{`   (${formErrors.appointmentDate}*)`}</span>}
+    </label>
     <input
         type="date"
         name="appointmentDate"
@@ -216,10 +237,11 @@ const Controlled: React.FC<Props> = () => {
         onChange={handleChange}
         required
     />
-    {formErrors.appointmentDate && <span className="text-red-500">{formErrors.appointmentDate}</span>}
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Appointment Time</label>
+    <label className="block text-sm font-medium mb-1">Appointment Time
+    {formErrors.appointmentTime && <span className="text-red-500">{`   (${formErrors.appointmentTime}*)`}</span>}
+    </label>
     <input
         type="time"
         name="appointmentTime"
@@ -228,7 +250,6 @@ const Controlled: React.FC<Props> = () => {
         onChange={handleChange}
         required
     />
-    {formErrors.appointmentTime && <span className="text-red-500">{formErrors.appointmentTime}</span>}
 </div>
 
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSubmit}>
