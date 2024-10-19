@@ -73,29 +73,31 @@ const Controlled: React.FC<Props> = () => {
                 <Dialog isOpen={true} onClose={handleCloseDialog} >
                     {/* Render dialog content here */}
                     <div className="p-4 ">
-                        <div className="flex justify-between">
+                        <div className="flex justify-between flex-row-reverse items-center ">
 
-                            <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="flex square-full h-1/3 w-1/3 mb-4 rounded" />
-                            <div className="flex flex-col">
-                                <h2 className="text-2xl font-bold mb-2">{selectedDoctor.Name}</h2>
-                                <p className="mb-2">
-                                    <i className="fas fa-stethoscope"></i> Specialization: {selectedDoctor.Specialization}
+                           <div className='flex square-full h-1/2 w-1/3 rounded shadow-md'>
+                           <img src={selectedDoctor.ImageURL} alt={selectedDoctor.Name} className="w-full h-full" />
+                           </div>
+                            <div className="flex flex-col ">
+                                <h2 className="text-2xl font-bold mb-2 underline-offset-4 underline text-[#f19d43]">{selectedDoctor.Name}</h2>
+                                <p className="mb-2 space-x-2">
+                                    <i className="fas fa-stethoscope"></i><span className='text-black'>{selectedDoctor.Specialization}</span>
                                 </p>
-                                <p className="mb-2">
-                                    <i className="fas fa-envelope"></i> Email: {selectedDoctor.Email}
+                                <p className="mb-2 space-x-2">
+                                    <i className="fas fa-envelope"></i><span className='text-black '>{selectedDoctor.Email}</span>
                                 </p>
-                                <p className="mb-2">
-                                    <i className="fas fa-phone"></i> Contact Number: {selectedDoctor.ContactNumber}
+                                <p className="mb-2 space-x-2">
+                                    <i className="fas fa-phone"></i><span className='text-black'>{selectedDoctor.ContactNumber}</span>
                                 </p>
+                                <p className="mb-2 space-x-2" >
+                            <i className="fas fa-map-marker-alt"></i><span className='text-black'>{selectedDoctor.ClinicAddress}</span>
+                        </p>
                             </div>
                         </div>
-                        <p className="mb-2 font-bold">{selectedDoctor.Description}</p>
 
 
-                        <p className="mb-2" style={{ maxHeight: '3.6rem', overflow: 'hidden' }}>
-                            <i className="fas fa-map-marker-alt"></i> Address: {selectedDoctor.ClinicAddress}
-                        </p>
-                        <div className='flex flex-row-reverse'>
+                        
+                        <div className='flex items-center justify-center mt-4'>
                             <a href={`https://wa.me/+91${selectedDoctor.ContactNumber}?text=I'm%20interested%20in%20booking%20an%20appointment`} target="_blank" rel="noopener noreferrer">
                                 <Button variant="solid">Book Appointment</Button>
                             </a>
