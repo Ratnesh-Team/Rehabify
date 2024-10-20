@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/Homeremedies": {
+        "/home-remedies": {
             "get": {
-                "description": "Get all Homeremedies details",
+                "description": "Get details of Homeremedies with role-based access control",
                 "consumes": [
                     "application/json"
                 ],
@@ -28,19 +28,51 @@ const docTemplate = `{
                     "Homeremedies"
                 ],
                 "summary": "Get all Homeremedies details",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "id",
+                        "description": "Filter Homeremedies by ID (optional)",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Homeremedies details fetched successfully",
                         "schema": {
-                            "$ref": "#/definitions/models.Homeremedies"
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/models.Homeremedies"
+                                    }
+                                }
+                            }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid value for 'id'"
+                    },
+                    "401": {
+                        "description": "Unauthorized - You do not have permission to access this resource"
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Failed to fetch Homeremedies details"
                     }
                 }
             }
         },
         "/NMK": {
             "get": {
-                "description": "Get all NMK codes",
+                "description": "Get NMK codes with role-based access control",
                 "consumes": [
                     "application/json"
                 ],
@@ -50,20 +82,145 @@ const docTemplate = `{
                 "tags": [
                     "NMK"
                 ],
-                "summary": "Get all NMK codes",
+                "summary": "Get NMK codes",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "email",
+                        "description": "Filter NMK codes by user email",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "role",
+                        "description": "Filter NMK codes by user role (admin only)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "NMK_Code",
+                        "description": "Filter NMK codes by NMK code",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "NMK codes fetched successfully",
                         "schema": {
-                            "$ref": "#/definitions/models.NMK"
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/models.NMK"
+                                    }
+                                }
+                            }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid NMK code"
+                    },
+                    "401": {
+                        "description": "Unauthorized - You do not have permission to access this resource"
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Failed to fetch NMK codes"
                     }
                 }
             }
         },
-        "/doctors": {
+
+        "/addNMK":{
+            "post": {
+                "description": "Add a new NMK code to the repository",
+                "consumes": [
+                "application/json"
+                ],
+                "produces": [
+                "application/json"
+                ],
+                "tags": [
+                "NMK"
+                ],
+                "summary": "Add a new NMK code",
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "nmk",
+                    "description": "New NMK Code",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/models.NMK"
+                    }
+                }
+                ],
+                "responses": {
+                "200": {
+                    "description": "OK",
+                    "schema": {
+                    "$ref": "#/definitions/models.NMK"
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Failed to bind NMK data"
+                },
+                "500": {
+                    "description": "Internal Server Error - Failed to insert NMK data"
+                }
+                }
+            }
+        },
+        "/NMK/approve":{
+            "post": {
+                  "description": "Approves an existing NMK code and sets IsVerified to true",
+                  "consumes": [
+                    "application/json"
+                  ],
+                  "produces": [
+                    "application/json"
+                  ],
+                  "tags": [
+                    "NMK"
+                  ],
+                  "summary": "Approve an existing NMK code by ID",
+                  "parameters": [
+                    {
+                      "in": "path",
+                      "name": "id",
+                      "description": "NMK ID",
+                      "required": true,
+                      "type": "string"
+                    }
+                  ],
+                  "responses": {
+                    "200": {
+                      "description": "OK - NMK code approved successfully",
+                      "schema": {
+                        "$ref": "#/definitions/models.NMKApprovalResponse"
+                      }
+                    },
+                    "400": {
+                      "description": "Bad Request - Invalid NMK code"
+                    },
+                    "500": {
+                      "description": "Internal Server Error - Failed to approve NMK code"
+                    }
+                  }
+                }
+        },
+        "/doctor": {
             "get": {
-                "description": "Get all doctors",
+                "description": "Get all doctors with role-based filtering",
                 "consumes": [
                     "application/json"
                 ],
@@ -71,22 +228,96 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Doctors"
+                    "Doctor"
                 ],
-                "summary": "Get all doctors",
+                "summary": "Retrieve all doctors",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "role",
+                        "description": "Role of the user requesting doctors (superadmin or others)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "Doctor_Code",
+                        "description": "Filter doctors by their unique code (optional)",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Doctors fetched successfully",
                         "schema": {
-                            "$ref": "#/definitions/models.DoctorData"
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/models.DoctorData"
+                                    }
+                                }
+                            }
                         }
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Failed to fetch doctors"
                     }
+                }
+            }
+        },
+        
+        "/addDoctor":{
+            "post": {
+                "description": "Add a new Doctor to the repository",
+                "consumes": [
+                "application/json"
+                ],
+                "produces": [
+                "application/json"
+                ],
+                "tags": [
+                "Doctor"
+                ],
+                "summary": "Add a new Doctor",
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "doctor",
+                    "description": "New Doctor Data",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/models.DoctorData"
+                    }
+                }
+                ],
+                "responses": {
+                "201": {
+                    "description": "Doctor added successfully",
+                    "schema": {
+                    "$ref": "#/definitions/models.DoctorData"
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Failed to parse request body"
+                },
+                "500": {
+                    "description": "Internal Server Error - Failed to insert Doctor"
+                }
                 }
             }
         },
         "/users": {
             "get": {
-                "description": "Get users based on query parameters",
+                "description": "Get users based on query parameters and role-based authorization",
                 "consumes": [
                     "application/json"
                 ],
@@ -96,43 +327,197 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "Get users",
+                "summary": "Retrieve users",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Addiction Type",
+                        "in": "query",
                         "name": "Addiction_Type",
-                        "in": "query"
+                        "description": "Type of addiction to filter users",
+                        "required": false,
+                        "type": "string"
                     },
                     {
-                        "type": "string",
-                        "description": "Nasha Mukti Centre Code",
+                        "in": "query",
                         "name": "Nasha_Mukti_Centre_Code",
-                        "in": "query"
+                        "description": "Code of the Nasha Mukti Centre to filter users",
+                        "required": false,
+                        "type": "string"
                     },
                     {
-                        "type": "integer",
-                        "description": "Employment Status",
+                        "in": "query",
                         "name": "Employment_Status",
-                        "in": "query"
+                        "description": "Employment status of the users (integer value)",
+                        "required": false,
+                        "type": "integer"
                     },
                     {
-                        "type": "boolean",
-                        "description": "Is Treatment Completed",
+                        "in": "query",
                         "name": "Is_Treatment_Completed",
-                        "in": "query"
+                        "description": "Filter users based on treatment completion status",
+                        "required": false,
+                        "type": "boolean"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "Users retrieved successfully",
                         "schema": {
-                            "$ref": "#/definitions/models.User"
+                            "type": "object",
+                            "properties": {
+                                "status": {
+                                    "type": "integer"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/models.User"
+                                    }
+                                }
+                            }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid query parameters"
+                    },
+                    "401": {
+                        "description": "Unauthorized - Role not permitted"
+                    },
+                    "500": {
+                        "description": "Internal Server Error - Error finding or decoding users"
                     }
                 }
             }
-        }
+        },
+        
+        "/addPatient":{
+            "post": {
+                "description": "Add a new Patient to the repository",
+                "consumes": [
+                "application/json"
+                ],
+                "produces": [
+                "application/json"
+                ],
+                "tags": [
+                "Patient"
+                ],
+                "summary": "Add a new Patient",
+                "parameters": [
+                {
+                    "in": "body",
+                    "name": "user",
+                    "description": "New Patient Data",
+                    "required": true,
+                    "schema": {
+                    "$ref": "#/definitions/models.User"
+                    }
+                }
+                ],
+                "responses": {
+                "200": {
+                    "description": "Patient added successfully",
+                    "schema": {
+                    "$ref": "#/definitions/models.User"
+                    }
+                },
+                "400": {
+                    "description": "Bad Request - Failed to bind user data"
+                },
+                "500": {
+                    "description": "Internal Server Error - Error inserting user"
+                }
+                }
+            }
+        },
+        "/signIn": {
+            "post": {
+              "description": "Verify user credentials and return a JWT token on successful verification",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "tags": [
+                "Auth"
+              ],
+              "summary": "Verify User",
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "user",
+                  "description": "User credentials for sign-in",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/models.SignIn"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "User verified successfully",
+                  "schema": {
+                    "$ref": "#/definitions/models.SignInResponse"
+                  }
+                },
+                "400": {
+                  "description": "Bad Request - Failed to parse request body"
+                },
+                "401": {
+                  "description": "Unauthorized - Invalid email or password"
+                },
+                "500": {
+                  "description": "Internal Server Error - Error querying or processing the request"
+                }
+              }
+            }
+          },
+          "/signUp": {
+            "post": {
+              "description": "Add a new User to the repository",
+              "consumes": [
+                "application/json"
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "tags": [
+                "Auth"
+              ],
+              "summary": "Add a new User",
+              "parameters": [
+                {
+                  "in": "body",
+                  "name": "user",
+                  "description": "New User Data",
+                  "required": true,
+                  "schema": {
+                    "$ref": "#/definitions/models.SignUp"
+                  }
+                }
+              ],
+              "responses": {
+                "200": {
+                  "description": "User added successfully",
+                  "schema": {
+                    "$ref": "#/definitions/models.SignUp"
+                  }
+                },
+                "400": {
+                  "description": "Bad Request - Failed to parse request body"
+                },
+                "409": {
+                  "description": "Conflict - Email already exists"
+                },
+                "500": {
+                  "description": "Internal Server Error - Error inserting user"
+                }
+              }
+            }
+          }
     },
     "definitions": {
         "models.DoctorData": {
@@ -310,7 +695,88 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
+        },
+        "models.Credentials":{
+            "type":"object",
+            "properties":{
+                "Email":{
+                    "type":"string"
+                },
+                "Password":{
+                    "type":"string"
+                },
+                "Role":{
+                    "type":"string"
+                }
+            }
+        },
+        "models.SignIn": {
+            "type": "object",
+            "properties": {
+                "Email": {
+                "type": "string"
+                },
+                "Password": {
+                "type": "string"
+                }
+            },
+            "required": ["Email", "Password"]
+            },
+            "models.SignInResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                "type": "string"
+                },
+                "user": {
+                "$ref": "#/definitions/models.UserInfo"
+                }
+            }
+            },
+            "models.UserInfo": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                "type": "string"
+                },
+                "email": {
+                "type": "string"
+                },
+                "userName": {
+                "type": "string"
+                },
+                "authority": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+                }
+            }
+        },
+        "models.SignUp": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "Username": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "Role": {
+          "type": "string"
+        },
+        "un": {
+          "type": "string"
         }
+      },
+      "required": ["Username", "Password", "Email", "Role"]
+    }
     }
 }`
 
