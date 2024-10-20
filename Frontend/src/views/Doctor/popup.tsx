@@ -150,7 +150,6 @@ const Controlled: React.FC<Props> = () => {
             </div>
 
             {selectedDoctor && (
-
     <Dialog isOpen={true} onClose={handleCloseDialog}>
         <div className="p-4 overflow-y-auto max-h-[80vh]">
             <div className="flex justify-between">
@@ -180,80 +179,93 @@ const Controlled: React.FC<Props> = () => {
             {/* Appointment Form */}
             {showForm && (
 
-
 <div className="mt-4 border p-4 rounded-lg shadow-md max-h-[400px] overflow-y-auto">
 <div className="mt-4">
     <form className="flex flex-col gap-4">
     <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Name
+    <label className="block text-sm font-medium mb-1">Name*
     {formErrors.name && <span className="text-red-500">{`   (${formErrors.name}*)`}</span>}
     </label>
+    <div className="w-64">
+
     <Input
         type="text"
         name="name"
-        className="px-4 py-2"
+        
         placeholder="Enter your name"
         value={formData.name}
         onChange={handleChange}
         required
     />
+    </div>
     
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Contact Number
-    {formErrors.contactNumber && <span className="text-red-500">{`   (${formErrors.contactNumber}*)`}</span>}
+    <label className="block text-sm font-medium mb-1">Contact Number*
+    {formErrors.contactNumber && <span className="text-red-500">{`   (${formErrors.contactNumber})`}</span>}
     </label>
+    <div className="w-64">
+
     <Input
         type="tel"
         name="contactNumber"
-        className="px-4 py-2"
+      
         placeholder="+91"
         value={formData.contactNumber}
         onChange={handleChange}
         required
     />
+    </div>
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Email
-    {formErrors.email && <span className="text-red-500">{`   (${formErrors.email}*)`}</span>}
+    <label className="block text-sm font-medium mb-1">Email*
+    {formErrors.email && <span className="text-red-500">{`   (${formErrors.email})`}</span>}
     </label>
+    <div className="w-64">
+
     <Input
         type="email"
         name="email"
-        className="px-4 py-2"
+        
         placeholder="Enter your email"
         value={formData.email}
         onChange={handleChange}
         required
     />
+    </div>
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Appointment Date
-    {formErrors.appointmentDate && <span className="text-red-500">{`   (${formErrors.appointmentDate}*)`}</span>}
+    <label className="block text-sm font-medium mb-1">Appointment Date*
+    {formErrors.appointmentDate && <span className="text-red-500">{`   (${formErrors.appointmentDate})`}</span>}
     </label>
+    <div className="w-32">
+
     <Input
         type="date"
         name="appointmentDate"
-        className=" px-4 py-2 "
+        
         value={formData.appointmentDate}
         onChange={handleChange}
         required
     />
+    </div>
 </div>
 <div className="mb-4">
-    <label className="block text-sm font-medium mb-1">Appointment Time
-    {formErrors.appointmentTime && <span className="text-red-500">{`   (${formErrors.appointmentTime}*)`}</span>}
+    <label className="block text-sm font-medium mb-1">Appointment Time*
+    {formErrors.appointmentTime && <span className="text-red-500">{`   (${formErrors.appointmentTime})`}</span>}
     </label>
+    <div className="w-32">
+
     <Input
         type="time"
         name="appointmentTime"
-        className="px-4 py-2"
+        
         value={formData.appointmentTime}
         onChange={handleChange}
         required
     />
+    </div>
 </div>
-
 
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSubmit}>
             Schedule Appointment
@@ -296,7 +308,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     const [serverError, setServerError] = useState(false);
     const [networkError, setNetworkError] = useState(false);
     const [cards, setCards] = useState<CardData[]>([]);
-    const pageSize = 8;
+    const pageSize = 6;
 
     useEffect(() => {
         const fetchCards = async () => {
@@ -307,9 +319,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
             } catch (error: any) {
                 console.error('Error fetching data:', error);
                 if (error.message === 'Network Error') {
-
                     setNetworkError(true);
-
                 } else {
                     setServerError(true);
                 }
@@ -340,13 +350,11 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
         <div>
             {networkError ? (
                 <div className="flex flex-col items-center justify-center">
-
                     <Alert showIcon className="mb-4" type="danger">
                         Network error: Please check your connection.
                     </Alert>
                     <DoubleSidedImage src="/img/others/img-2.png" darkModeSrc="/img/others/img-2-dark.png" alt="Network Error" />
                 </div>
-
             ) : serverError ? (
                 <div className="flex flex-col items-center justify-center">
                     <Alert showIcon className="mb-4" type="danger">
@@ -399,7 +407,6 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                     </div>
                 </>
             )}
-
         </div>
     );
 };
