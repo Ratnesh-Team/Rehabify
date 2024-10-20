@@ -53,10 +53,10 @@ const Home: React.FC = () => {
                 <div className='md:ml-2 md:mt-4 md:w-6/12'>
                     <h1 className='ml-3 mt-2 text-white'>DATABASE</h1>
 
-                    <p className='text-white ml-3 mt-4 mb-10 text-base tracking-wide'>Our website relies on a robust database to organize and deliver information efficiently. It ensures data accuracy, supports quick access to specific details, and enhances your online experience. Whether you're exploring our offerings or seeking information, our database ensures smooth and reliable interactions.</p>
+                    <p className='text-white mx-3 mt-4 mb-10 text-base tracking-wide'>Our website relies on a robust database to organize and deliver information efficiently. It ensures data accuracy, supports quick access to specific details, and enhances your online experience. Whether you're exploring our offerings or seeking information, our database ensures smooth and reliable interactions.</p>
                     <div className='mt-2 mb-8'>
                         <Link to={"/database"}>
-                            <Button shape="circle" variant='solid' className="mr-2 md:ml-16">
+                            <Button shape="circle" variant='solid' className=" ml-2 md:ml-16">
                                 <div className='flex justify-between'>
                                     Explore more  {<FiArrowUpRight />}
                                 </div>
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
                 <div className='md:ml-2 md:mt-4 md:w-6/12'>
                     <h1 className='text-right mr-3 mt-2'>Experienced Doctors </h1>
                     <h3 className='text-right mr-3 mt-1 mb-3'>Book Your Appointment Now</h3>
-                    <p className='text-right mr-3 mb-6 text-base tracking-wide text-black dark:text-white'>
+                    <p className='text-right mx-3 mb-6 text-base tracking-wide text-black dark:text-white'>
                         Our team of experienced doctors is dedicated to providing exceptional medical care tailored to your needs. With expertise in various specialties, including cardiology, neurology, and pediatrics, our doctors are committed to your well-being. Whether you need a routine check-up or specialized treatment, we're here to help. Book your appointment now and experience compassionate care from our trusted medical professionals.
                     </p>
                     <div className='mt-2 mb-8 ml-20'>
@@ -162,7 +162,7 @@ const Home: React.FC = () => {
                 <div className='w-full md:w-1/2 self-center'>
                     <img src="/img/home_page_img/map.png" alt="" />
                 </div>
-                <div className='w-full md:w-1/2 md:mx-3 md:mt-4 text-base '>
+                <div className='w-full md:w-1/2 mt-2 px-4 md:px-0 md:mx-3 md:mt-4 text-base '>
                     <p className='mb-4'>Discover the closest Nasha Mukti Kendra to you with our user-friendly locator. We understand that taking the first step towards recovery is a critical decision, and we're here to assist you. Our tool allows you to enter your location, providing instant access to the nearest addiction treatment centers. Find the support and care you need for a journey towards a healthier, addiction-free life.</p>
                     <div className='my-3'>
                         <Link to={"/treatment-centers"}>

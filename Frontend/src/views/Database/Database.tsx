@@ -230,7 +230,7 @@ const PaginationTable = () => {
             <div>
                 <h1  className="font-semibold">Users Data</h1>
             </div>
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex  sm:justify-between items-center mb-4">
                <span></span>
                 <div className="flex items-center ">
                     <Input className="mr-2" placeholder="Search..." value={searchTerm} onChange={handleSearch} />
