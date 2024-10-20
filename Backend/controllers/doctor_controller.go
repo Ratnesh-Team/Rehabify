@@ -10,15 +10,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// GetDoctor is a handler to get all doctors.
+// GetDoctor is a handler to retrieve all doctors.
 // It fetches all doctors from the repository and returns them as a response.
-// @Summary Get all doctors
-// @Description Get all doctors
+// @Summary Retrieve all doctors
+// @Description Retrieve all doctors, with filtering options based on query parameters.
 // @Tags Doctors
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.DoctorData
-// @Router /doctors [get]
+// @Param role query string false "Role" Enums(superadmin, admin, user)
+// @Param Doctor_Code query string false "Doctor Code"
+// @Success 200 {array} models.DoctorData
+// @Failure 500 {object} responses.ApplicationResponse "Failed to fetch doctors"
+// @Router /doctor [get]
 func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var doctorlist []models.DoctorData
@@ -71,6 +74,18 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 }
 
 // this is schema
+// AddDoctor is a handler to add a new doctor.
+// It inserts a new doctor into the repository and returns the created doctor data.
+// @Summary Add a new doctor
+// @Description Add a new doctor to the system with the details provided in the request body.
+// @Tags Doctors
+// @Accept json
+// @Produce json
+// @Param doctor body models.DoctorData true "Doctor data"
+// @Success 201 {object} models.DoctorData "Successfully added doctor"
+// @Failure 400 {object} responses.ApplicationResponse "Failed to parse request body"
+// @Failure 500 {object} responses.ApplicationResponse "Failed to insert doctor"
+// @Router /addDoctor [post]
 func AddDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	// fmt.Println("123")
 	return func(c *gin.Context) {

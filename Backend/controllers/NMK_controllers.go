@@ -10,14 +10,20 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// GetNMK is a handler to get all NMK codes.
+// GetNMK is a handler to retrieve all NMK codes.
 // It fetches all NMK codes from the repository and returns them as a response.
-// @Summary Get all NMK codes
-// @Description Get all NMK codes
+// @Summary Retrieve all NMK codes
+// @Description Fetch all NMK codes, with optional filtering based on query parameters such as email, role, and NMK code.
 // @Tags NMK
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.NMK
+// @Param email query string false "Filter by user email"
+// @Param role query string false "Filter by role; requires superadmin privileges to access unverified NMK codes"
+// @Param NMK_Code query string false "Filter by NMK Code"
+// @Success 200 {array} models.NMK "Successfully retrieved NMK codes"
+// @Failure 400 {object} map[string]interface{} "Invalid NMK code"
+// @Failure 401 {object} map[string]interface{} "Unauthorized access"
+// @Failure 500 {object} map[string]interface{} "Failed to fetch NMK codes"
 // @Router /NMK [get]
 func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -91,15 +97,17 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
     }
 }
 
-// AddNMK adds a new NMK code.
+// AddNMK adds a new NMK code to the repository.
 // @Summary Add a new NMK code
-// @Description Add a new NMK code to the repository
+// @Description Creates a new NMK code in the repository. The new NMK code is initially marked as unverified.
 // @Tags NMK
 // @Accept json
 // @Produce json
-// @Param nmk body models.NMK true "New NMK Code"
-// @Success 200 {object} models.NMK
-// @Router /NMK [post]
+// @Param nmk body models.NMK true "New NMK Code details"
+// @Success 201 {object} models.NMK "Successfully added NMK code"
+// @Failure 400 {object} map[string]interface{} "Failed to bind NMK data"
+// @Failure 500 {object} map[string]interface{} "Failed to insert NMK data"
+// @Router /addNMK [post]
 func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
         var nmk models.NMK
@@ -131,15 +139,17 @@ func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
     }
 }
 
-// ApproveNMK approves an existing NMK code.
-// @Summary Approve an existing NMK code by ID.
-// @Description Approves an existing NMK code and sets IsVerified to true.
+// ApproveNMK approves an existing NMK code by its ID.
+// @Summary Approve an existing NMK code by ID
+// @Description Approves an NMK code, setting its IsVerified status to true.
 // @Tags NMK
 // @Accept json
 // @Produce json
-// @Param id path string true "NMK ID"
-// @Success 200 {object} models.NMKApprovalResponse
-// @Router /NMK/{id}/approve [post]
+// @Param id path string true "ID of the NMK code to approve"
+// @Success 200 {object} map[string]interface{} "Successfully approved NMK code"
+// @Failure 400 {object} map[string]interface{} "Invalid NMK code ID"
+// @Failure 500 {object} map[string]interface{} "Failed to approve NMK code"
+// @Router /NMK/approve [post]
 func ApproveNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
         queryParams := c.Request.URL.Query()

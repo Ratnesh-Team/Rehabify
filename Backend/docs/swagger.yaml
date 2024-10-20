@@ -74,6 +74,28 @@ definitions:
       State:
         type: string
     type: object
+  models.SignIn:
+    properties:
+      Email:
+        type: string
+      Password:
+        type: string
+    type: object
+  models.SignUp:
+    properties:
+      _id:
+        type: string
+      Email:
+        type: string
+      Password:
+        type: string
+      Role:
+        type: string
+      Username:
+        type: string
+      un:
+        type: string
+    type: object
   models.User:
     properties:
       _id:
@@ -115,73 +137,348 @@ definitions:
       Under_Treatment:
         type: boolean
     type: object
+  responses.ApplicationResponse:
+    properties:
+      data: {}
+      message:
+        type: string
+      status: {}
+    type: object
 info:
   contact: {}
 paths:
-  /Homeremedies:
-    get:
-      consumes:
-      - application/json
-      description: Get all Homeremedies details
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Homeremedies'
-      summary: Get all Homeremedies details
-      tags:
-      - Homeremedies
   /NMK:
     get:
       consumes:
       - application/json
-      description: Get all NMK codes
+      description: Fetch all NMK codes, with optional filtering based on query parameters
+        such as email, role, and NMK code.
+      parameters:
+      - description: Filter by user email
+        in: query
+        name: email
+        type: string
+      - description: Filter by role; requires superadmin privileges to access unverified
+          NMK codes
+        in: query
+        name: role
+        type: string
+      - description: Filter by NMK Code
+        in: query
+        name: NMK_Code
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved NMK codes
+          schema:
+            items:
+              $ref: '#/definitions/models.NMK'
+            type: array
+        "400":
+          description: Invalid NMK code
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Unauthorized access
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch NMK codes
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Retrieve all NMK codes
+      tags:
+      - NMK
+  /NMK/approve:
+    post:
+      consumes:
+      - application/json
+      description: Approves an NMK code, setting its IsVerified status to true.
+      parameters:
+      - description: ID of the NMK code to approve
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully approved NMK code
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid NMK code ID
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to approve NMK code
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Approve an existing NMK code by ID
+      tags:
+      - NMK
+  /addDoctor:
+    post:
+      consumes:
+      - application/json
+      description: Add a new doctor to the system with the details provided in the
+        request body.
+      parameters:
+      - description: Doctor data
+        in: body
+        name: doctor
+        required: true
+        schema:
+          $ref: '#/definitions/models.DoctorData'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully added doctor
+          schema:
+            $ref: '#/definitions/models.DoctorData'
+        "400":
+          description: Failed to parse request body
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Failed to insert doctor
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Add a new doctor
+      tags:
+      - Doctors
+  /addNMK:
+    post:
+      consumes:
+      - application/json
+      description: Creates a new NMK code in the repository. The new NMK code is initially
+        marked as unverified.
+      parameters:
+      - description: New NMK Code details
+        in: body
+        name: nmk
+        required: true
+        schema:
+          $ref: '#/definitions/models.NMK'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully added NMK code
+          schema:
+            $ref: '#/definitions/models.NMK'
+        "400":
+          description: Failed to bind NMK data
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to insert NMK data
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add a new NMK code
+      tags:
+      - NMK
+  /addPatient:
+    post:
+      consumes:
+      - application/json
+      description: Add a new patient by binding the request data and inserting into
+        the repository
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.NMK'
-      summary: Get all NMK codes
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "400":
+          description: Failed to bind user data
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Error inserting user
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Add a new patient
       tags:
-      - NMK
-  /doctors:
+      - User
+  /doctor:
     get:
       consumes:
       - application/json
-      description: Get all doctors
+      description: Retrieve all doctors, with filtering options based on query parameters.
+      parameters:
+      - description: Role
+        enum:
+        - superadmin
+        - admin
+        - user
+        in: query
+        name: role
+        type: string
+      - description: Doctor Code
+        in: query
+        name: Doctor_Code
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.DoctorData'
-      summary: Get all doctors
+            items:
+              $ref: '#/definitions/models.DoctorData'
+            type: array
+        "500":
+          description: Failed to fetch doctors
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Retrieve all doctors
       tags:
       - Doctors
+  /home-remedies:
+    get:
+      consumes:
+      - application/json
+      description: Fetch all Homeremedies details, with optional filtering based on
+        query parameters.
+      parameters:
+      - description: Homeremedies ID
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved Homeremedies details
+          schema:
+            items:
+              $ref: '#/definitions/models.Homeremedies'
+            type: array
+        "400":
+          description: Invalid value for 'id'
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "401":
+          description: Unauthorized access
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Failed to fetch Homeremedies details
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Retrieve all Homeremedies details
+      tags:
+      - Homeremedies
+  /signIn:
+    post:
+      consumes:
+      - application/json
+      description: Verify a user's email and password. If verified, a JWT token is
+        generated and returned.
+      parameters:
+      - description: User sign-in details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignIn'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User verified successfully, token returned
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "400":
+          description: Bad request, invalid input data
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "401":
+          description: Unauthorized, invalid email or password
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Verify user credentials
+      tags:
+      - Auth
+  /signUp:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user by providing email, password, and other required
+        fields. It checks if the email already exists before adding the user.
+      parameters:
+      - description: User signup details
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.SignUp'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User registered successfully
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "400":
+          description: Bad request, invalid input data
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "409":
+          description: Conflict, email already exists
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Register a new user
+      tags:
+      - Auth
   /users:
     get:
       consumes:
       - application/json
-      description: Get users based on query parameters
+      description: Fetch users by passing optional query parameters to filter results
       parameters:
-      - description: Addiction Type
+      - description: Filter by Addiction Type
         in: query
         name: Addiction_Type
         type: string
-      - description: Nasha Mukti Centre Code
+      - description: Filter by Nasha Mukti Centre Code
         in: query
         name: Nasha_Mukti_Centre_Code
         type: string
-      - description: Employment Status
+      - description: Filter by Employment Status (integer)
         in: query
         name: Employment_Status
         type: integer
-      - description: Is Treatment Completed
+      - description: Filter by Treatment Completion status (boolean)
         in: query
         name: Is_Treatment_Completed
         type: boolean
@@ -189,10 +486,24 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
+          description: List of users
           schema:
-            $ref: '#/definitions/models.User'
-      summary: Get users
+            items:
+              $ref: '#/definitions/models.User'
+            type: array
+        "400":
+          description: Bad request, invalid query parameters
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "401":
+          description: Unauthorized access
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/responses.ApplicationResponse'
+      summary: Retrieve users based on filters
       tags:
       - User
 swagger: "2.0"
