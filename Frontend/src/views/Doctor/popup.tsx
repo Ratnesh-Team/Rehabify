@@ -186,10 +186,10 @@ const Controlled: React.FC<Props> = () => {
     <label className="block text-sm font-medium mb-1">Name
     {formErrors.name && <span className="text-red-500">{`   (${formErrors.name}*)`}</span>}
     </label>
-    <input
+    <Input
         type="text"
         name="name"
-        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        className="px-4 py-2"
         placeholder="Enter your name"
         value={formData.name}
         onChange={handleChange}
@@ -201,10 +201,10 @@ const Controlled: React.FC<Props> = () => {
     <label className="block text-sm font-medium mb-1">Contact Number
     {formErrors.contactNumber && <span className="text-red-500">{`   (${formErrors.contactNumber}*)`}</span>}
     </label>
-    <input
+    <Input
         type="tel"
         name="contactNumber"
-        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        className="px-4 py-2"
         placeholder="+91"
         value={formData.contactNumber}
         onChange={handleChange}
@@ -215,10 +215,10 @@ const Controlled: React.FC<Props> = () => {
     <label className="block text-sm font-medium mb-1">Email
     {formErrors.email && <span className="text-red-500">{`   (${formErrors.email}*)`}</span>}
     </label>
-    <input
+    <Input
         type="email"
         name="email"
-        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        className="px-4 py-2"
         placeholder="Enter your email"
         value={formData.email}
         onChange={handleChange}
@@ -229,10 +229,10 @@ const Controlled: React.FC<Props> = () => {
     <label className="block text-sm font-medium mb-1">Appointment Date
     {formErrors.appointmentDate && <span className="text-red-500">{`   (${formErrors.appointmentDate}*)`}</span>}
     </label>
-    <input
+    <Input
         type="date"
         name="appointmentDate"
-        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        className=" px-4 py-2 "
         value={formData.appointmentDate}
         onChange={handleChange}
         required
@@ -242,10 +242,10 @@ const Controlled: React.FC<Props> = () => {
     <label className="block text-sm font-medium mb-1">Appointment Time
     {formErrors.appointmentTime && <span className="text-red-500">{`   (${formErrors.appointmentTime}*)`}</span>}
     </label>
-    <input
+    <Input
         type="time"
         name="appointmentTime"
-        className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+        className="px-4 py-2"
         value={formData.appointmentTime}
         onChange={handleChange}
         required
