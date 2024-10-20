@@ -150,6 +150,7 @@ const Controlled: React.FC<Props> = () => {
             </div>
 
             {selectedDoctor && (
+
     <Dialog isOpen={true} onClose={handleCloseDialog}>
         <div className="p-4 overflow-y-auto max-h-[80vh]">
             <div className="flex justify-between">
@@ -178,6 +179,7 @@ const Controlled: React.FC<Props> = () => {
 
             {/* Appointment Form */}
             {showForm && (
+
 
 <div className="mt-4 border p-4 rounded-lg shadow-md max-h-[400px] overflow-y-auto">
 <div className="mt-4">
@@ -252,6 +254,7 @@ const Controlled: React.FC<Props> = () => {
     />
 </div>
 
+
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleSubmit}>
             Schedule Appointment
         </button>
@@ -293,7 +296,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
     const [serverError, setServerError] = useState(false);
     const [networkError, setNetworkError] = useState(false);
     const [cards, setCards] = useState<CardData[]>([]);
-    const pageSize = 6;
+    const pageSize = 8;
 
     useEffect(() => {
         const fetchCards = async () => {
@@ -304,7 +307,9 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
             } catch (error: any) {
                 console.error('Error fetching data:', error);
                 if (error.message === 'Network Error') {
+
                     setNetworkError(true);
+
                 } else {
                     setServerError(true);
                 }
@@ -335,11 +340,13 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
         <div>
             {networkError ? (
                 <div className="flex flex-col items-center justify-center">
+
                     <Alert showIcon className="mb-4" type="danger">
                         Network error: Please check your connection.
                     </Alert>
                     <DoubleSidedImage src="/img/others/img-2.png" darkModeSrc="/img/others/img-2-dark.png" alt="Network Error" />
                 </div>
+
             ) : serverError ? (
                 <div className="flex flex-col items-center justify-center">
                     <Alert showIcon className="mb-4" type="danger">
@@ -392,6 +399,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                     </div>
                 </>
             )}
+
         </div>
     );
 };
