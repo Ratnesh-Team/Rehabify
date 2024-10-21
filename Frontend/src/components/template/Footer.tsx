@@ -11,13 +11,14 @@ type FooterProps = {
 
 const FooterContent = () => {
     return (
-        <div className="flex items-center justify-between flex-auto w-full">
+        <div className=" flex my-4 sm:my-[0px]  py-[10px] sm:py-[0px] flex-col sm:flex-row gap-[5px] ml-4 sm:ml-0  sm:justify-center justify-start items-start  sm:items-center justify-between flex-auto w-full">
   <span>
     Copyright &copy; {`${new Date().getFullYear()}`}{" "}
     <span className="font-semibold">{`${APP_NAME}`}</span> All rights reserved.
   </span>
-  <div className="flex items-center space-x-2"> {/* Flex container with spacing */}
-  <GoogleTranslate />
+  <div className="flex sm:justify-center justify-start items-start  sm:items-center  flex-col sm:flex-row gap-[5px] space-x-2 "> {/* Flex container with spacing */}
+  <GoogleTranslate /> 
+    <div>
     <a
       className="text-gray"
       href="/#"
@@ -33,6 +34,7 @@ const FooterContent = () => {
     >
       Privacy & Policy
     </a>
+    </div>
     
   </div>
 </div>
