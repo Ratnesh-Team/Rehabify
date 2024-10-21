@@ -13,16 +13,20 @@ import (
 
 // GetUsers retrieves users based on query parameters.
 // It fetches users from the repository based on the query parameters and returns them as a response.
-// @Summary Get users
-// @Description Get users based on query parameters
+// @Summary Retrieve users based on filters
+// @Description Fetch users by passing optional query parameters to filter results
 // @Tags User
 // @Accept json
 // @Produce json
-// @Param Addiction_Type query string false "Addiction Type"
-// @Param Nasha_Mukti_Centre_Code query string false "Nasha Mukti Centre Code"
-// @Param Employment_Status query int false "Employment Status"
-// @Param Is_Treatment_Completed query bool false "Is Treatment Completed"
-// @Success 200 {object} models.User
+// @Param Authorization header string true "Bearer token"
+// @Param Addiction_Type query string false "Filter by Addiction Type"
+// @Param Nasha_Mukti_Centre_Code query string false "Filter by Nasha Mukti Centre Code"
+// @Param Employment_Status query int false "Filter by Employment Status (integer)"
+// @Param Is_Treatment_Completed query bool false "Filter by Treatment Completion status (boolean)"
+// @Success 200 {array} models.User "List of users"
+// @Failure 400 {object} responses.ApplicationResponse "Bad request, invalid query parameters"
+// @Failure 401 {object} responses.ApplicationResponse "Unauthorized access"
+// @Failure 500 {object} responses.ApplicationResponse "Internal server error"
 // @Router /users [get]
 func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -122,7 +126,19 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 	}
 }
 
-
+// AddPatient is a handler to add a new patient.
+// It binds the request body to the user model and inserts it into the repository.
+// @Summary Add a new patient
+// @Description Add a new patient by binding the request data and inserting into the repository
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param Authorization header string true "Bearer token"
+// @Param user body models.User true "User data"
+// @Success 200 {object} responses.ApplicationResponse
+// @Failure 400 {object} responses.ApplicationResponse "Failed to bind user data"
+// @Failure 500 {object} responses.ApplicationResponse "Error inserting user"
+// @Router /addPatient [post]
 func AddPatient(userRepo repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user models.User
