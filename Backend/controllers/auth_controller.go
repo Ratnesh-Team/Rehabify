@@ -14,7 +14,19 @@ import (
 )
 
 // AuthController is a controller for authentication
-
+// AddUser registers a new user.
+// It checks if the email already exists in the database and if not, hashes the password and stores the user details.
+// @Summary Register a new user
+// @Description Register a new user by providing email, password, and other required fields. It checks if the email already exists before adding the user.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.SignUp true "User signup details"
+// @Success 200 {object} responses.ApplicationResponse "User registered successfully"
+// @Failure 400 {object} responses.ApplicationResponse "Bad request, invalid input data"
+// @Failure 409 {object} responses.ApplicationResponse "Conflict, email already exists"
+// @Failure 500 {object} responses.ApplicationResponse "Internal server error"
+// @Router /signUp [post]
 func AddUser(authdb repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user models.SignUp
@@ -74,6 +86,19 @@ func AddUser(authdb repository.MongoRepository) gin.HandlerFunc {
 	}
 }
 
+// VerifyUser verifies a user's credentials.
+// It checks if the provided email and password match an existing user and returns a JWT token upon successful verification.
+// @Summary Verify user credentials
+// @Description Verify a user's email and password. If verified, a JWT token is generated and returned.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.SignIn true "User sign-in details"
+// @Success 200 {object} responses.ApplicationResponse "User verified successfully, token returned"
+// @Failure 400 {object} responses.ApplicationResponse "Bad request, invalid input data"
+// @Failure 401 {object} responses.ApplicationResponse "Unauthorized, invalid email or password"
+// @Failure 500 {object} responses.ApplicationResponse "Internal server error"
+// @Router /signIn [post]
 func VerifyUser(authdb repository.MongoRepository) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var user models.SignIn
