@@ -1,0 +1,25 @@
+{
+  "name": "rehabify",
+  "version": "1.0.0",
+  "description": "<table align=\"center\">\r     <thead align=\"center\">\r         <tr border: 2px;>\r             <td><b>🌟 Stars</b></td>\r             <td><b>🍴 Forks</b></td>\r             <td><b>🐛 Issues</b></td>\r             <td><b>🔔 Open PRs</b></td>\r             <td><b>🔕 Close PRs</b></td>\r         </tr>\r      </thead>\r     <tbody>\r          <tr>\r             <td><img alt=\"Stars\" src=\"https://img.shields.io/github/stars/Ratnesh-Team/Rehabify?style=flat&logo=github\"/></td>\r              <td><img alt=\"Forks\" src=\"https://img.shields.io/github/forks/Ratnesh-Team/Rehabify?style=flat&logo=github\"/></td>\r             <td><img alt=\"Issues\" src=\"https://img.shields.io/github/issues/Ratnesh-Team/Rehabify?style=flat&logo=github\"/></td>\r             <td><img alt=\"Open Pull Requests\" src=\"https://img.shields.io/github/issues-pr/Ratnesh-Team/Rehabify?style=flat&logo=github\"/></td>\r            <td><img alt=\"Close Pull Requests\" src=\"https://img.shields.io/github/issues-pr-closed/Ratnesh-Team/Rehabify?style=flat&color=green&logo=github\"/></td>\r         </tr>\r     </tbody>\r </table>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.13.0",
+    "@types/jest": "^29.5.13",
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "eslint": "^9.13.0",
+    "globals": "^15.11.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.10.0"
+  }
+}

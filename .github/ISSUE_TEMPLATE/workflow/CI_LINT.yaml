@@ -1,0 +1,34 @@
+name: CI - Lint, Test, and Build
+# Create by @smog-root
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run ESLint
+      run: npm run lint  # Linting step for TypeScript files
+
+    - name: Compile TypeScript
+      run: npm run build  # Build step to compile TypeScript code
+
+    - name: Run Tests
+      run: npm test  # Testing step using Jest
