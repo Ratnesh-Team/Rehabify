@@ -185,7 +185,7 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
         ) : (
         
         <>
-            <div className="flex flex-wrap justify-around gap-6">
+            <div className="flex flex-wrap justify-center gap-6">
                 {displayedCards.map((card, index) => (
                     <div key={index} className="max-w-xs mb-6">
                         {/* Use onClick event handler to handle card click */}
