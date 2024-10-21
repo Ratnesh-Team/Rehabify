@@ -18,6 +18,7 @@ import (
 // @Tags User
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param Addiction_Type query string false "Filter by Addiction Type"
 // @Param Nasha_Mukti_Centre_Code query string false "Filter by Nasha Mukti Centre Code"
 // @Param Employment_Status query int false "Filter by Employment Status (integer)"
@@ -132,6 +133,7 @@ func GetUsers(userRepo repository.MongoRepository) gin.HandlerFunc {
 // @Tags User
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param user body models.User true "User data"
 // @Success 200 {object} responses.ApplicationResponse
 // @Failure 400 {object} responses.ApplicationResponse "Failed to bind user data"

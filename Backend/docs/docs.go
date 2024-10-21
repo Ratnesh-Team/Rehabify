@@ -31,6 +31,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Filter by user email",
                         "name": "email",
                         "in": "query"
@@ -98,6 +105,13 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "ID of the NMK code to approve",
                         "name": "id",
                         "in": "path",
@@ -144,6 +158,13 @@ const docTemplate = `{
                 "summary": "Add a new doctor",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Doctor data",
                         "name": "doctor",
                         "in": "body",
@@ -189,6 +210,13 @@ const docTemplate = `{
                 ],
                 "summary": "Add a new NMK code",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "New NMK Code details",
                         "name": "nmk",
@@ -238,6 +266,13 @@ const docTemplate = `{
                 "summary": "Add a new patient",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User data",
                         "name": "user",
                         "in": "body",
@@ -283,6 +318,13 @@ const docTemplate = `{
                 ],
                 "summary": "Retrieve all doctors",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "enum": [
                             "superadmin",
@@ -334,6 +376,13 @@ const docTemplate = `{
                 ],
                 "summary": "Retrieve all Homeremedies details",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Homeremedies ID",
@@ -490,6 +539,13 @@ const docTemplate = `{
                 ],
                 "summary": "Retrieve users based on filters",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Filter by Addiction Type",

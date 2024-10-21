@@ -17,6 +17,7 @@ import (
 // @Tags Doctors
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param role query string false "Role" Enums(superadmin, admin, user)
 // @Param Doctor_Code query string false "Doctor Code"
 // @Success 200 {array} models.DoctorData
@@ -81,6 +82,7 @@ func GetDoctor(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 // @Tags Doctors
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param doctor body models.DoctorData true "Doctor data"
 // @Success 201 {object} models.DoctorData "Successfully added doctor"
 // @Failure 400 {object} responses.ApplicationResponse "Failed to parse request body"

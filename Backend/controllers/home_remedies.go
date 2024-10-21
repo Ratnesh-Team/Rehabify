@@ -17,6 +17,7 @@ import (
 // @Tags Homeremedies
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param id query int false "Homeremedies ID" 
 // @Success 200 {array} models.Homeremedies "Successfully retrieved Homeremedies details"
 // @Failure 400 {object} responses.ApplicationResponse "Invalid value for 'id'"

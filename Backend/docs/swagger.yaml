@@ -154,6 +154,11 @@ paths:
       description: Fetch all NMK codes, with optional filtering based on query parameters
         such as email, role, and NMK code.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Filter by user email
         in: query
         name: email
@@ -200,6 +205,11 @@ paths:
       - application/json
       description: Approves an NMK code, setting its IsVerified status to true.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: ID of the NMK code to approve
         in: path
         name: id
@@ -233,6 +243,11 @@ paths:
       description: Add a new doctor to the system with the details provided in the
         request body.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Doctor data
         in: body
         name: doctor
@@ -264,6 +279,11 @@ paths:
       description: Creates a new NMK code in the repository. The new NMK code is initially
         marked as unverified.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: New NMK Code details
         in: body
         name: nmk
@@ -297,6 +317,11 @@ paths:
       description: Add a new patient by binding the request data and inserting into
         the repository
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: User data
         in: body
         name: user
@@ -327,6 +352,11 @@ paths:
       - application/json
       description: Retrieve all doctors, with filtering options based on query parameters.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Role
         enum:
         - superadmin
@@ -362,6 +392,11 @@ paths:
       description: Fetch all Homeremedies details, with optional filtering based on
         query parameters.
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Homeremedies ID
         in: query
         name: id
@@ -466,6 +501,11 @@ paths:
       - application/json
       description: Fetch users by passing optional query parameters to filter results
       parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
       - description: Filter by Addiction Type
         in: query
         name: Addiction_Type

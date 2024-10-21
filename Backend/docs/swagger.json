@@ -20,6 +20,13 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Filter by user email",
                         "name": "email",
                         "in": "query"
@@ -87,6 +94,13 @@
                 "parameters": [
                     {
                         "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "ID of the NMK code to approve",
                         "name": "id",
                         "in": "path",
@@ -133,6 +147,13 @@
                 "summary": "Add a new doctor",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Doctor data",
                         "name": "doctor",
                         "in": "body",
@@ -178,6 +199,13 @@
                 ],
                 "summary": "Add a new NMK code",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "New NMK Code details",
                         "name": "nmk",
@@ -227,6 +255,13 @@
                 "summary": "Add a new patient",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "User data",
                         "name": "user",
                         "in": "body",
@@ -272,6 +307,13 @@
                 ],
                 "summary": "Retrieve all doctors",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "enum": [
                             "superadmin",
@@ -323,6 +365,13 @@
                 ],
                 "summary": "Retrieve all Homeremedies details",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "integer",
                         "description": "Homeremedies ID",
@@ -479,6 +528,13 @@
                 ],
                 "summary": "Retrieve users based on filters",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "type": "string",
                         "description": "Filter by Addiction Type",

@@ -17,6 +17,7 @@ import (
 // @Tags NMK
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param email query string false "Filter by user email"
 // @Param role query string false "Filter by role; requires superadmin privileges to access unverified NMK codes"
 // @Param NMK_Code query string false "Filter by NMK Code"
@@ -103,6 +104,7 @@ func GetNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 // @Tags NMK
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param nmk body models.NMK true "New NMK Code details"
 // @Success 201 {object} models.NMK "Successfully added NMK code"
 // @Failure 400 {object} map[string]interface{} "Failed to bind NMK data"
@@ -145,6 +147,7 @@ func AddNMK(nmkRepo repository.MongoRepository) gin.HandlerFunc {
 // @Tags NMK
 // @Accept json
 // @Produce json
+// @Param Authorization header string true "Bearer token"
 // @Param id path string true "ID of the NMK code to approve"
 // @Success 200 {object} map[string]interface{} "Successfully approved NMK code"
 // @Failure 400 {object} map[string]interface{} "Invalid NMK code ID"
