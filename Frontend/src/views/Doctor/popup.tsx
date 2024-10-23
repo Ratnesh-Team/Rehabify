@@ -355,51 +355,55 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                     </Alert>
                     <DoubleSidedImage src="/img/others/img-2.png" darkModeSrc="/img/others/img-2-dark.png" alt="Network Error" />
                 </div>
-            ) : serverError ? (
-                <div className="flex flex-col items-center justify-center">
-                    <Alert showIcon className="mb-4" type="danger">
-                        The server is not running. Please try again later.
-                    </Alert>
-                    <DoubleSidedImage src="/img/others/img-2.png" darkModeSrc="/img/others/img-2-dark.png" alt="Access Denied!" />
-                </div>
-            ) : (
-                <>
-                    <div className="flex flex-wrap justify-around gap-6">
-                        {displayedCards.map((card, index) => (
-                            <div key={index} className="max-w-xs mb-6">
-                                <div onClick={() => onCardClick(card)} className="max-w-xs mb-6 cursor-pointer">
-                                    <Card
-                                        clickable
-                                        className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
-                                        header={
-                                            <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
-                                                <img
-                                                    src={card.ImageURL}
-                                                    alt="card header"
-                                                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                                                />
-                                            </div>
-                                        }
-                                        
-                                    >
-                                        <span>
-                                            <h3 className="text-emerald-600 font-bold">{card.Name}</h3>
-                                        </span>
-                                        <p className="text-sm">
-                                            {' '}
-                                            <i className="fas fa-stethoscope"></i>
-                                            {card.Specialization}
-                                        </p>
-                                        <p className="font-semibold" style={{ overflow: 'hidden' }}>
-                                            {card.Description}
-                                        </p>
-                                        <p className="mb-2">
-                                            <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
-                                        </p>
-                                    </Card>
-                                </div>
-                            </div>
-                        ))}
+
+            ) : 
+            serverError ? (
+            <div className='flex flex-col items-center justify-center'>
+                <Alert showIcon className="mb-4" type="danger">
+                    The server is not running. Please try again later.
+                </Alert>
+                <DoubleSidedImage
+                    src="/img/others/img-2.png"
+                    darkModeSrc="/img/others/img-2-dark.png"
+                    alt="Access Denied!"
+                />
+            </div>
+        ) : (
+        
+        <>
+            <div className="flex flex-wrap justify-center gap-8">
+                {displayedCards.map((card, index) => (
+                    <div key={index} className="max-w-xs mb-6">
+                        {/* Use onClick event handler to handle card click */}
+                        <div onClick={() => onCardClick(card)} className="max-w-xs mb-6 cursor-pointer">
+                            <Card
+                                clickable
+                                className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                header={
+                                    <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
+                                        <img src={card.ImageURL} alt="card header" style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
+                                    </div>
+                                }
+                                footer={
+                                    <div className='flex flex-row-reverse'>
+                                        <span className="font-bold">Book Appointment </span>
+                                    </div>
+                                }
+                                headerClass="p-0"
+                                footerBorder={true}
+                                headerBorder={true}
+                            >
+                                <span>
+                                    <h3 className="text-emerald-600 font-bold ">{card.Name}</h3>
+                                </span>
+                                <p className="text-sm"> <i className="fas fa-stethoscope"></i>{card.Specialization}</p>
+                                <p className="font-semibold" style={{ overflow: 'hidden' }}>{card.Description}</p>
+                                <p className="mb-2">
+                                    <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
+                                </p>
+                            </Card>
+                        </div>
+
                     </div>
 
                     <div className="flex justify-center mt-6">
