@@ -6,6 +6,7 @@ import { FiArrowUpRight } from "react-icons/fi";
 import Homeremedies from '../HomeRemedies/HomeRemedies';
 import CountUp from "react-countup";
 import VisibilitySensor from 'react-visibility-sensor';
+import Testimonials from '../testimonal/Testimonials';
 
 const Home: React.FC = () => {
     return (
@@ -178,6 +179,7 @@ const Home: React.FC = () => {
                 </div>
 
             </div>
+            <Testimonials />
             <Homeremedies numberOfCardsToShow={3} />
         </div>
     );
