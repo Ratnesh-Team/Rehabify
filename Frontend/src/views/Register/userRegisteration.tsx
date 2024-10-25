@@ -106,15 +106,15 @@ type FormModel = {
 }
 
 const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required').min(3, 'Name is too short').max(50, 'Name is too long'),
-    age: Yup.string().required('Age is required').min(1, 'Age is too short').max(3, 'Age is too long'),
+    name: Yup.string().required('Name is required').matches(/^[A-Za-z\s]*$/, 'Name can only include letters').min(3, 'Name is too short').max(50, 'Name is too long'),
+    age: Yup.number().required('Age is required').min(12, 'Age must be at least 12').max(99, 'Age cannot exceed 99'),
     gender: Yup.string().required('gender is required'),
     state: Yup.string().required('State is required'),
-    district: Yup.string().required('District is required').min(3, 'District is too short').max(50, 'District is too long'),
-    guardianName: Yup.string().required('Guardian Name is required').min(3, 'Guardian Name is too short').max(50, 'Guardian Name is too long'),
+    district: Yup.string().required('District is required').matches(/^[A-Za-z\s]*$/, 'Can only include letters').min(3, 'District is too short').max(50, 'District is too long'),
+    guardianName: Yup.string().required('Guardian Name is required').matches(/^[A-Za-z\s]*$/, 'Can only include letters').min(3, 'Guardian Name is too short').max(50, 'Guardian Name is too long'),
     addictionType: Yup.string().required('Addiction Type is required'),
-    addictionDuration: Yup.number().required('Addiction Duration is required'),
-    durationOfTreatment: Yup.number().required('Duration of Treatment is required'),
+    addictionDuration: Yup.number().required('Addiction Duration is required').min(1, 'Invalid Addiction Duration').max(Yup.ref('age'), 'Addiction Duration cannot exceed age'),
+    durationOfTreatment: Yup.number().required('Duration of Treatment is required').positive('Value must be positive').max(120, 'Cannot exceed 120 months'),
     // isTreatmentCompleted: Yup.boolean().required('Is Treatment Completed is required'),
     // underTreatment: Yup.boolean().required('Under Treatment is required'),
     employmentStatus: Yup.string().required('Employment Status is required'),
@@ -122,8 +122,8 @@ const validationSchema = Yup.object().shape({
     // nashaMuktiCentreAddress: Yup.string().required('Nasha Mukti Centre Address is required'),
     // nashaMuktiCentreCode: Yup.string().required('Nasha Mukti Centre Code is required'),
     joiningDate: Yup.string().required('Joining Date is required'),
-    counsellingCount: Yup.string().required('Counselling Count is required'),
-    counsellorName: Yup.string().required('Counsellor Name is required'),
+    counsellingCount: Yup.number().required('Counselling Count is required').positive('Value must be positive'),
+    counsellorName: Yup.string().required('Counsellor Name is required').matches(/^[A-Za-z\s]*$/, 'Can only include letters').min(3, 'Name is too short').max(50, 'Name is too long'),
     // Add more fields as needed
 })
 
@@ -223,7 +223,7 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen, setDataSubmitted }: { dial
                                     "Guardian_Name": values.guardianName,
                                     "Addiction_Type": values.addictionType,
                                     "Addiction_Duration": values.addictionDuration,
-                                    "Duration_of_Treatment": values.durationOfTreatment,
+                                    "Duration_of_Treatment": parseInt(values.durationOfTreatment),
                                     "Is_Treatment_Completed": false,
                                     "Under_Treatment": true,
                                     "Employment_Status": parseInt(values.employmentStatus),
@@ -444,6 +444,8 @@ const UserRegisteration = ({ dialogIsOpen, setIsOpen, setDataSubmitted }: { dial
                                             <Grid item xs={12} sm={6} style={{ paddingTop: "0px" }}>
                                                 <FormItem
                                                     label="Duration of Treatment"
+                                                    invalid={errors.durationOfTreatment && touched.durationOfTreatment}
+                                                    errorMessage={errors.durationOfTreatment}
                                                 >
                                                     <Field
                                                         type="number"
