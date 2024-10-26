@@ -86,6 +86,21 @@ For contributing to this repository, make sure you raise a pull request to the `
     ```bash
     go run main.go
     ```
+
+**Hey! If you don’t have Go installed, you can also use Docker to run the backend. Here’s how:**
+
+1. **Build the Docker Image**:
+    ```bash
+    docker build -t rehabify-backend .
+    ```
+
+2. **Run the Docker Container**:
+    ```bash
+    docker run -d --name rehabify-backend -p 3000:3000 -e MONGOURI="mongodb://host.docker.internal:27017/Rehabify" -e SALT="YOUR_JWT_KEY" rehabify-backend
+    ```
+
+   Replace `"YOUR_JWT_KEY"` with your actual JWT key and MONGOURI your MONGOURI.
+
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ### Frontend Setup
