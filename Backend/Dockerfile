@@ -20,10 +20,6 @@ WORKDIR /app
 # Copy the binary from the builder stage
 COPY --from=builder /app/myapp .
 
-# Set environment variables
-ENV MONGOURI="mongodb://localhost:27017/Rehabify"
-ENV SALT="YOUR_JWT_KEY"
-
 # Expose port 3000 for the application
 EXPOSE 3000
 
