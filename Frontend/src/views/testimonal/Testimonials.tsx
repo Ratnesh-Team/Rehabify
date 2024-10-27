@@ -1,8 +1,9 @@
 import React from 'react';
-import TestimonialCard from './TestimonialCard';
+
 import image from "./image.png"
 import testimonal from './testimonal.jpg';
-import imageorz from"./image (1).png"
+import imageorz from"./image (1).png";
+import { Card } from '@/components/ui';
 
 const Testimonials = () => {
   const testimonials = [
@@ -23,15 +24,52 @@ const Testimonials = () => {
     }
   ];
 
+
+
   return (
     <div className="testimonials-section">
-      <h2>Testimonials</h2>
-      <div className="testimonials">
+    <h2 className="text-2xl font-semibold text-center mb-8">Testimonials</h2>
+    <div className="flex flex-wrap justify-around gap-6">
         {testimonials.map((testimonial, index) => (
-          <TestimonialCard key={index} text={testimonial.text}  username={testimonial.username} imgSrc={testimonial.imgSrc} />
+            <div key={index} className="max-w-xs mb-6">
+                <Card
+                    clickable
+                    className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                    header={
+                        <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ height: '150px' }}>
+                            <img
+                                src={testimonial.imgSrc}
+                                alt={`${testimonial.username} profile`}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                        </div>
+                    }
+                    footer={
+                        <div className="flex flex-col items-center text-center">
+                            <h6 className="text-sm font-bold mt-2">{testimonial.username}</h6>
+                        </div>
+                    }
+                    headerClass="p-0"
+                    footerBorder={false}
+                    headerBorder={true}
+                >
+                    <p className="text-sm h-20 overflow-hidden">
+                        {testimonial.text.length > 100
+                            ? `${testimonial.text.slice(0, 100)}...`
+                            : testimonial.text}
+                    </p>
+                </Card>
+            </div>
         ))}
-      </div>
     </div>
+</div>
+
+
+   
   );
 };
 
