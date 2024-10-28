@@ -1,0 +1,43 @@
+# Ignore the Go module cache
+/pkg/
+
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Output of the `go build` and `go test` commands
+/build/
+*.out
+
+# Dependencies
+/vendor/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# GoLand and VSCode project files
+/.idea/
+/.vscode/
+
+# OS-specific files
+.DS_Store
+
+# Environment files
+.env
+
+# Test-related files
+/testdata/
+/coverage.out
+
+# Compiled binary
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.o
+*.a
