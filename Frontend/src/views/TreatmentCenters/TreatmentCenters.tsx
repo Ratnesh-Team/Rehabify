@@ -115,7 +115,8 @@ const TreatmentCentres: React.FC<{
                                 >
                                     <Card
                                         clickable
-                                        className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                       
+                                        className="hover:shadow-lg hover:scale-105 transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
                                         header={
                                             <div
                                                 className="rounded-tl-lg rounded-tr-lg overflow-hidden"
