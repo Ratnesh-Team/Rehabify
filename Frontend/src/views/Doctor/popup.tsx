@@ -73,9 +73,12 @@ const Controlled: React.FC<Props> = () => {
     const validateForm = () => {
         const errors: any = {};
         const phoneRegex = /^\+?\d{1,3}[- ]?\d{3}[- ]?\d{3}[- ]?\d{4}$/; // Example: +91-123-456-7890
+        const nameRegex = /^[a-zA-Z\s]+$/; // Allows only letters and spaces
 
         if (!formData.name) {
             errors.name = 'required';
+        } else if (!nameRegex.test(formData.name)) {
+            errors.name = 'Name should only contain letters and spaces';
         }
         if (!formData.contactNumber) {
             errors.contactNumber = 'required';
@@ -89,9 +92,22 @@ const Controlled: React.FC<Props> = () => {
         }
         if (!formData.appointmentDate) {
             errors.appointmentDate = 'required';
+        } else {
+            const today = new Date();
+            const appointmentDate = new Date(formData.appointmentDate);
+            // Set time to midnight to only compare dates
+            today.setHours(0, 0, 0, 0);
+            if (appointmentDate < today) {
+                errors.appointmentDate = 'Please select a date in the future';
+            }
         }
         if (!formData.appointmentTime) {
             errors.appointmentTime = 'required';
+        }  else {
+            const [hour, minute] = formData.appointmentTime.split(':').map(Number);
+            if (hour < 9 || (hour > 20 || (hour === 20 && minute > 0))) {
+                errors.appointmentTime = 'Appointment time must be within business hours (9:00 AM to 8:00 PM)';
+            }
         }
 
         setFormErrors(errors);
@@ -184,7 +200,7 @@ const Controlled: React.FC<Props> = () => {
     <form className="flex flex-col gap-4">
     <div className="mb-4">
     <label className="block text-sm font-medium mb-1">Name*
-    {formErrors.name && <span className="text-red-500">{`   (${formErrors.name}*)`}</span>}
+    {formErrors.name && <span className="text-red-500">{`   (${formErrors.name})`}</span>}
     </label>
     <div className="w-64">
 
