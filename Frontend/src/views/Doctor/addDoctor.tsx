@@ -22,11 +22,16 @@ import { addDoctor } from '@/services/DoctorService'
 //write schema for form validation from the default values
 
 const validationSchema = Yup.object().shape({
-    Name: Yup.string().required('Name is required'),
-    Description: Yup.string().required('Description is required'),
-    Specialization: Yup.string().required('Specialization is required'),
-    ClinicAddress: Yup.string().required('ClinicAddress is required'),
-    ContactNumber: Yup.number().required('ContactNumber is required'),
+    Name: Yup.string().matches(/^[a-zA-Z\s]+$/, 'Only letters and spaces allowed.')
+    .min(3, 'Should be at least 3 characters.')
+    .max(50, 'Should not exceed 50 characters.').required('Name is required'),
+    Description: Yup.string().min(10, 'Should be at least 10 characters.')
+    .max(300, 'Should not exceed 300 characters.').required('Description is required'),
+    Specialization: Yup.string().min(3, 'Should be at least 3 characters.')
+    .max(100, 'Should not exceed 100 characters.').required('Specialization is required'),
+    ClinicAddress: Yup.string().min(10, 'Should be at least 10 characters.')
+    .max(200, 'should not exceed 200 characters').required('ClinicAddress is required'),
+    ContactNumber: Yup.string().matches(/^\d{10}$/, 'Must be exactly 10 digits.').required('ContactNumber is required'),
     Email: Yup.string().email("Invalid Email").required('Email is required'),
     // ImageURL: Yup.string().required('ImageURL is required'),
 
