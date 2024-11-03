@@ -7,6 +7,7 @@ import Layout from '@/components/layouts'
 import mockServer from './mock'
 import appConfig from '@/configs/app.config'
 import './locales'
+import Metadata from './metadata'
 
 const environment = process.env.NODE_ENV
 
@@ -19,6 +20,8 @@ if (environment !== 'production' && appConfig.enableMock) {
 }
 function App() {
     return (
+        <>
+        <Metadata />
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <BrowserRouter>
@@ -28,6 +31,7 @@ function App() {
                 </BrowserRouter>
             </PersistGate>
         </Provider>
+        </>
     )
 }
 
