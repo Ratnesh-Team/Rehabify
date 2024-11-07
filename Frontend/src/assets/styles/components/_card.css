@@ -28,11 +28,12 @@
 
 .card-header,
 .card-footer {
-  @apply py-3 px-5;
+  @apply py-3 px-2;
 }
 
+
 .card-body {
-  @apply p-5;
+  @apply p-2;
 }
 
 .card-gutterless {

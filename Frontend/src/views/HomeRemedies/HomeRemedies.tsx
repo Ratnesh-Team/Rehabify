@@ -34,8 +34,17 @@ const Homeremedies: React.FC<Props> = ({ numberOfCardsToShow }) => {
     const displayedCards = cards.slice(0, numberOfCardsToShow);
 
     return (
-        <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
+        <div className="">
+             <div className="flex flex-col justify end sm:flex-row justify-between">
+                <div>
+                    <h1 className="text-3xl font-bold mb-6">Home Remedies</h1>
+                </div>
+                {/* <div className="flex justify-end mb-2">
+                    <Button variant="solid" onClick={openDialog}>
+                        Register Doctor
+                    </Button>
+                </div> */}
+            </div>
             {isLoading ? (
                 <div className="centre">Loading...</div>
             ) : errorMessage ? (
@@ -50,7 +59,7 @@ const Homeremedies: React.FC<Props> = ({ numberOfCardsToShow }) => {
                     />
                 </div>
             ) : (
-                <div className="flex flex-wrap justify-around gap-6">
+                <div className="flex flex-wrap justify-start gap-6">
                     {displayedCards.map((card) => (
                         <div key={card.ID} className="max-w-xs mb-6">
                             <Link

@@ -103,11 +103,11 @@ const TreatmentCentres: React.FC<{
                         />
                     </div>
                 ) : (
-                    <div className="flex flex-wrap justify-around gap-6">
+                    <div className="flex flex-wrap justify-start gap-4">
                         {displayedCards.map((card, index) => (
                             <div
                                 key={index}
-                                className="w-[300px] max-w-xs sm:w-[400px] mb-6" // fixed size of cards on small and large screens
+                                className="w-[300px] max-w-xs sm:w-[400px]" // fixed size of cards on small and large screens
                             >
                                 <Link
                                     to={`/NMK?NMK_Code=${card._id}`}
@@ -135,10 +135,16 @@ const TreatmentCentres: React.FC<{
                                                 />
                                             </div>
                                         }
+                                        footer={
+                                            <p className='font-semibold'>
+                                                {card.Owner_Name}
+                                            </p>
+                                        }
                                         headerClass="p-0"
                                         footerBorder={false}
                                         headerBorder={true}
                                     >
+                                        <div className='flex flex-col gap-2 mt-2'>
                                         <span>
                                             <h3 className="text-emerald-600 font-bold">
                                                 {card.Name}
@@ -147,9 +153,7 @@ const TreatmentCentres: React.FC<{
                                         <p className="text-sm overflow-hidden whitespace-nowrap">
                                             {card.Address}
                                         </p>
-                                        <p className="font-semibold">
-                                            {card.Owner_Name}
-                                        </p>
+                                        </div>
                                     </Card>
                                 </Link>
                             </div>
