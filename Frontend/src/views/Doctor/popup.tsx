@@ -145,7 +145,7 @@ const Controlled: React.FC<Props> = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center">
+            <div>
                 <TreatmentCentres page={page} onPageChange={onPageChange} searchTerm={searchTerm} onCardClick={handleCardClick} />
             </div>
 
@@ -364,15 +364,18 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                 </div>
             ) : (
                 <>
-                    <div className="flex flex-wrap justify-around gap-6">
+                    <div className="flex flex-wrap justify-start gap-4">
                         {displayedCards.map((card, index) => (
-                            <div key={index} className="max-w-xs mb-6">
-                                <div onClick={() => onCardClick(card)} className="max-w-xs mb-6 cursor-pointer">
+                            <div key={index} className="max-w-xs">
+                                <div onClick={() => onCardClick(card)} className="max-w-xs cursor-pointer">
                                     <Card
                                         clickable
-                                        className="hover:shadow-lg transition duration-150 ease-in-out dark:border dark:border-gray-600 dark:border-solid"
+                                        className="hover:shadow-lg w-[305px] transition duration-150 ease-in-out"
+                                        footerBorder={false}
+                                        headerBorder={false}
+                                        headerClass='p-0'
                                         header={
-                                            <div className="rounded-tl-lg rounded-tr-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
+                                            <div className="rounded-t-lg overflow-hidden" style={{ width: '100%', height: '200px' }}>
                                                 <img
                                                     src={card.ImageURL}
                                                     alt="card header"
@@ -380,10 +383,18 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                                 />
                                             </div>
                                         }
-                                        
+                                        footer={
+                                            <div className='flex justify-between'>
+                                                <p>
+                                                    <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
+                                                </p>
+                                            </div>
+                                        }                                        
                                     >
+                                        <div className='flex flex-col gap-2 mt-2'>
+
                                         <span>
-                                            <h3 className="text-emerald-600 font-bold">{card.Name}</h3>
+                                            <h3 className="text-emerald-600 font-bold mb-1">{card.Name}</h3>
                                         </span>
                                         <p className="text-sm">
                                             {' '}
@@ -393,9 +404,8 @@ const TreatmentCentres: React.FC<{ page: number; onPageChange: (newPage: number)
                                         <p className="font-semibold" style={{ overflow: 'hidden' }}>
                                             {card.Description}
                                         </p>
-                                        <p className="mb-2">
-                                            <i className="fas fa-map-marker-alt"></i> Address: {card.ClinicAddress}
-                                        </p>
+                                        </div>
+
                                     </Card>
                                 </div>
                             </div>
