@@ -27,6 +27,7 @@ const links = [
   { href: '/dashboard/users', label: 'Users' },
   { href: '/dashboard/doctors', label: 'Doctors' },
   { href: '/dashboard/nmk', label: 'NMK Centers' },
+  { href: '/register', label: 'Manage NMK' },
   { href: '/dashboard/home-remedies', label: 'Home Remedies' },
 ]
 

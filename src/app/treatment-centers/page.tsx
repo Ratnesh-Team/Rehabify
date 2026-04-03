@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -68,7 +68,7 @@ export default function TreatmentCentersPage() {
   const pagedItems = filteredItems.slice(start, start + PAGE_SIZE)
 
   return (
-    <LegacyShell
+    <AppShell
       title="Treatment Centres"
       subtitle="Find registered rehabilitation and Nasha Mukti Kendras across India."
     >
@@ -142,6 +142,6 @@ export default function TreatmentCentersPage() {
           </button>
         </div>
       ) : null}
-    </LegacyShell>
+    </AppShell>
   )
 }

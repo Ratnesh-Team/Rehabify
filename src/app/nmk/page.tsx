@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import { useSearchParams } from 'next/navigation'
 import { Suspense, useEffect, useMemo, useState } from 'react'
 
@@ -107,7 +107,7 @@ function NmkPageContent() {
   }
 
   return (
-    <LegacyShell
+    <AppShell
       title={PAGE_TITLE}
       subtitle={PAGE_SUBTITLE}
     >
@@ -209,7 +209,7 @@ function NmkPageContent() {
           </table>
         </div>
       </div>
-    </LegacyShell>
+    </AppShell>
   )
 }
 
@@ -217,9 +217,9 @@ export default function NmkPage() {
   return (
     <Suspense
       fallback={
-        <LegacyShell title={PAGE_TITLE} subtitle={PAGE_SUBTITLE}>
+        <AppShell title={PAGE_TITLE} subtitle={PAGE_SUBTITLE}>
           <p className="text-sm text-neutral-600">Loading center data...</p>
-        </LegacyShell>
+        </AppShell>
       }
     >
       <NmkPageContent />

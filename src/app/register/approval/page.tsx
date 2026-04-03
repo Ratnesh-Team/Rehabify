@@ -1,9 +1,9 @@
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import Link from 'next/link'
 
 export default function RegisterApprovalPage() {
   return (
-    <LegacyShell
+    <AppShell
       title="Data Verification In Progress"
       subtitle="We are verifying your Nasha Mukti Kendra details."
     >
@@ -20,6 +20,6 @@ export default function RegisterApprovalPage() {
           Go to Database
         </Link>
       </div>
-    </LegacyShell>
+    </AppShell>
   )
 }

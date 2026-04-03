@@ -1,4 +1,4 @@
-import { BlogArticle } from '@/components/legacy/BlogArticle'
+import { BlogArticle } from '@/components/content/BlogArticle'
 
 export default function Blog3Page() {
   return (

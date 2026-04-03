@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -63,7 +63,7 @@ export default function HomeRemediesPage() {
   }, [items, query])
 
   return (
-    <LegacyShell
+    <AppShell
       title="Home Remedies"
       subtitle="Explore practical recovery tips and wellness guidance articles."
     >
@@ -123,6 +123,6 @@ export default function HomeRemediesPage() {
           No remedies matched your search.
         </div>
       ) : null}
-    </LegacyShell>
+    </AppShell>
   )
 }

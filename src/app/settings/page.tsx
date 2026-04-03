@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -75,7 +75,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <LegacyShell title="Settings" subtitle="Manage your session and account access.">
+    <AppShell title="Settings" subtitle="Manage your session and account access.">
       {loading ? <p className="text-sm text-neutral-600">Loading account settings...</p> : null}
 
       {!loading && !user ? (
@@ -134,6 +134,6 @@ export default function SettingsPage() {
           </div>
         </div>
       ) : null}
-    </LegacyShell>
+    </AppShell>
   )
 }

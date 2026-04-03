@@ -446,15 +446,15 @@ export function LandingExperience() {
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f7f4ec] text-neutral-900">
-      <section className="relative overflow-hidden border-b border-[#d8c9a8] bg-gradient-to-br from-[#f7edd8] via-[#f9f4ea] to-[#f3e2bc]">
+    <div className="overflow-x-hidden bg-[#f7f4ec] text-neutral-900">
+      <section className="relative overflow-hidden border-b border-[#d8c9a8] bg-linear-to-br from-[#f7edd8] via-[#f9f4ea] to-[#f3e2bc]">
         <div className="absolute -left-20 top-14 h-72 w-72 rounded-full bg-[#f75700]/15 blur-3xl" />
         <div className="absolute right-0 top-0 h-64 w-64 rounded-full bg-[#0b6e69]/15 blur-3xl" />
 
         <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-4 py-14 md:grid-cols-[1.2fr_1fr] md:px-8 md:py-18">
           <div>
             <p className="mb-3 inline-flex rounded-full border border-[#d0b48a] bg-white/80 px-4 py-1 text-xs font-semibold uppercase tracking-[0.14em] text-[#7a4b11]">
-              Reimagined from legacy UI behavior
+              Recovery Platform
             </p>
             <h1 className="text-5xl font-black leading-tight md:text-6xl">
               Rehabify
@@ -462,9 +462,13 @@ export function LandingExperience() {
                 The Path to a Brighter Tomorrow
               </span>
             </h1>
+            <p className="mt-4 max-w-2xl text-sm font-semibold uppercase tracking-[0.06em] text-[#7a4b11] md:text-base">
+              Motto: Demonstrating how Nasha Mukti Kendra can operate with clear, humane, and data-informed
+              recovery workflows.
+            </p>
             <p className="mt-6 max-w-2xl text-base leading-7 text-[#554f47] md:text-lg">
-              This new landing experience keeps the old click journey intact: card click to popup, in-popup
-              appointment booking, NMK registration popup, and direct photo plus verification uploads.
+              Access doctors, register NMKs, and manage critical healthcare onboarding from one place with
+              direct appointment, upload, and verification workflows.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -510,16 +514,15 @@ export function LandingExperience() {
       <section className="mx-auto mt-8 w-full max-w-7xl px-4 md:px-8">
         <div className="grid gap-4 md:grid-cols-3">
           <article className="rounded-2xl border border-[#b9e2df] bg-[#e9f7f6] p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#0b6e69]">Legacy click flow</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#0b6e69]">Care Journey</p>
             <h3 className="mt-2 text-xl font-black">Click Doctor Card</h3>
             <p className="mt-2 text-sm leading-6 text-[#35524f]">
-              Matching the old interface, cards are clickable and open a popup with doctor details, WhatsApp action,
-              and appointment form.
+              Doctor cards are interactive and open a detailed view with appointment booking and WhatsApp contact.
             </p>
           </article>
 
           <article className="rounded-2xl border border-[#f4c7a9] bg-[#fff1e6] p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#8d4a1a]">Legacy upload flow</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#8d4a1a]">Verified Onboarding</p>
             <h3 className="mt-2 text-xl font-black">Add NMK with Evidence</h3>
             <p className="mt-2 text-sm leading-6 text-[#5f4735]">
               NMK registration now includes popup form and direct photo plus verification uploads before submit.
@@ -527,10 +530,10 @@ export function LandingExperience() {
           </article>
 
           <article className="rounded-2xl border border-[#cdc3f0] bg-[#f2edff] p-5">
-            <p className="text-xs font-semibold uppercase tracking-wide text-[#5a4795]">Legacy section anchors</p>
+            <p className="text-xs font-semibold uppercase tracking-wide text-[#5a4795]">Quick Access</p>
             <h3 className="mt-2 text-xl font-black">Nearest Center and Remedies</h3>
             <p className="mt-2 text-sm leading-6 text-[#4e4466]">
-              The old homepage anchors are preserved through direct links to treatment centers and home remedies.
+              Move quickly between treatment centers, home remedies, and core recovery resources.
             </p>
           </article>
         </div>
@@ -558,8 +561,8 @@ export function LandingExperience() {
       <section className="mx-auto mt-10 w-full max-w-7xl px-4 pb-10 md:px-8">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-3xl font-black">Doctor Cards with Popup</h2>
-            <p className="text-sm text-[#5d5449]">Click any card to open details and book appointment in a popup.</p>
+            <h2 className="text-3xl font-black">Find the Right Doctor</h2>
+            <p className="text-sm text-[#5d5449]">Browse profiles and connect quickly for support and appointments.</p>
           </div>
           <Link
             href="/doctor"
@@ -626,7 +629,7 @@ export function LandingExperience() {
           <div className="rounded-2xl border border-[#d3c4ad] bg-[#fff7eb] p-5">
             <h3 className="text-2xl font-black">Nearest Nasha Mukti Kendra</h3>
             <p className="mt-2 text-sm leading-6 text-[#5f5245]">
-              We kept the old location intent and turned it into a clear action path for users who need center lookup.
+              Find trusted centers quickly and move to the right care path without unnecessary friction.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Link
@@ -647,13 +650,11 @@ export function LandingExperience() {
           </div>
 
           <div className="rounded-2xl border border-[#c3dcd9] bg-[#e9f7f6] p-5">
-            <h3 className="text-2xl font-black">Legacy Flow Snapshot</h3>
-            <ul className="mt-3 space-y-2 text-sm leading-6 text-[#375653]">
-              <li>Doctor card click opens popup details.</li>
-              <li>Popup includes appointment booking and WhatsApp action.</li>
-              <li>NMK popup includes owner data, center details, and document upload.</li>
-              <li>Uploads are routed through Cloudinary before API submit.</li>
-            </ul>
+            <h3 className="text-2xl font-black">Demo Notice</h3>
+            <p className="mt-3 text-sm leading-6 text-[#375653]">
+              This website is a Nasha Mukti Kendra demo experience. All data shown here is dummy demo data
+              and does not represent or identify any real person.
+            </p>
           </div>
         </div>
       </section>
@@ -1017,6 +1018,6 @@ export function LandingExperience() {
           </div>
         </div>
       ) : null}
-    </main>
+    </div>
   )
 }

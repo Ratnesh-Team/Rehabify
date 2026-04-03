@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 
 type Doctor = {
@@ -195,7 +195,7 @@ export default function DoctorPage() {
   }
 
   return (
-    <LegacyShell title="Doctor Appointment" subtitle="Search doctors and register new doctor profiles.">
+    <AppShell title="Doctor Appointment" subtitle="Search doctors and register new doctor profiles.">
       <section className="space-y-5">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-2xl font-black text-neutral-900">Doctor Appointment</h2>
@@ -463,6 +463,6 @@ export default function DoctorPage() {
           </div>
         </div>
       ) : null}
-    </LegacyShell>
+    </AppShell>
   )
 }

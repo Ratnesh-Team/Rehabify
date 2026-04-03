@@ -37,7 +37,7 @@
 
 - **Email**: user@gmail.com
 - **Password**: 123Qwe1
- 
+
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
 ## 🌟 Overview
@@ -51,7 +51,13 @@
 - **📍 User Search**: Users can locate the nearest Nasha Mukti Kendra, ensuring access to rehabilitation services when needed.
 - **🛡️ Super Admin Approval**: The super admin has control over approving registrations and managing the platform efficiently.
 - **🔑 Secure Authentication**: Robust login mechanisms for super admins, admins, doctors, and users, ensuring secure access to sensitive information.
-  
+
+## 📚 Documentation
+
+All migration and project documentation is now organized in the `docs` folder.
+
+- Start here: `docs/README.md`
+
 
 ## 🛠️ Project Structure
 
@@ -80,7 +86,7 @@ For contributing to this repository, make sure you raise a pull request to the `
     ```
 
 3. **Create a .env File**:
-   Create a `.env` file in the `Backend` directory and add the environment variables mentioned in `sample.env` file 
+   Create a `.env` file in the `Backend` directory and add the environment variables mentioned in `sample.env` file
 
 4. **Run the backend server**:
     ```bash
@@ -101,7 +107,7 @@ For contributing to this repository, make sure you raise a pull request to the `
     ```
 
 3. **Create a .env File**:
-   Create a `.env` file in the `Frontend` directory and add the environment variables mentioned in `sample.env` file 
+   Create a `.env` file in the `Frontend` directory and add the environment variables mentioned in `sample.env` file
 
 4. **Run the frontend server**:
     ```bash
@@ -123,7 +129,7 @@ For contributing to this repository, make sure you raise a pull request to the `
     - Use the search functionality to find the nearest centers.
 
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
-      
+
 ## ⭐ Star the Repo
 
 If you find this project useful, please consider giving it a star ⭐ on GitHub. It helps the project gain visibility and encourages contributions from the community.
@@ -135,7 +141,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Awesome contributors :star_struck:
 <a href="https://github.com/Ratnesh-Team/Rehabify/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Ratnesh-Team/Rehabify" />
-</a> 
+</a>
 
 <img src="https://www.animatedimages.org/data/media/562/animated-line-image-0184.gif" width="1920" />
 
@@ -144,5 +150,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ### 🎉 Happy contributing! Keep exploring! 🌟
 
 </div>
-
-

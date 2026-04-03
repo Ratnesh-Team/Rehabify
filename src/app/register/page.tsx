@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import Link from 'next/link'
 import { FormEvent, useEffect, useMemo, useState } from 'react'
 
@@ -282,7 +282,7 @@ export default function RegisterPage() {
   }, [patients, search])
 
   return (
-    <LegacyShell
+    <AppShell
       title="Manage NMK"
       subtitle="Register your center, track approval status, and manage patients."
     >
@@ -578,6 +578,6 @@ export default function RegisterPage() {
           </div>
         </div>
       ) : null}
-    </LegacyShell>
+    </AppShell>
   )
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import { useEffect, useMemo, useState } from 'react'
 
 type Contributor = {
@@ -56,7 +56,7 @@ export default function ContributorPage() {
   }, [contributors])
 
   return (
-    <LegacyShell
+    <AppShell
       title="Contributors"
       subtitle="Shaping the future of Rehabify, one commit at a time."
     >
@@ -138,6 +138,6 @@ export default function ContributorPage() {
           ))}
         </div>
       </section>
-    </LegacyShell>
+    </AppShell>
   )
 }

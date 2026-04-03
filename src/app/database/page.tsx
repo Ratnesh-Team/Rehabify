@@ -1,6 +1,6 @@
 'use client'
 
-import { LegacyShell } from '@/components/legacy/LegacyShell'
+import { AppShell } from '@/components/shell/AppShell'
 import { useEffect, useMemo, useState } from 'react'
 
 type DatabaseRow = {
@@ -97,7 +97,7 @@ export default function DatabasePage() {
   const pagedRows = filteredRows.slice(start, start + pageSize)
 
   return (
-    <LegacyShell title="Database" subtitle="View and manage rehabilitation user records.">
+    <AppShell title="Database" subtitle="View and manage rehabilitation user records.">
       <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <h2 className="text-lg font-semibold text-neutral-900">Users Data</h2>
@@ -201,6 +201,6 @@ export default function DatabasePage() {
           </div>
         </div>
       </section>
-    </LegacyShell>
+    </AppShell>
   )
 }
