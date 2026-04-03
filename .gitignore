@@ -11,7 +11,11 @@ node_modules
 dist
 dist-ssr
 build
+.next
+out
+coverage
 *.local
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -27,3 +31,5 @@ build
 
 #add env
 .env
+.env*
+/.claude
