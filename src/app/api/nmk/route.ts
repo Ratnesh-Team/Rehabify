@@ -8,6 +8,21 @@ import { connectDB } from '@/lib/db'
 import { NMK } from '@/lib/models/NMK'
 import { Types } from 'mongoose'
 import { NextRequest } from 'next/server'
+import { z } from 'zod'
+
+const NMKCreateSchema = z.object({
+  Name: z.string().min(1, 'Center name is required'),
+  Address: z.string().min(1, 'Address is required'),
+  Owner_Name: z.string().min(1, 'Owner name is required'),
+  Contact_Number: z.union([z.string(), z.number()]).transform(v => Number(v)),
+  Email: z.string().email('Valid email is required').optional(),
+  State: z.string().min(1, 'State is required'),
+  District: z.string().optional(),
+  Pincode: z.union([z.string(), z.number()]).transform(v => Number(v)).optional(),
+  Established_Year: z.union([z.string(), z.number()]).transform(v => Number(v)).optional(),
+  ImageURL: z.string().url('ImageURL must be a valid URL').optional().or(z.literal('')),
+  NMK_Verification_Image: z.string().optional(),
+})
 
 export async function GET(request: NextRequest) {
   try {
@@ -43,12 +58,18 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    await connectDB()
 
-    const nmk = await NMK.create({ ...body, IsVerified: false })
-    return created(nmk, 'NMK data inserted successfully')
+    const parsed = NMKCreateSchema.safeParse(body)
+    if (!parsed.success) {
+      const messages = parsed.error.issues.map(i => i.message).join(', ')
+      return badRequest(messages)
+    }
+
+    await connectDB()
+    const nmk = await NMK.create({ ...parsed.data, IsVerified: false })
+    return created(nmk, 'NMK registered successfully')
   } catch (error) {
     console.error('Add NMK error:', error)
-    return internalServerError('Failed to insert NMK data')
+    return internalServerError('Failed to register NMK')
   }
 }

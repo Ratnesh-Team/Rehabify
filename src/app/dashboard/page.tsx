@@ -11,25 +11,48 @@ type CurrentUser = {
   role: 'USER' | 'DOCTOR' | 'ADMIN'
 }
 
+type Stats = {
+  patients: number
+  doctors: number
+  nmkCenters: number
+}
+
 export default function DashboardPage() {
   const [user, setUser] = useState<CurrentUser | null>(null)
+  const [stats, setStats] = useState<Stats | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
     const load = async () => {
       try {
-        const response = await fetch('/api/me')
-        const result = await response.json()
+        const [meRes, usersRes, doctorsRes, nmkRes] = await Promise.all([
+          fetch('/api/me'),
+          fetch('/api/users', { cache: 'no-store' }),
+          fetch('/api/doctors', { cache: 'no-store' }),
+          fetch('/api/nmk', { cache: 'no-store' }),
+        ])
 
-        if (!response.ok) {
+        if (!meRes.ok) {
+          const result = await meRes.json()
           setError(result?.message || 'Unable to load dashboard')
           return
         }
 
-        setUser(result.data)
-      } catch (err) {
-        console.error(err)
+        const [meResult, usersResult, doctorsResult, nmkResult] = await Promise.all([
+          meRes.json(),
+          usersRes.json(),
+          doctorsRes.json(),
+          nmkRes.json(),
+        ])
+
+        setUser(meResult.data)
+        setStats({
+          patients: (usersResult.data ?? []).length,
+          doctors: (doctorsResult.data ?? []).length,
+          nmkCenters: (nmkResult.data ?? []).length,
+        })
+      } catch {
         setError('Unable to load dashboard')
       } finally {
         setLoading(false)
@@ -49,7 +72,16 @@ export default function DashboardPage() {
         </p>
       </div>
 
-      {loading ? <p className="text-neutral-600">Loading profile...</p> : null}
+      {loading ? (
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="animate-pulse rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+              <div className="h-4 w-20 rounded bg-slate-200" />
+              <div className="mt-3 h-8 w-12 rounded bg-slate-200" />
+            </div>
+          ))}
+        </div>
+      ) : null}
 
       {error ? (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">{error}</div>
@@ -68,24 +100,31 @@ export default function DashboardPage() {
         </div>
       ) : null}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-500">Users</h3>
-          <p className="mt-2 text-3xl font-black text-[#f75700]">01</p>
+      {stats ? (
+        <div className="grid gap-4 md:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-slate-500">Patients</h3>
+            <p className="mt-2 text-3xl font-black text-[#f75700]">{stats.patients}</p>
+            <Link href="/dashboard/users" className="mt-2 inline-block text-xs text-orange-600 hover:underline">
+              View all →
+            </Link>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-slate-500">Doctors</h3>
+            <p className="mt-2 text-3xl font-black text-[#f75700]">{stats.doctors}</p>
+            <Link href="/dashboard/doctors" className="mt-2 inline-block text-xs text-orange-600 hover:underline">
+              View all →
+            </Link>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-slate-500">NMK Centers</h3>
+            <p className="mt-2 text-3xl font-black text-[#f75700]">{stats.nmkCenters}</p>
+            <Link href="/dashboard/nmk" className="mt-2 inline-block text-xs text-orange-600 hover:underline">
+              View all →
+            </Link>
+          </div>
         </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-500">Doctors</h3>
-          <p className="mt-2 text-3xl font-black text-[#f75700]">02</p>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-500">NMK Centers</h3>
-          <p className="mt-2 text-3xl font-black text-[#f75700]">03</p>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h3 className="text-sm font-semibold text-slate-500">Home Remedies</h3>
-          <p className="mt-2 text-3xl font-black text-[#f75700]">04</p>
-        </div>
-      </div>
+      ) : null}
 
       <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         <h3 className="text-lg font-bold text-neutral-900">Quick Actions</h3>
@@ -102,6 +141,12 @@ export default function DashboardPage() {
             className="rounded-md border border-orange-300 px-3 py-2 text-sm font-medium text-orange-700 hover:bg-orange-50"
           >
             Manage Patients
+          </Link>
+          <Link
+            href="/doctor"
+            className="rounded-md border border-orange-300 px-3 py-2 text-sm font-medium text-orange-700 hover:bg-orange-50"
+          >
+            Doctors
           </Link>
           <Link
             href="/superadmin"

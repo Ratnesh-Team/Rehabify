@@ -70,7 +70,7 @@ export default function DoctorPage() {
 
   const load = async () => {
     try {
-      const response = await fetch('/api/doctor')
+      const response = await fetch('/api/doctors')
       const result = await response.json()
 
       if (response.ok) {
@@ -110,16 +110,34 @@ export default function DoctorPage() {
     setDoctorForm(current => ({ ...current, [key]: value }))
   }
 
+  const [doctorFormErrors, setDoctorFormErrors] = useState<Partial<RegisterDoctorForm>>({})
+  const [doctorFormServerError, setDoctorFormServerError] = useState('')
+
+  const validateDoctorForm = () => {
+    const errors: Partial<RegisterDoctorForm> = {}
+    if (!doctorForm.Name.trim()) errors.Name = 'required'
+    if (!doctorForm.Specialization.trim()) errors.Specialization = 'required'
+    if (!doctorForm.Email.trim()) {
+      errors.Email = 'required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(doctorForm.Email)) {
+      errors.Email = 'invalid email'
+    }
+    if (doctorForm.ContactNumber && !/^\d{7,15}$/.test(doctorForm.ContactNumber.replace(/\s/g, ''))) {
+      errors.ContactNumber = 'invalid number'
+    }
+    setDoctorFormErrors(errors)
+    return Object.keys(errors).length === 0
+  }
+
   const handleAddDoctor = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setDoctorFormServerError('')
 
-    if (!doctorForm.Name || !doctorForm.Specialization || !doctorForm.Email) {
-      return
-    }
+    if (!validateDoctorForm()) return
 
     setSubmitting(true)
     try {
-      await fetch('/api/addDoctor', {
+      const response = await fetch('/api/doctors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,7 +146,14 @@ export default function DoctorPage() {
         }),
       })
 
+      const result = await response.json()
+      if (!response.ok) {
+        setDoctorFormServerError(result.message || result.error || 'Failed to register doctor')
+        return
+      }
+
       setDoctorForm(initialDoctorForm)
+      setDoctorFormErrors({})
       setShowRegisterForm(false)
       await load()
     } finally {
@@ -276,35 +301,61 @@ export default function DoctorPage() {
               </button>
             </div>
 
-            <form onSubmit={handleAddDoctor} className="grid gap-3 md:grid-cols-2">
-              <input
-                value={doctorForm.Name}
-                onChange={event => handleDoctorFieldChange('Name', event.target.value)}
-                placeholder="Doctor name"
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
-                required
-              />
-              <input
-                value={doctorForm.Specialization}
-                onChange={event => handleDoctorFieldChange('Specialization', event.target.value)}
-                placeholder="Specialization"
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
-                required
-              />
-              <input
-                value={doctorForm.Email}
-                onChange={event => handleDoctorFieldChange('Email', event.target.value)}
-                placeholder="Email"
-                type="email"
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
-                required
-              />
-              <input
-                value={doctorForm.ContactNumber}
-                onChange={event => handleDoctorFieldChange('ContactNumber', event.target.value)}
-                placeholder="Contact number"
-                className="rounded-md border border-slate-300 px-3 py-2 text-sm"
-              />
+            {doctorFormServerError ? (
+              <div className="mb-3 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {doctorFormServerError}
+              </div>
+            ) : null}
+            <form onSubmit={handleAddDoctor} noValidate className="grid gap-3 md:grid-cols-2">
+              <div>
+                <input
+                  value={doctorForm.Name}
+                  onChange={event => {
+                    handleDoctorFieldChange('Name', event.target.value)
+                    setDoctorFormErrors(p => ({ ...p, Name: undefined }))
+                  }}
+                  placeholder="Doctor name *"
+                  className={`w-full rounded-md border px-3 py-2 text-sm ${doctorFormErrors.Name ? 'border-red-400 bg-red-50' : 'border-slate-300'}`}
+                />
+                {doctorFormErrors.Name ? <p className="mt-0.5 text-xs text-red-600">Name {doctorFormErrors.Name}</p> : null}
+              </div>
+              <div>
+                <input
+                  value={doctorForm.Specialization}
+                  onChange={event => {
+                    handleDoctorFieldChange('Specialization', event.target.value)
+                    setDoctorFormErrors(p => ({ ...p, Specialization: undefined }))
+                  }}
+                  placeholder="Specialization *"
+                  className={`w-full rounded-md border px-3 py-2 text-sm ${doctorFormErrors.Specialization ? 'border-red-400 bg-red-50' : 'border-slate-300'}`}
+                />
+                {doctorFormErrors.Specialization ? <p className="mt-0.5 text-xs text-red-600">Specialization {doctorFormErrors.Specialization}</p> : null}
+              </div>
+              <div>
+                <input
+                  value={doctorForm.Email}
+                  onChange={event => {
+                    handleDoctorFieldChange('Email', event.target.value)
+                    setDoctorFormErrors(p => ({ ...p, Email: undefined }))
+                  }}
+                  placeholder="Email *"
+                  type="email"
+                  className={`w-full rounded-md border px-3 py-2 text-sm ${doctorFormErrors.Email ? 'border-red-400 bg-red-50' : 'border-slate-300'}`}
+                />
+                {doctorFormErrors.Email ? <p className="mt-0.5 text-xs text-red-600">Email {doctorFormErrors.Email}</p> : null}
+              </div>
+              <div>
+                <input
+                  value={doctorForm.ContactNumber}
+                  onChange={event => {
+                    handleDoctorFieldChange('ContactNumber', event.target.value)
+                    setDoctorFormErrors(p => ({ ...p, ContactNumber: undefined }))
+                  }}
+                  placeholder="Contact number"
+                  className={`w-full rounded-md border px-3 py-2 text-sm ${doctorFormErrors.ContactNumber ? 'border-red-400 bg-red-50' : 'border-slate-300'}`}
+                />
+                {doctorFormErrors.ContactNumber ? <p className="mt-0.5 text-xs text-red-600">Contact {doctorFormErrors.ContactNumber}</p> : null}
+              </div>
               <input
                 value={doctorForm.ClinicAddress}
                 onChange={event => handleDoctorFieldChange('ClinicAddress', event.target.value)}
@@ -320,7 +371,7 @@ export default function DoctorPage() {
               <input
                 value={doctorForm.ImageURL}
                 onChange={event => handleDoctorFieldChange('ImageURL', event.target.value)}
-                placeholder="Doctor photo URL"
+                placeholder="Doctor photo URL (https://...)"
                 className="rounded-md border border-slate-300 px-3 py-2 text-sm md:col-span-2"
               />
 
@@ -329,7 +380,7 @@ export default function DoctorPage() {
                 disabled={submitting}
                 className="rounded-md bg-[#f75700] px-3 py-2 text-sm font-semibold text-white hover:bg-[#da4d00] disabled:opacity-60 md:col-span-2"
               >
-                {submitting ? 'Submitting...' : 'Submit'}
+                {submitting ? 'Submitting...' : 'Register Doctor'}
               </button>
             </form>
           </div>
