@@ -11,11 +11,6 @@ export default function SigninPage() {
         <Image src="/img/logo/logo-dark-full.png" alt="Rehabify logo" width={170} height={48} className="h-auto" />
 
         <div>
-          <div className="mb-6 flex items-center gap-3">
-            <Image src="/img/avatars/thumb-1.jpg" alt="Team member" width={70} height={70} className="rounded-full border-2 border-white object-cover" />
-            <Image src="/img/avatars/thumb-2.jpg" alt="Team member" width={60} height={60} className="rounded-full border-2 border-white object-cover" />
-            <Image src="/img/avatars/thumb-3.jpg" alt="Team member" width={50} height={50} className="rounded-full border-2 border-white object-cover" />
-          </div>
           <p className="text-base font-semibold text-black">Rehabify Team</p>
           <p className="text-sm text-black/80">Developers</p>
           <p className="mt-6 text-lg font-semibold text-black/80">The Path to a Brighter Tomorrow</p>
